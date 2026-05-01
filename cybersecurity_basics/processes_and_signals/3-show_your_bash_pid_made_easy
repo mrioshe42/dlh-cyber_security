@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 # filter processes with bash and print its pid 
 #!/usr/bin/env bash
-pgrep bash | while read pid; do echo "$pid bash"; done
+pgrep bash | while read -r pid; do echo "$pid bash"; done
