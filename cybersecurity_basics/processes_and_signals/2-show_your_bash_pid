@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# grep lines containing bash
+# shellcheck disable=SC2009
+ps -e -o user,pid,%cpu,%mem,vsz,rss,tty,stat,bsdstart,time,command --forest | grep bash
