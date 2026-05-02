@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# create a tmp file and delte it on SIGQUIT and SIGTERM
+
+echo "$$" > "/tmp/myscript.pid"
+trap 'echo "I hate the kill"' TERM
+trap 'echo "Y U no love me?!"' INT
+trap 'rm -f "/tmp/myscript.pid"; exit 0' QUIT TERM
+while true
+do
+        echo "To infinity and beyond"
+        sleep 2
+done
