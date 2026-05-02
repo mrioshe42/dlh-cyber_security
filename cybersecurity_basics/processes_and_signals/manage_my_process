@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Daemon process that writes in a loop in a temp file
+
+while true
+do
+    echo "I am alive!" >> /tmp/my_process
+    sleep 2
+done
