@@ -1,2 +1,2 @@
 #!/bin/bash
-last -n 5
+sudo last -a | head -5
