@@ -1,10 +1,7 @@
 #!/bin/bash
-
-d="${1//\{xor\}/}"
-b=$(printf '%s' "$d" | base64 -d 2>/dev/null)
-
-for ((i=0;i<${#b};i++)); do
-    printf "\\$(printf '%03o' "$(( $(printf '%d' "'${b:i:1}") ^ 95 ))")"
-done
-
-echo
+python3 -c "
+from base64 import b64decode
+data = '$1'.replace('{xor}', '')
+decoded = bytes(byte ^ 0x5f for byte in b64decode(data))
+print(decoded.decode('utf-8'))
+"
