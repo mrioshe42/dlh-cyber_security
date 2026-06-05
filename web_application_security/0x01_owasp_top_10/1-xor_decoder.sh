@@ -1,15 +1,10 @@
 #!/bin/bash
 
-data="${1//\{xor\}/}"
+d="${1//\{xor\}/}"
+b=$(printf '%s' "$d" | base64 -d 2>/dev/null)
 
-decoded=$(base64 -d <<< "$data")
-
-result=""
-
-for ((i=0; i<${#decoded}; i++)); do
-    byte=$(printf '%d' "'${decoded:$i:1}")
-    xor=$((byte ^ 0x5f))
-    result+=$(printf "\\$(printf '%03o' "$xor")")
+for ((i=0;i<${#b};i++)); do
+    printf "\\$(printf '%03o' "$(( $(printf '%d' "'${b:i:1}") ^ 95 ))")"
 done
 
-printf '%s\n' "$result"
+echo
