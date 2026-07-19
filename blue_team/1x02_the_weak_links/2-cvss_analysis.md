@@ -21,14 +21,16 @@
 
 ## Exercise 2: Construction
 
-**Scenario:**
+**Scenario Analysis and Mapping:**
 
-* Exploitable only from the local network (`AV:A`)
-* Exploitation is complex (`AC:H`)
-* Low-level privileges required (`PR:L`)
-* No user interaction (`UI:N`)
-* Scope unchanged (`S:U`)
-* Confidentiality: High (`C:H`), Integrity/Availability: None (`I:N`, `A:N`)
+* **Attack Vector (`AV:A`):** The scenario is "Exploitable only from the local network." This is strictly mapped to **Adjacent (AV:A)**, as it requires access to the shared local network segment (e.g., LAN/VLAN) and cannot be exploited via the broader internet (Network) or from the local machine (Local).
+* **Attack Complexity (`AC:H`):** Exploitation is complex.
+* **Privileges Required (`PR:L`):** Low-level privileges required.
+* **User Interaction (`UI:N`):** No user interaction.
+* **Scope (`S:U`):** Scope unchanged.
+* **Confidentiality Impact (`C:H`):** Confidentiality is impacted highly.
+* **Integrity Impact (`I:N`):** No integrity impact.
+* **Availability Impact (`A:N`):** No availability impact.
 
 **Vector String:** `CVSS:3.1/AV:A/AC:H/PR:L/UI:N/S:U/C:H/I:N/A:N`
 **Calculated Score:** **5.1 (Medium)**
@@ -40,5 +42,8 @@
 | **Finding 001** | `CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H` | **9.8** | Critical |
 | **Finding 005** | `CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:L/A:L` | **5.6** | Medium |
 
-* **Analysis:** The primary difference is the impact on **Integrity (I)** and **Availability (A)**, combined with **Attack Complexity (AC)**.
-* **Biggest Impact:** The biggest drivers of the score difference are the Impact metrics and the Complexity metric. Finding 001 is "Critical" (9.8) because it allows an attacker to bypass all controls (`AC:L`) and gain full read/write/delete access (`H/H/H`). Finding 005 is "Medium" (5.6) because the attacker faces higher complexity (`AC:H`) and, even if successful, can only achieve limited impact (`L/L/L`) on the Confidentiality, Integrity, and Availability of the system. This demonstrates how access to data (Confidentiality) does not inherently constitute a "Critical" vulnerability unless combined with the ability to alter or destroy that data (Integrity/Availability).
+* **Analysis:** The primary differences between these findings are the **Attack Complexity (AC)** and the **Impact Metrics (Confidentiality, Integrity, and Availability)**.
+* **Biggest Impact on Score:**
+    1. **Impact Metrics (C, I, A):** These have the largest weight. Finding 001 provides total compromise (`H/H/H`), driving the score to Critical. Finding 005 only impacts the system to a limited degree (`L/L/L`), which drastically reduces the base score.
+    2. **Attack Complexity (AC):** Finding 005 uses `AC:H`, which adds a barrier to entry, lowering the score compared to Finding 001 (`AC:L`), which allows for easier, reliable exploitation. 
+* **Conclusion:** While both findings have similar network-based attack vectors, the severity difference is driven by the potential for full system compromise (Finding 001) versus limited impact (Finding 005).
