@@ -1,50 +1,36 @@
-# 9. The OSINT Hunt: Vulnerability & Threat Assessment
+# 9 The OSINT Hunt: Vulnerability & Threat Assessment
 
 ### Executive Summary
 
-Automated network scanners are limited to identifying IP-addressable perimeter services and known port signatures. They routinely miss logical application flaws, identity-layer risks in SaaS environments, and vulnerabilities within proprietary medical protocols. This OSINT assessment supplements the automated scan by mapping MedDefense's known technology stack against verified threat intelligence, identifying four significant exposures.
+Automated network scanners identify IP-addressable perimeter services and known open ports, but frequently miss logic flaws, SaaS environment configuration risks, and vulnerabilities tied to proprietary protocols. This OSINT assessment supplements the automated scan by mapping MedDefense's known technology stack against verified threat intelligence and vendor advisories. It identifies four critical and high-risk exposures not detected by standard perimeter scanning.
 
-### Summary of Findings
+## External Vulnerability Assessment (OSINT)
 
-| Asset | Vulnerability / Threat | CVE | Severity | Source |
+| Asset | Vulnerability | CVE / Reference | Severity | Direct Source |
 | --- | --- | --- | --- | --- |
-| **FortiGate 100F** | SSL VPN Out-of-bounds Write | **CVE-2024-21762** | Critical (9.6) | [FortiGuard FG-IR-24-015](https://www.fortiguard.com/psirt/FG-IR-24-015) [NVD CVE-2024-21762](https://nvd.nist.gov/vuln/detail/CVE-2024-21762) |
-| **Microsoft Entra ID** | OAuth App Consent Phishing | N/A (Method) | High | [CISA Alert AA23-347A](https://www.cisa.gov/news-events/cybersecurity-advisories/aa23-347a) |
-| **Synology DSM 7** | VPN Plus Server Out-of-bounds Write | **CVE-2022-43931** | Critical (10.0) | [Synology SA-22:26](https://www.synology.com/en-global/security/advisory/Synology_SA_22_26) [NVD CVE-2022-43931](https://www.google.com/search?q=https://nvd.nist.gov/vuln/detail/CVE-2022-43931) |
-| **PACS (DICOM)** | Unencrypted Legacy Protocol & Cleartext PHI | N/A (Protocol) | High | [HHS HC3 PACS Alert](https://www.hhs.gov/sites/default/files/pacs-vulnerabilities.pdf) |
+| **FortiGate 100F Firewall** | SSL VPN Out-of-bounds Write | CVE-2024-21762 | Critical (9.6) | [Fortinet PSIRT FG-IR-24-015](https://www.fortiguard.com/psirt/FG-IR-24-015) |
+| **JetBrains TeamCity Server** | Authentication Bypass to RCE | CVE-2023-42793 | Critical (9.8) | [CISA Alert AA23-347A](https://www.cisa.gov/news-events/cybersecurity-advisories/aa23-347a) |
+| **Synology Router** | VPN Plus Server Arbitrary Command Execution | CVE-2022-43931 | Critical (10.0) | [Synology SA-22:26](https://www.synology.com/en-global/security/advisory/Synology_SA_22_26) |
+| **Legacy PACS Server** | Unauthenticated DICOM Access / Exposure | N/A | High | [HHS HC3 Sector Alert (PDF)](https://www.hhs.gov/sites/default/files/pacs-vulnerabilities.pdf) |
 
-### Detailed Analysis
+---
 
-#### 1. FortiGate 100F (FortiOS)
+### 1. FortiGate 100F Firewall
 
-* **Vulnerability:** `CVE-2024-21762` – An out-of-bounds write vulnerability in the SSL VPN component of FortiOS.
-* **Sources:** [Fortinet PSIRT Advisory FG-IR-24-015](https://www.fortiguard.com/psirt/FG-IR-24-015) | [NVD CVE-2024-21762](https://nvd.nist.gov/vuln/detail/CVE-2024-21762)
-* **Why the Scan Missed It:** Automated scanners verify if the SSL VPN port is open, but without authenticated credentials or a highly specific exploit payload to trigger the heap overflow in the `sslvpnd` process, the scanner cannot detect the memory corruption vulnerability. It merely logs the service as active.
-* **MedDefense Impact:** If exploited, unauthenticated threat actors gain root-level Remote Code Execution (RCE) on the firewall. Because this is the primary gateway for MedDefense, an attacker could bypass perimeter security, disable network segmentation, and pivot laterally directly into the secure clinical VLANs.
+* **Why the scan missed it:** Automated scanners typically look for open ports or known service banners. Because this is an out-of-bounds write vulnerability occurring in memory during SSL VPN negotiation, an unauthenticated network scan will simply report that port 443 is open, missing the underlying memory corruption flaw unless a highly specific exploitation payload is sent.
+* **MedDefense Impact:** Fortinet's advisory confirms this vulnerability may allow a remote, unauthenticated attacker to execute arbitrary code or commands via specially crafted HTTP requests. Since this firewall serves as the primary network gateway for MedDefense, an attacker exploiting this could establish a foothold on the perimeter appliance and bypass security controls to access internal medical databases.
 
-#### 2. Microsoft Entra ID (O365)
+### 2. JetBrains TeamCity Server
 
-* **Vulnerability:** OAuth Application / Consent Phishing.
-* **Source:** [CISA Alert AA23-347A](https://www.cisa.gov/news-events/cybersecurity-advisories/aa23-347a)
-* **Why the Scan Missed It:** This is an identity-layer vulnerability targeting the human element and Microsoft tenant configurations, not a network-level software flaw. Perimeter scanners only probe IP addresses and ports; they are completely blind to SaaS-hosted OAuth token permissions and consent phishing risks.
-* **MedDefense Impact:** If a MedDefense staff member is tricked into granting consent to a malicious OAuth app, attackers can extract access tokens to bypass MFA entirely. This allows persistent, stealthy access to patient records stored in SharePoint, Outlook, and OneDrive, causing a severe HIPAA breach.
+* **Why the scan missed it:** The vulnerability requires interacting with specific application endpoints. If the automated scanner is not configured with up-to-date web application fuzzing plugins targeting this exact 2023 TeamCity flaw, or if it only conducts a basic infrastructure sweep, it will fail to detect the authentication bypass.
+* **MedDefense Impact:** CISA explicitly notes that threat actors use this vulnerability to bypass authentication, execute arbitrary code, and gain initial access to networks. For MedDefense, compromising the CI/CD pipeline means attackers could steal proprietary healthcare software code or inject backdoors into medical application updates distributed to partnering hospitals.
 
-#### 3. Synology DSM 7
+### 3. Synology Router (VPN Plus Server)
 
-* **Vulnerability:** `CVE-2022-43931` – An out-of-bounds write vulnerability in the Remote Desktop Functionality of Synology VPN Plus Server.
-* **Sources:** [Synology Security Advisory SA-22:26](https://www.synology.com/en-global/security/advisory/Synology_SA_22_26) | [NVD CVE-2022-43931](https://www.google.com/search?q=https://nvd.nist.gov/vuln/detail/CVE-2022-43931)
-* **Why the Scan Missed It:** Standard vulnerability scanners often check the core OS version (DSM 7) but frequently fail to comprehensively probe proprietary, add-on daemon packages (like the VPN Plus Server app) for deep memory corruption flaws.
-* **MedDefense Impact:** This flaw grants unauthenticated RCE with a maximum CVSS score of 10.0. Since MedDefense uses Synology NAS arrays to hold clinical backups, an attacker exploiting this could encrypt, alter, or wipe the backups, crippling disaster recovery capabilities during a ransomware event.
+* **Why the scan missed it:** Vulnerability scanners heavily rely on version banners to flag outdated software. Synology routers typically do not broadcast the specific version of the installed VPN Plus Server package to unauthenticated users. Without credentials to query the package manager, the scanner assumes the service is secure.
+* **MedDefense Impact:** The Synology security advisory states this flaw allows remote attackers to possibly execute arbitrary commands via a susceptible version of the VPN Plus Server. In a MedDefense context, these routers are often deployed at remote satellite clinics. Compromising the router would give attackers direct access to the remote clinic's local network and any site-to-site VPN tunnels connected to the main hospital network.
 
-#### 4. Medical Imaging (DICOM / PACS)
+### 4. Legacy PACS Server (GE Optima)
 
-* **Vulnerability:** Exposed Picture Archiving and Communication Systems (PACS) transmitting data via unencrypted DICOM protocols.
-* **Source:** [HHS Sector Cybersecurity Coordination Center (HC3) Alert](https://www.hhs.gov/sites/default/files/pacs-vulnerabilities.pdf)
-* **Why the Scan Missed It:** DICOM is a specialized medical communications protocol, not standard web traffic (HTTP/TLS). Traditional IT scanners do not possess DICOM "dissectors" to analyze the traffic, meaning they will overlook the fact that patient imaging data is traversing the internal network in cleartext.
-* **MedDefense Impact:** Because medical images (CT/MRI scans) are sent unencrypted, an attacker who gains a foothold inside the MedDefense network can sniff traffic to steal Protected Health Information (PHI). Furthermore, an attacker could manipulate the unencrypted DICOM payloads to falsify medical scans, directly jeopardizing patient care.
-
-### Methodology & Evidence Verification
-
-1. **Primary Source Traceability:** All generic search engine links have been removed. Every finding points directly to the primary vendor PSIRT page, CISA cyber alert, or Department of Health and Human Services (HHS) document.
-2. **NVD Grounding:** All CVE identifiers cited are cross-referenced with direct links to the official National Vulnerability Database (NVD) to substantiate the technical metrics and CVSS severity.
-3. **Contextual Risk Assessment:** Vulnerabilities are explicitly mapped to MedDefense's operational realities (e.g., patient care continuity, HIPAA compliance, and backup integrity), rather than relying on abstract, unsupported impact claims.
+* **Why the scan missed it:** Many generic vulnerability scanners do not parse the specialized DICOM (Digital Imaging and Communications in Medicine) protocol. When they encounter port 104 or 2762, they may identify an "unknown service" but fail to realize the service is configured to allow unauthenticated image retrieval over the internet.
+* **MedDefense Impact:** HHS HC3 warns that vulnerable internet-connected PACS servers expose patient names, dates of birth, social security numbers, and medical images. Furthermore, DICOM protocol exploitation can be used to install malware or falsify scans. For MedDefense, this represents an immediate, severe HIPAA violation and a direct threat to patient safety through compromised diagnostic integrity.
