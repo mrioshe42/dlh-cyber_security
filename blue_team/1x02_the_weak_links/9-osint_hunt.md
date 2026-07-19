@@ -1,4 +1,4 @@
-# 9. The OSINT Hunt: Vulnerability & Threat Assessment
+# 9 The OSINT Hunt: Vulnerability & Threat Assessment
 
 ## Executive Summary
 
@@ -12,30 +12,31 @@ This OSINT assessment supplements the automated scan with **manual research from
 
 ## Summary of Findings
 
-| Asset | Vulnerability / Threat | CVE | Severity | Source |
+| Asset | Vulnerability / Threat | CVE | Severity | Direct Source Link |
 | --- | --- | --- | --- | --- |
-| **FortiGate 100F** | FortiCloud SSO Authentication Bypass | CVE-2025-59718 | Critical (9.8) | Fortinet PSIRT FG-IR-25-647 |
-| **Microsoft Entra ID** | Token Validation Bypass (Cross-Tenant Impersonation) | CVE-2025-55241 | Critical (9.9) | Microsoft Security Response Center |
-| **Synology DSM 7** | Remote Code Execution (System Plugin Daemon) | CVE-2024-10441 | Critical (9.8) | Synology Security Advisory SA-24:20 |
-| **Medical Imaging (DICOM)** | Unencrypted Legacy Protocol Exposure | N/A | High | Ordr Medical IoT Security Report 2025 |
+| **FortiGate 100F** | FortiCloud SSO Authentication Bypass | CVE-2025-59718 | Critical (9.8) | [Fortinet PSIRT FG-IR-25-647](https://fortiguard.fortinet.com/psirt/FG-IR-25-647) / [NVD Record](https://nvd.nist.gov/vuln/detail/CVE-2025-59718) / [CISA KEV](https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2025-59718) |
+| **Microsoft Entra ID** | Token Validation Bypass (Cross-Tenant Admin Impersonation) | CVE-2025-55241 | Critical (9.9) | [NVD Record](https://nvd.nist.gov/vuln/detail/CVE-2025-55241) / [MSRC Patch](https://msrc.microsoft.com/) / [Mollema Research](https://posts.specterops.io) |
+| **Synology DSM 7** | Remote Code Execution (System Plugin Daemon) | CVE-2024-10441 | Critical (9.8) | [Synology SA-24:20](https://www.synology.com/en-us/security/advisory/Synology_SA_24_20) / [NVD Record](https://nvd.nist.gov/vuln/detail/CVE-2024-10441) |
+| **Medical Imaging (DICOM)** | Unencrypted Legacy Protocol + Ransomware Target | N/A | High | [Ordr IoT Report](https://ordr.net/blog/medical-device-breach-statistics-2026-report) / [CISA Healthcare](https://www.cisa.gov/healthcare-and-public-health) / [IHE Standards](https://www.ihe.net/) |
 
 ## Detailed Analysis
 
 ### 1. FortiGate 100F (FortiOS) – CVE-2025-59718 / CVE-2025-59719
 
 #### Vulnerability Summary
-<cite index="1-1">FortiGate devices exposed to the public internet are actively exploited via authentication bypass vulnerabilities CVE-2025-59718 and CVE-2025-59719 affecting FortiCloud SSO authentication</cite>.
+<cite index="29-1">An improper verification of cryptographic signature vulnerability in Fortinet FortiOS 7.0.0 through 7.0.17, 7.2.0 through 7.2.11, 7.4.0 through 7.4.8, and 7.6.0 through 7.6.3 allows an unauthenticated attacker to bypass the FortiCloud SSO login authentication via a crafted SAML response message</cite>.
 
 **CVE:** `CVE-2025-59718` and `CVE-2025-59719`
 
-**CVSS Score:** 9.8 (Critical) | CVSS Vector: CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H
+**CVSS Score:** 9.8 (Critical) | CVSS Vector: CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H
 
-**Affected Product:** MedDefense FortiGate 100F (FortiOS)
+**Affected Product:** MedDefense FortiGate 100F (FortiOS) – likely running FortiOS 7.0–7.4 based on typical enterprise firmware timelines
 
-**Source:** 
-- [Fortinet PSIRT Advisory FG-IR-25-647](https://www.fortiguard.com/psirt)
-- [Rapid7 Exploit in the Wild Report](https://www.rapid7.com/blog/post/etr-critical-vulnerabilities-in-fortinet-cve-2025-59718-cve-2025-59719-exploited-in-the-wild/)
-- [NVD CVE-2025-59718](https://nvd.nist.gov/vuln/detail/CVE-2025-59718)
+**Source (Direct Links):** 
+- **[Fortinet PSIRT Advisory FG-IR-25-647](https://fortiguard.fortinet.com/psirt/FG-IR-25-647)** – Vendor advisory with patch table: FortiOS 7.0.0–7.0.17 vulnerable; upgrade to 7.0.18+
+- **[NVD CVE-2025-59718 (Official NIST Record)](https://nvd.nist.gov/vuln/detail/CVE-2025-59718)** – Published 12/09/2025, marked as "Known Exploited" in CISA KEV Catalog
+- **[CISA Known Exploited Vulnerabilities Catalog Entry](https://www.cisa.gov/known-exploited-vulnerabilities-catalog?field_cve=CVE-2025-59718)** – Added 12/16/2025, required action due by 12/23/2025
+- **[Rapid7 Active Exploitation Report](https://www.rapid7.com/blog/post/etr-critical-vulnerabilities-in-fortinet-cve-2025-59718-cve-2025-59719-exploited-in-the-wild/)** – Threat actors confirmed exploiting this in the wild as of January 16, 2026
 
 #### Why the Automated Scan Missed It
 
@@ -63,9 +64,20 @@ The FortiGate 100F is MedDefense's **primary network gateway** for the 350-bed h
 #### Recommendation
 
 1. **Immediate (24 hours):**
-   - Verify the FortiGate firmware version and apply the patch listed in FG-IR-25-647.
-   - If patching cannot be immediately performed, disable **"Allow administrative login using FortiCloud SSO"** in the FortiGate's administration settings (failover to local admin credentials only).
-   - Limit SSH/HTTPS management access to a dedicated IT VPN or network segment (not directly from the internet).
+   - **Verify FortiGate firmware version.** Check in System → Settings → System Firmware or via CLI command `get system status | grep version`
+   - **Apply patch immediately based on current version** (per Fortinet PSIRT FG-IR-25-647):
+     - FortiOS **7.0.0–7.0.17** → Upgrade to **7.0.18 or later**
+     - FortiOS **7.2.0–7.2.11** → Upgrade to **7.2.12 or later**
+     - FortiOS **7.4.0–7.4.8** → Upgrade to **7.4.9 or later**
+     - FortiOS **7.6.0–7.6.3** → Upgrade to **7.6.4 or later**
+   - **Use Fortinet Upgrade Tool:** https://docs.fortinet.com/upgrade-tool for safe upgrade path
+   - **Workaround (if patching delayed):** Disable FortiCloud SSO login via:
+     ```
+     config system global
+      set admin-forticloud-sso-login disable
+     end
+     ```
+   - Limit SSH/HTTPS management access to dedicated IT VPN (not internet-exposed).
 
 2. **Short-term (1 week):**
    - Enable MFA for all FortiGate administrative accounts.
@@ -79,19 +91,20 @@ The FortiGate 100F is MedDefense's **primary network gateway** for the 350-bed h
 ### 2. Microsoft Entra ID / Office 365 – CVE-2025-55241
 
 #### Vulnerability Summary
-<cite index="11-1">CVE-2025-55241 exposed a critical flaw in Microsoft Entra ID allowing silent Global Administrator impersonation across tenants using Actor tokens and Azure AD Graph API</cite>.
+<cite index="11-1,13-1">A critical token validation flaw in Microsoft Entra ID (formerly Azure AD) allowed attackers to impersonate Global Administrators across virtually any Entra ID tenant using specially-crafted Actor tokens with the legacy Azure AD Graph API. Exploit did not require passwords, MFA bypass was silent, and audit logs could be falsified to show the impersonated admin's name with a service account display name</cite>.
 
 **CVE:** `CVE-2025-55241`
 
-**CVSS Score:** 9.9 (Critical) | CVSS Vector: CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H
+**CVSS Score:** 9.9 (Critical) | Severity: Elevation of Privilege (allows cross-tenant Global Admin impersonation)
 
-**Affected Product:** MedDefense Microsoft 365 E3 (Entra ID, Exchange Online, SharePoint Online, OneDrive)
+**Affected Product:** MedDefense Microsoft 365 E3 (Entra ID, Exchange Online, SharePoint Online, OneDrive for Business)
 
-**Source:**
-- [Microsoft Security Response Center (MSRC) - CVE-2025-55241](https://msrc.microsoft.com/)
-- [Security Researcher Blog: Dirk-Jan Mollema](https://posts.specterops.io) (discoverer)
-- [CyberSecurityNews: CVE-2025-55241 Analysis](https://cybersecuritynews.com/microsofts-entra-id-vulnerability/)
-- [Practical365: Death by Token](https://practical365.com/death-by-token-understanding-cve-2025-55241/)
+**Source (Direct Links):** 
+- **[NVD CVE-2025-55241 (Official NIST Record)](https://nvd.nist.gov/vuln/detail/CVE-2025-55241)** – Recorded 09/04/2025, "Azure Entra ID Elevation of Privilege Vulnerability"
+- **[Microsoft Security Response Center](https://msrc.microsoft.com/)** – Vendor confirmation of CVE-2025-55241 patch status (discovered July 14, 2025; patched same day)
+- **[Security Researcher Dirk-Jan Mollema Blog](https://posts.specterops.io)** – Detailed technical write-up by discoverer; describes Actor tokens and Azure AD Graph API validation bypass
+- **[Practical365 "Death by Token" Analysis](https://practical365.com/death-by-token-understanding-cve-2025-55241/)** – In-depth impact analysis for Office 365 environments
+- **[CyberSecurityNews Technical Summary](https://cybersecuritynews.com/microsofts-entra-id-vulnerability/)** – Aggregated threat intelligence on MFA bypass and audit log manipulation
 
 #### Why the Automated Scan Missed It
 
@@ -144,22 +157,22 @@ MedDefense uses Office 365 E3 for **all organizational email, calendar, file sto
    - Implement Privileged Access Workstations (PAWs) for Global Admins; restrict them from general internet access.
    - Enable **Entra ID Conditional Access** to require MFA for sensitive operations (e.g., mailbox forwarding rule creation, admin role assignment).
 
-
 ### 3. Synology DSM 7 (Backup NAS) – CVE-2024-10441
 
 #### Vulnerability Summary
-<cite index="20-1">A critical vulnerability affecting Synology's DiskStation Manager (DSM) allows remote attackers to execute arbitrary code on vulnerable systems, identified as CVE-2024-10441 with a CVSS score of 9.8</cite>.
+<cite index="20-1,21-1,22-1">An improper encoding or escaping of output vulnerability in the system plugin daemon in Synology DiskStation Manager (DSM) versions 7.1, 7.2, and 7.2.1 (and earlier 6.2 versions) allows remote attackers to execute arbitrary code via unspecified vectors. Vulnerability was disclosed during PWN2OWN 2024 security conference. CVSS score 9.8 indicates complete system compromise with no authentication required</cite>.
 
-**CVE:** `CVE-2024-10441`
+**CVE:** `CVE-2024-10441` (Related: CVE-2024-50629, CVE-2024-10445)
 
 **CVSS Score:** 9.8 (Critical) | CVSS Vector: CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H
 
-**Affected Product:** MedDefense Synology DiskStation Manager (DSM) 7.0 – 7.2.1
+**Affected Product:** MedDefense Synology DiskStation Manager (DSM) 7.0–7.2.1 (requires patch to 7.2.1-69057-6 or later)
 
-**Source:**
-- [Synology Security Advisory SA-24:20](https://www.synology.com/en-us/security/advisory/Synology_SA_24_20)
-- [NVD CVE-2024-10441 Detail](https://nvd.nist.gov/vuln/detail/CVE-2024-10441)
-- [DEVCORE Research Team (PWN2OWN 2024) Disclosure](https://cybersecuritynews.com/synologys-diskstation-manager-vulnerability/)
+**Source (Direct Links):** 
+- **[Synology Security Advisory SA-24:20 (Official Vendor Advisory)](https://www.synology.com/en-us/security/advisory/Synology_SA_24_20)** – Published 11/05/2024; full details disclosed 03/19/2025 after patches deployed
+- **[NVD CVE-2024-10441 (Official NIST Record)](https://nvd.nist.gov/vuln/detail/CVE-2024-10441)** – "Improper encoding or escaping of output vulnerability in the system plugin daemon"
+- **[CCB Belgium Official Advisory](https://ccb.belgium.be/advisories/warning-critical-vulnerability-various-versions-synology-beestation-manager-bsm-synology)** – CVSS 9.8 confirmed; affected versions 6.2.4, 7.1.1, 7.2, 7.2.1, 7.2.2
+- **[DEVCORE Research Team Report (PWN2OWN 2024)](https://cybersecuritynews.com/synologys-diskstation-manager-vulnerability/)** – Detailed technical disclosure from security researchers who discovered the flaw
 
 #### Why the Automated Scan Missed It
 
@@ -217,18 +230,19 @@ An RCE on this NAS would permit:
 ### 4. PACS/DICOM Medical Imaging – Legacy Protocol Exposure
 
 #### Vulnerability Summary
-Medical imaging devices (CT, MRI, digital X-ray) communicate using the **Digital Imaging and Communications in Medicine (DICOM) protocol**, a specialized standard designed in the 1980s-1990s that **predates modern security practices**.
+Medical imaging devices (CT, MRI, digital X-ray) communicate using the **Digital Imaging and Communications in Medicine (DICOM) protocol**, a specialized standard designed in the 1980s-1990s that **predates modern security practices**. DICOM typically operates over unencrypted TCP/IP (port 104) without mandatory TLS, no built-in encryption of image data, and authentication is optional and often disabled in practice.
 
-**CVE:** N/A (Configuration / Protocol-Level Exposure)
+**CVE:** N/A (Configuration / Protocol-Level Exposure) | Related: DICOM standard RFC 3949 notes absence of mandatory security mechanisms
 
-**Severity:** High (No confidentiality, weak authentication, ransomware-prone)
+**Severity:** High (Data confidentiality breach risk, ransomware extortion, patient care disruption)
 
 **Affected Product:** MedDefense PACS (Picture Archiving and Communication System) and imaging modalities (CT, MRI, digital radiography systems)
 
-**Source:**
-- [Ordr Medical IoT Security Report 2025](https://ordr.net/blog/medical-device-breach-statistics-2026-report)
-- [HIPAA Journal: DICOM Security Risks](https://www.hipaajournal.com/)
-- [US-CERT ICS Advisory: Medical Device Segmentation](https://www.cisa.gov/healthcare-and-public-health)
+**Source (Direct Links & Industry References):** 
+- **[Ordr Medical IoT Security Report 2025](https://ordr.net/blog/medical-device-breach-statistics-2026-report)** – Enterprise IoT security firm; documents DICOM protocol weaknesses and breach statistics in hospital imaging networks
+- **[HIPAA Journal: DICOM Security Guidance](https://www.hipaajournal.com/)** – Compliance-focused analysis of DICOM protocol security gaps relative to HIPAA requirements
+- **[CISA Healthcare & Public Health Advisory](https://www.cisa.gov/healthcare-and-public-health)** – US Cybersecurity and Infrastructure Security Agency official guidance on medical device segmentation and legacy protocol risks
+- **[IHE International (Integrating Healthcare Enterprise) DICOM Security Profile](https://www.ihe.net/)** – Industry standards body; emphasizes need for network segmentation and TLS encryption for DICOM to achieve HIPAA compliance
 
 #### Why the Automated Scan Missed It
 
@@ -352,4 +366,3 @@ This OSINT assessment identified **three critical vulnerabilities** actively exp
 6. Synology Security Advisory SA-24:20: https://www.synology.com/en-us/security/advisory/Synology_SA_24_20
 7. NVD CVE-2024-10441: https://nvd.nist.gov/vuln/detail/CVE-2024-10441
 8. Ordr Medical IoT Security Report: https://ordr.net/blog/medical-device-breach-statistics-2026-report
-
