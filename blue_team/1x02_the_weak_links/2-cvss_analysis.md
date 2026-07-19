@@ -16,7 +16,8 @@
 | **Availability** | A:H | High | Total loss of availability (DoS). |
 
 * **Other Values:** Changing **AV:N (Network)** to **AV:L (Local)** or **AV:P (Physical)** drastically lowers the score by restricting accessibility.
-* **Change to AV:L:** The new score is **7.8 (High)**. The score drops because the attack vector is no longer reachable via the internet, limiting the potential attacker pool to someone already on the local system.
+* **Change to AV:L:** The new score is **8.4 (High)**.
+* **Why the score is 8.4:** The score drops from 9.8 to 8.4 because the Attack Vector shifts from "Network" to "Local," meaning the attacker must now have physical or logical access to the specific machine. However, the score remains high (8.4) because all three impact metrics (Confidentiality, Integrity, and Availability) are still set to "High." The severity of the exploit itself—full system compromise—remains intact; the only change is the reduction in the number of potential attackers who can reach the vulnerability.
 
 ## Exercise 2: Construction
 
@@ -37,7 +38,7 @@
 | Finding | Vector | Score | Severity |
 | --- | --- | --- | --- |
 | **Finding 001** | `CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H` | **9.8** | Critical |
-| **Finding 005** | `CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N` | **7.5** | High |
+| **Finding 005** | `CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:L/A:L` | **5.6** | Medium |
 
-* **Analysis:** The primary difference is the impact on **Integrity (I)** and **Availability (A)**.
-* **Biggest Impact:** In this case, the `I` and `A` metrics are the primary drivers of the score difference. Because Finding 001 provides the attacker with full control (H/H/H) across all impact vectors, it reaches "Critical" status, whereas Finding 005, which only allows confidentiality loss (H/N/N), is capped at "High."
+* **Analysis:** The primary difference is the impact on **Integrity (I)** and **Availability (A)**, combined with **Attack Complexity (AC)**.
+* **Biggest Impact:** The biggest drivers of the score difference are the Impact metrics and the Complexity metric. Finding 001 is "Critical" (9.8) because it allows an attacker to bypass all controls (`AC:L`) and gain full read/write/delete access (`H/H/H`). Finding 005 is "Medium" (5.6) because the attacker faces higher complexity (`AC:H`) and, even if successful, can only achieve limited impact (`L/L/L`) on the Confidentiality, Integrity, and Availability of the system. This demonstrates how access to data (Confidentiality) does not inherently constitute a "Critical" vulnerability unless combined with the ability to alter or destroy that data (Integrity/Availability).
