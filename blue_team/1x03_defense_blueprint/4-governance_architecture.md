@@ -2,42 +2,40 @@
 
 A strategic security program requires a formal governance structure to establish accountability, streamline decision-making, and sustain operations beyond initial technical fixes. Without explicit authority boundaries, security decisions default to informal influence, leading to friction between IT, Security, and Clinical Leadership.
 
-
 ## Part 1: Governance RACI Matrix
 
-To resolve operational ambiguity and establish clear organizational boundaries between executive management, IT operations, and security governance, this matrix enforces **exactly one Accountable ('A')** and **exactly one Responsible ('R')** role per activity.
+To resolve operational ambiguity and establish clear organizational boundaries between executive management, IT operations, clinical leadership, and security governance, this matrix enforces **exactly one Accountable ('A')** and **exactly one Responsible ('R')** role per activity.
 
-* **R (Responsible):** The primary lead who executes the task, drafts the deliverable, or requests the operational exception.
-* **A (Accountable):** The single executive with ultimate decision-making or formal approval authority.
-* **C (Consulted):** Key stakeholders providing vital operational context, clinical impact analysis, or technical guidance prior to approval/execution.
+* **R (Responsible):** The primary lead who executes the task, conducts technical analysis, or drafts deliverables.
+* **A (Accountable):** The single role with ultimate decision-making, operational sign-off, or business ownership authority.
+* **C (Consulted):** Key stakeholders providing vital operational context, clinical impact analysis, or technical guidance prior to execution.
 * **I (Informed):** Parties kept updated on progress, status, or final outcomes.
 
 | Activity | CEO | Deputy CISO (James) | IT Director (Sarah) | Dept Heads (e.g., Dr. Patel) | Security Analyst (You) |
 | :--- | :---: | :---: | :---: | :---: | :---: |
-| **Security budget approval** | **A** | C | **R** | C | I |
-| **Vulnerability remediation** | I | **A** | **R** | C | C |
+| **Security budget approval** | **A** | **R** | C | C | I |
+| **Vulnerability remediation** | I | C | **A** | C | **R** |
 | **Incident response execution** | I | **A** | C | C | **R** |
 | **Security policy approval** | **A** | **R** | C | C | I |
-| **Risk acceptance decisions** | **A** | C | I | **R** | I |
-| **Security awareness training** | I | **A** | I | C | **R** |
-| **Vendor risk assessment** | I | **A** | I | **R** | C |
+| **Risk acceptance decisions** | I | **R** | C | **A** | I |
+| **Security awareness training** | I | C | I | **A** | **R** |
+| **Vendor risk assessment** | I | C | C | **A** | **R** |
 | **Audit coordination** | I | **A** | C | C | **R** |
 
 
 ### Operational Governance Boundaries & Execution Mechanics
 
 #### 1. Business Leadership & Executive Authority (Budget, Policy, Risk Acceptance)
-* **Risk Acceptance Decisions:** Department Heads (**R**) act as business risk owners. When requesting security exceptions (e.g., operating legacy clinical software), the Department Head is responsible for submitting the formal business and clinical necessity justification. James (**C**) conducts quantitative risk analysis ($\text{ALE}$ modeling) to advise on risk severity, and the CEO (**A**) holds sole decision-making authority to approve or reject enterprise risk acceptance.
-* **Security Budget Approval:** The IT Director / Sarah (**R**) leads budget preparation and operational cost modeling across IT and security infrastructure. James (**C**) is consulted to prioritize technical security controls, Department Heads (**C**) provide clinical capability requirements, and the CEO (**A**) grants final budget authorization.
-* **Security Policy Approval:** James (**R**) drafts enterprise security standards and governance policies. Department Heads (**C**) and Sarah (**C**) are consulted to ensure policy feasibility within clinical workflows and IT operations before the CEO (**A**) signs the policy into law.
+* **Risk Acceptance Decisions:** Department Heads (**A**) act as business risk owners for their respective clinical units. When requesting security exceptions (e.g., operating legacy medical software), the Department Head holds ultimate decision authority for accepting the clinical and operational business risks. James (**R**) is responsible for conducting quantitative risk modeling ($\text{ALE}$ calculations), documenting compensatory controls, and maintaining the formal risk register.
+* **Security Budget & Policy Approval:** The CEO (**A**) holds sole executive authority for formally approving enterprise security budgets and enacting corporate security policy into law. James (**R**) is responsible for drafting policy standards and structuring the security budget request, actively consulting with Sarah (**C**) and Department Heads (**C**) to align with IT infrastructure and clinical workflows.
 
 #### 2. Technical Operations (Vulnerability & Incident Response)
-* **Vulnerability Remediation:** James (**A**) sets vulnerability remediation SLAs and governance policies. Sarah (**R**) is responsible for testing and deploying patches across infrastructure. Department Heads (**C**) are consulted to schedule maintenance windows around clinical operations, and the Security Analyst (**C**) provides scan data and verifies patch completion.
-* **Incident Response Execution:** James (**A**) serves as Incident Commander directing overall response strategy. The Security Analyst (**R**) acts as primary investigator executing log analysis, containment, and digital forensics. Sarah (**C**) executes infrastructure changes (e.g., VLAN isolation), and Department Heads (**C**) are consulted regarding clinical impact and system downtime during containment.
+* **Vulnerability Remediation:** The IT Director / Sarah (**A**) is accountable for IT infrastructure availability, patch deployment SLAs, and system maintenance. The Security Analyst (**R**) is responsible for executing vulnerability scans, prioritizing CVE severity, and verifying patch success. James (**C**) provides strategic threat context, while Department Heads (**C**) are consulted to schedule maintenance windows around clinical operations.
+* **Incident Response Execution:** James (**A**) serves as Incident Commander managing crisis escalation, regulatory communication, and containment strategy. The Security Analyst (**R**) acts as primary technical investigator executing log analysis, threat hunting, and digital forensics. Sarah (**C**) executes network containment actions (e.g., port isolation), and Department Heads (**C**) are consulted to evaluate patient care continuity and approve temporary clinical downtime windows.
 
 #### 3. Administrative Governance (Training, Vendor Risk, Audits)
-* **Vendor Risk Assessment:** Department Heads (**R**) sponsor new software acquisitions and define clinical integration requirements. The Security Analyst (**C**) conducts third-party vetting (reviewing SOC 2 reports and BAAs), and James (**A**) provides final security clearance.
-* **Security Awareness Training & Audits:** James (**A**) holds ultimate accountability for organizational compliance. The Security Analyst (**R**) manages daily administration (phishing simulations, audit evidence gathering), while Department Heads (**C**) and Sarah (**C**) provide scheduling alignment and technical evidence.
+* **Vendor Risk Assessment:** Department Heads (**A**) hold business accountability for selecting clinical software vendors. The Security Analyst (**R**) is responsible for conducting third-party technical risk evaluations (SOC 2 analysis, BAA reviews), and James (**C**) provides formal security recommendations before contract execution.
+* **Security Awareness Training & Audits:** Department Heads (**A**) are accountable for enforcing 100% training completion within their respective clinical teams. The Security Analyst (**R**) manages LMS platform administration and phishing simulations. For compliance audits, James (**A**) holds governance accountability while the Security Analyst (**R**) gathers technical evidence and log artifacts.
 
 
 ## Part 2: Data Role Definitions
@@ -47,7 +45,7 @@ To address James's concern ("Dr. Patel thinks he can do whatever he wants with h
 ### 1. Data Owner
 * **Assigned Entity:** **Department Heads (e.g., Dr. Patel / Clinical & Medical Directors)**
 * **Role Definition:** The business lead who determines the purpose, data classification, and clinical necessity of information within their domain.
-* **Justification & Boundary:** Dr. Patel understands cardiology workflows. As Data Owner, he defines *who* needs access to cardiology data based on care requirements. However, he remains subject to enterprise security policies and cannot bypass access control mechanisms or grant policy exemptions independently.
+* **Justification & Boundary:** Dr. Patel understands cardiology workflows. As Data Owner, he defines *who* requires access to cardiology data based on clinical care requirements. However, he remains subject to enterprise security policies and cannot bypass technical controls or grant policy exemptions independently.
 
 ### 2. Data Controller
 * **Assigned Entity:** **MedDefense Health Systems (Board of Directors & Executive Management)**
@@ -62,7 +60,7 @@ To address James's concern ("Dr. Patel thinks he can do whatever he wants with h
 ### 4. Data Custodian / Steward
 * **Assigned Entity:** **IT Department (Led by IT Director Sarah & Systems Engineering)**
 * **Role Definition:** The technical caretakers responsible for maintaining the underlying infrastructure, operating systems, database engines, access control mechanics, backups, and physical hardware.
-* **Justification & Boundary:** IT manages hardware assets (`ehr-db-01`, `pacs-srv-01`), database engines, and storage networks. Sarah acts as technical custodian—enforcing access control lists, database encryption at rest, and backup routines as specified by Security and Data Owners, without owning the clinical data itself.
+* **Justification & Boundary:** IT manages hardware assets (`ehr-db-01`, `pacs-srv-01`), database engines, and storage networks. Sarah acts as technical custodian—enforcing access control lists, database encryption at rest, and backup routines as specified by Security and Data Owners, without holding ownership rights over the clinical data itself.
 
 
 ## Part 3: Executive Leadership Strategy (The CISO Question)
