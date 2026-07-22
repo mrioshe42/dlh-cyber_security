@@ -41,15 +41,15 @@ The 24/7 Outsourced SOC is rejected rather than deferred because it is not finan
 
 This control does not represent a temporary funding problem; it represents an unsuitable investment decision for the organization’s current scale. The available budget provides significantly greater risk reduction when invested in the selected technical controls.
 
-
 ## Total Spend vs. Budget Remaining
 
-**Total budget available:** $120,000
-**Total spend:** $87,500
-**Budget remaining:** $32,500
+Budget Usage Summary:
 
-The remaining budget is preserved for additional security improvements and unresolved critical gaps identified during previous assessments. Keeping financial flexibility allows MedDefense to respond to emerging risks without reducing the effectiveness of the funded security controls.
+- Total budget available: $120,000 (120000)
+- Total spend: $87,500
+- Budget remaining: $32,500
 
+The budget usage demonstrates that MedDefense funded the highest-value controls while maintaining financial flexibility. The remaining budget is reserved for additional security improvements and unresolved critical gaps identified during previous assessments. Maintaining budget remaining allows MedDefense to address emerging risks without reducing the effectiveness of the funded security controls.
 
 # Part 2 — The Opportunity Cost
 
