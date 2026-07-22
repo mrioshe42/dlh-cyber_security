@@ -24,29 +24,44 @@ To resolve operational ambiguity and establish clear organizational boundaries, 
 
 ### Operational Governance Boundaries & Execution Mechanics
 
+**Critical Distinction:** In this model, **Accountable (A)** means the person who **makes the binding decision**, and **Responsible (R)** means the person who **executes or documents** that decision. These are never the same role for strategic decisions.
+
 #### 1. Business Leadership & Executive Authority (Budget, Policy, Risk Acceptance)
 
 **Security Budget Approval:**
-The CEO holds both Accountable and Responsible authority for formally approving the enterprise security budget. This ensures executive ownership of security investment decisions and fiscal accountability. James (Deputy CISO) and Sarah (IT Director) consult on technical priorities and resource efficiency, but the CEO alone signs off on final budget allocation and strategic trade-offs between security spending and other organizational priorities.
+- **Decision Maker (A):** CEO alone decides on final budget allocation, trade-offs between security spending and other priorities, and fiscal accountability.
+- **Executor (R):** CEO prepares the budget decision; James and Sarah provide technical input on priorities, but do not decide.
+- **Authority Boundary:** The CEO signs the budget; no other role can override this decision.
 
 **Security Policy Approval:**
-The CEO holds both Accountable and Responsible authority for organizational security policies. As the institution's executive leader, the CEO bears ultimate legal liability for compliance failures and information security governance. James drafts policy documentation and framework recommendations, but the CEO retains sole authority to sign policies into corporate mandate. This prevents security policy from being treated as a technical artifact delegated downward.
+- **Decision Maker (A):** CEO alone decides whether organizational security policies are approved and mandatory across the institution.
+- **Executor (R):** CEO owns the final approval decision; James drafts policy documentation and recommends frameworks, but cannot issue policies without CEO sign-off.
+- **Authority Boundary:** CEO bears ultimate legal liability for policy compliance. No technical staff (James, Sarah, or analyst) can approve policies independently.
 
 **Risk Acceptance Decisions:**
-Department Heads (A) act as ultimate business risk owners for their respective clinical units. When requesting security exceptions (e.g., operating legacy medical software for critical diagnostics), the Department Head holds sole accountability for accepting clinical and operational business risks. James (R) is responsible for developing the formal risk assessment and documenting the risk register entry, but James does not have authority to override clinical risk acceptance decisions. The Security Analyst remains Informed to ensure the risk acceptance is formally documented in enterprise risk tracking systems.
+- **Decision Maker (A):** Department Heads (e.g., Dr. Patel) decide whether to accept clinical and operational risks when requesting security exceptions (e.g., operating legacy medical software).
+- **Executor (R):** James develops the formal risk assessment, quantifies the threat landscape, and documents the decision in the enterprise risk register.
+- **Authority Boundary:** The Department Head's decision is final. James may *advise* against acceptance, but cannot block it. The Security Analyst remains Informed, ensuring formal documentation occurs.
 
 #### 2. Technical Operations (Vulnerability & Incident Response)
 
 **Vulnerability Remediation:**
-The IT Director / Sarah (A) is accountable for IT infrastructure availability, patch deployment, and system maintenance timelines. Sarah owns operational decisions about when patches can be deployed without disrupting clinical workflows. The Security Analyst (R) acts as the technical engine managing the vulnerability lifecycle—executing scans, prioritizing CVEs by business impact, and verifying patch success. James consults on threat intelligence and risk prioritization but does not override IT operational decisions.
+- **Decision Maker (A):** Sarah (IT Director) decides when patches can be deployed without disrupting clinical workflows; she owns infrastructure availability and maintenance timelines.
+- **Executor (R):** Security Analyst executes scans, prioritizes CVEs by business impact, and verifies patch success; reports findings to Sarah for deployment approval.
+- **Authority Boundary:** Sarah's operational timeline decisions are final. James consults on threat intelligence but does not override IT operational authority.
 
 **Incident Response Execution:**
-James (Deputy CISO) serves as Incident Commander (A), managing crisis escalation, regulatory communication decisions, and containment strategy. This ensures a single executive authority during security incidents. The Security Analyst (R) acts as primary technical investigator, executing log analysis, threat hunting, and digital forensics. Sarah (C) executes network containment actions (e.g., port isolation, VLAN segmentation) under the Incident Commander's direction. This structure prevents technical responses from outpacing executive decision-making during crises.
+- **Decision Maker (A):** James (Deputy CISO) is the sole Incident Commander; he decides on crisis escalation level, regulatory notification timing, and containment scope.
+- **Executor (R):** Security Analyst conducts log analysis, threat hunting, and digital forensics under James's direction; Sarah executes network containment actions (port isolation, VLAN segmentation) under James's command.
+- **Authority Boundary:** James's incident command decisions are binding. The analyst and Sarah execute technical work; they do not make containment strategy decisions.
 
 #### 3. Administrative Governance (Training, Vendor Risk, Audits)
 
 **Security Awareness Training, Vendor Risk Assessment & Audits:**
-James (A) holds governance accountability for security audit compliance, vendor posture standards, and regulatory filings. The Security Analyst (R) performs daily administration: gathering technical evidence, issuing vendor SOC 2 questionnaires, coordinating audit evidence packages, and tracking phishing simulation metrics. Department Heads are consulted on clinical workflow impacts of training content or vendor restrictions.
+- **Decision Maker (A):** James holds governance accountability for audit compliance standards, vendor posture requirements, and regulatory submission strategy.
+- **Executor (R):** Security Analyst gathers technical evidence, issues vendor questionnaires, coordinates audit packages, and tracks training metrics.
+- **Authority Boundary:** James approves what gets audited and reported; the analyst collects and documents evidence on James's behalf. Department Heads are consulted on workflow impacts.
+
 
 ## Part 2: Data Role Definitions
 
