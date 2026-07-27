@@ -86,7 +86,7 @@ Certificate Request:
 
 1. **CSR Generated:** Completed locally via OpenSSL (`portal.csr` and `portal_key.pem`).
 2. **Submission to CA:** Submit the CSR to our chosen commercial CA (or via ACME client for automated Let's Encrypt validation).
-3. **Validation Process:** The CA executes the **Validation Process** by verifying domain control (via HTTP-01 or DNS-01 challenge) and confirming organization identity for OV compliance.
+3. **Validation process:** The CA executes the Validation process by verifying domain control (via HTTP-01 or DNS-01 challenge) and confirming organization identity for OV compliance.
 4. **Certificate Issuance:** The CA signs the public key and returns the operational leaf certificate bundle along with intermediate CA certificates.
 5. **Installation on the Web Server:** Securely transfer `portal_cert.pem` and `portal_key.pem` to `web-srv-01`, placing them in `/etc/ssl/private/` and `/etc/ssl/certs/` with restricted file permissions (`chmod 600`). Update Nginx/Apache configuration to point to the new files.
 6. **Verification:** Test the deployment locally and externally using `openssl s_client -connect portal.meddefense.local:443` to ensure the full chain is served and expiration dates are updated.
