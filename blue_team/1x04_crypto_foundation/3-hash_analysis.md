@@ -6,21 +6,6 @@ To analyze hash diffusion properties, the baseline string `"MedDefense"` and a s
 
 #### Commands and Generated Hashes
 
-```bash
-# SHA-256 baseline and modified hashes
-echo -n "MedDefense" | sha256sum
-# Output: f8b32c696df83df02fa9bc5e51084281729b11e74f114c0a5d429a3a1f81ef62
-echo -n "MedDefense1" | sha256sum
-# Output: 4d2e811ec3331b658d447d40e9d6bc9cb57423bf7a16e7807c4bc589a87d6092
-
-# MD5 baseline and modified hashes
-echo -n "MedDefense" | md5sum
-# Output: b1628d09f3e4bc9006df6752309f7a42
-echo -n "MedDefense1" | md5sum
-# Output: d41d8cd98f00b204e9800998ecf8427e
-
-```
-
 # SHA-256 baseline and modified hashes
 echo -n "MedDefense" | sha256sum
 # Output: 39e026e107a44b2268e43e16e61033fdcc5d2bd62b23e03aca51db35c8671098
