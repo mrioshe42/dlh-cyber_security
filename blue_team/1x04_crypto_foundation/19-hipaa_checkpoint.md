@@ -1,0 +1,15 @@
+## 19. The HIPAA Crypto Checkpoint
+
+### HIPAA Crypto Compliance Table
+
+| HIPAA Requirement | What it Mandates | Current MedDefense State | Compliant? | Gap / Remediation |
+|---|---|---|---|---|
+| **§164.312(a)(2)(iv)**<br>Encryption and decryption of ePHI (At Rest) | Implement a mechanism to encrypt and decrypt electronic protected health information stored on physical media, databases, and endpoints. | Databases (`ehr-db-01`, `billing-srv-01`) utilize unencrypted storage volumes; workstations lack uniform Full Disk Encryption (FDE); legacy systems store plaintext files. | **No** | **Gap:** Lack of database TDE and workstation FDE.<br>**Remediation:** Enable AES-256 Transparent Data Encryption across all SQL instances and enforce BitLocker/FileVault via GPO on all 540 endpoints. |
+| **§164.312(e)(1)**<br>Transmission security | Guard against unauthorized access to ePHI that is being transmitted over an electronic communications network. | Internal flat network (`Net-04`) allows unencrypted DICOM and database traffic to traverse internal switches; patient portal uses a deprecated, expiring certificate. | **No** | **Gap:** Lack of internal segmentation and reliance on cleartext protocols.<br>**Remediation:** Implement network micro-segmentation (VLANs), enforce inter-VLAN firewall ACLs, and mandate TLS 1.3 across all internal assets. |
+| **§164.312(e)(2)(ii)**<br>Encryption of ePHI in transit | Implement a mechanism to encrypt electronic protected health information whenever deemed appropriate during transmission. | Patient Portal (`web-srv-01`) supports legacy TLS 1.0; internal database links and PACS imaging streams are unencrypted. | **No** | **Gap:** Active support for legacy TLS 1.0/1.1 and unencrypted internal channels.<br>**Remediation:** Disable TLS 1.0/1.1 on Nginx/IIS web servers, deploy automated ACME certificate management, and wrap internal traffic in TLS/IPsec. |
+| **§164.312(d)**<br>Person or entity authentication | Implement procedures to verify that a person or entity seeking access to ePHI is the one claimed. | Widespread password-only authentication; lack of mandatory Multi-Factor Authentication (MFA) across remote access and cloud services; excessive Domain Admins. | **No** | **Gap:** Single-factor reliance and broad privileged accounts.<br>**Remediation:** Enforce mandatory MFA (TOTP/Push) across all VPN and M365 logins and reduce Domain Admin accounts to $\leq 4$. |
+
+
+### Audit Readiness Evaluation
+
+Could MedDefense pass a HIPAA security audit today? **No, MedDefense would fail a HIPAA security audit immediately and catastrophically.** An auditor would cite the pervasive absence of data-at-rest encryption on core clinical and billing databases (`ehr-db-01`, `billing-srv-01`) combined with unsegmented internal networks transmitting unencrypted ePHI as the most critical compliance deficiencies. Under the HIPAA Breach Notification Rule, these foundational gaps mean any internal lateral movement or perimeter compromise would automatically escalate into an unmitigated reportable breach, exposing MedDefense to severe Office for Civil Rights (OCR) financial penalties and regulatory sanctions.
