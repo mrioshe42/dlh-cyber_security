@@ -21,6 +21,19 @@ echo -n "MedDefense1" | md5sum
 
 ```
 
+# SHA-256 baseline and modified hashes
+echo -n "MedDefense" | sha256sum
+# Output: 39e026e107a44b2268e43e16e61033fdcc5d2bd62b23e03aca51db35c8671098
+echo -n "MedDefense1" | sha256sum
+# Output: 4d2e811ec3331b658d447d40e9d6bc9cb57423bf7a16e7807c4bc589a87d6092
+
+# MD5 baseline and modified hashes
+echo -n "MedDefense" | md5sum
+# Output: 75d47fd4b4d183456d0f98fd9ba6ae4d
+echo -n "MedDefense1" | md5sum
+# Output: 0d2aed72043f78c2935e61ba8520306d
+
+
 * **Avalanche Analysis:** Comparing the SHA-256 and MD5 hex outputs across these four hashes reveals that changing a single character ("1") alters roughly **50% to 60% of the resulting hexadecimal characters** due to complex non-linear bit mixing across rounds. Both SHA-256 and MD5 exhibit this strong avalanche effect, proving that output hashes do not leak structural similarities when inputs are perturbed.
 
 ### Part 2: Hash Collisions and the Birthday Problem
