@@ -21,14 +21,14 @@ echo -n "MedDefense1" | md5sum
 
 ```
 
-* **Avalanche Analysis:** Comparing the SHA-256 hex outputs reveals that changing a single character ("1") alters roughly **50% to 60% of the resulting hexadecimal characters** due to complex non-linear bit mixing across rounds. Both SHA-256 and MD5 exhibit this strong avalanche effect, proving that output hashes do not leak structural similarities when inputs are perturbed.
+* **Avalanche Analysis:** Comparing the SHA-256 and MD5 hex outputs across these four hashes reveals that changing a single character ("1") alters roughly **50% to 60% of the resulting hexadecimal characters** due to complex non-linear bit mixing across rounds. Both SHA-256 and MD5 exhibit this strong avalanche effect, proving that output hashes do not leak structural similarities when inputs are perturbed.
 
 ### Part 2: Hash Collisions and the Birthday Problem
 
-* **Unique Output Calculations:**
+* **Unique Output Calculations & Powers of Two:**
 * **MD5 (128-bit):** $2^{128}$ possible unique outputs ($\approx 3.4 \times 10^{38}$).
 * **SHA-256 (256-bit):** $2^{256}$ possible unique outputs ($\approx 1.15 \times 10^{77}$).
-* **Collision Vulnerability & Birthday Attacks:** Shorter hash functions (like MD5) have significantly smaller output spaces, making them vulnerable to **birthday attacks**—a mathematical probability model showing that collisions can be found in roughly the square root of the total possibilities ($2^{64}$ operations for MD5) rather than full brute-force space.
+* **Collision Vulnerability & Birthday Attacks:** Shorter hash functions (like MD5) have significantly smaller output spaces, making them vulnerable to **birthday attacks**—a mathematical probability model ($\approx 1.2 \times \sqrt{N}$) showing that collisions can be found in roughly the square root of the total possibilities ($2^{64}$ operations for MD5) rather than full brute-force space.
 * **Connection to MedDefense Finding 018:** Active Directory’s support for legacy RC4/DES Kerberos tickets relies heavily on MD4/MD5 primitives internally. Because MD-family hashes are vulnerable to fast collision and pre-image attacks on modern hardware, an attacker who intercepts a Kerberoasting ticket encrypted with RC4 can crack user credentials offline in minutes, exposing enterprise accounts.
 
 ### Part 3: Rainbow Table Demonstration
