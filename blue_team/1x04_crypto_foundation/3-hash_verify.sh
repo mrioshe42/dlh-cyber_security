@@ -2,10 +2,12 @@
 set -euo pipefail
 
 [[ $# -eq 2 ]] || { echo "Usage: $0 <file_path> <expected_sha256_hash>"; exit 1; }
-[[ -f $1 ]] || { echo "File not found: $1"; exit 1; }
+FILE="$1"
+ARG2="$2"
+[[ -f "$FILE" ]] || { echo "File not found: $FILE"; exit 1; }
 
-EXPECTED_HASH="${2,,}"
-read -r ACTUAL_HASH _ < <(sha256sum "$1")
+EXPECTED_HASH="${ARG2,,}"
+ACTUAL_HASH=$(sha256sum "$FILE" | cut -d' ' -f1)
 
 if [[ "$ACTUAL_HASH" == "$EXPECTED_HASH" ]]; then
     echo "INTEGRITY OK"
