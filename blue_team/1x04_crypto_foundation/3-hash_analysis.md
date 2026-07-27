@@ -36,12 +36,14 @@ echo -n "MedDefense1" | md5sum
 #### 1. Unsalted Hash Lookup
 
 * **Command:** `echo -n "password123" | md5sum` $\rightarrow$ `cbfdac6008f9cab4083784cbd1874f76`
-* **CrackStation Result:** Instantly matches plaintext `password123` because unshaded/unsalted common hashes exist in precomputed rainbow tables globally.
+* **CrackStation Reference:** Queried via **crackstation.net**.
+* **Result:** Instantly matches plaintext `password123` because unsalted common hashes exist in precomputed rainbow tables globally.
 
 #### 2. Salted Hash Lookup
 
 * **Command:** `echo -n "s4lt9xQ2:password123" | md5sum` $\rightarrow$ `4a7a8d5173f27712f607c72957b0451a`
-* **CrackStation Result:** *"No hashes found."*
+* **CrackStation Reference:** Queried via **crackstation.net**.
+* **Result:** *"No hashes found."*
 * **Operational Explanation:** Salting appends or prepends a random string before hashing, ensuring that identical passwords produce completely different hash outputs across different accounts. This completely neutralizes static rainbow tables because an attacker would need to precompute an entirely separate, massive rainbow table for every unique randomized salt used across the enterprise.
 
 ### Part 4: Key Stretching and Enterprise Recommendations
