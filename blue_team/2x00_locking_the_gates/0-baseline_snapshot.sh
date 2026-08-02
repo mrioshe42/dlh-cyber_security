@@ -1,4 +1,7 @@
 #!/bin/bash
+
+set -euo pipefail
+
 [ "$EUID" -ne 0 ] && echo "Error: Run with sudo" && exit 1
 
 echo "Hostname: $(hostname)"
