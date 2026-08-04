@@ -49,6 +49,8 @@ touch /var/log/auth.log /var/log/syslog 2>/dev/null || true
 logger -p auth.info "MedDefense auth verification test" 2>/dev/null || true
 logger -p user.info "MedDefense syslog verification test" 2>/dev/null || true
 
+tail -n 20 /var/log/auth.log >/dev/null 2>&1 || true
+tail -n 20 /var/log/syslog >/dev/null 2>&1 || true
 grep -q "MedDefense auth verification test" /var/log/auth.log 2>/dev/null || true
 grep -q "MedDefense syslog verification test" /var/log/syslog 2>/dev/null || true
 
