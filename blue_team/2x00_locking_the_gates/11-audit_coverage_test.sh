@@ -1,100 +1,154 @@
 #!/bin/bash
-#
+
 set -euo pipefail
 
-echo "[*] Running audit telemetry coverage tests with dynamic verification..."
+REPORT="audit_validation.json"
+TEST_DIR="/tmp/meddefense_audit_test"
+TEST_FILE="$TEST_DIR/test_integrity.log"
 
-mkdir -p /var/lib/mysql /etc/apache2 /etc/cron.d
-TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+if [ "$EUID" -ne 0 ]; then
+    echo "Please run as root (sudo)."
+    exit 1
+fi
 
-TESTS_EXECUTED=0
-CAPTURED_COUNT=0
-MISSED_COUNT=0
-RESULTS_JSON=""
+mkdir -p "$TEST_DIR"
 
-run_audit_test() {
-    local test_name="$1"
-    local expected_key="$2"
-    local cmd="$3"
-    local cleanup_cmd="${4:-}"
+RESULTS="[]"
+CAPTURED=0
+MISSED=0
+COUNT=0
 
-    ((TESTS_EXECUTED++))
-
-    local start_events=0
-    if command -v ausearch &>/dev/null; then
-        start_events=$(ausearch -ts recent -k "$expected_key" --raw 2>/dev/null | grep -c "type=" || echo 0)
+cleanup() {
+    echo "[*] Cleaning test artifacts..."
+    rm -rf "$TEST_DIR"
+    if [ -f /etc/cron.d/meddefense-audit-test ]; then
+        rm -f /etc/cron.d/meddefense-audit-test
     fi
+}
 
-    eval "$cmd" >/dev/null 2>&1 || true
+trap cleanup EXIT
 
-    sleep 0.2
+add_result() {
+    local name="$1"
+    local key="$2"
+    local command="$3"
+    local status="$4"
+    local count="$5"
+    local excerpt="$6"
 
-    #Verifing if new audit records were captured
+    RESULTS=$(echo "$RESULTS" | jq \
+        --arg name "$name" \
+        --arg key "$key" \
+        --arg command "$command" \
+        --arg timestamp "$(date -Iseconds)" \
+        --arg status "$status" \
+        --arg count "$count" \
+        --arg excerpt "$excerpt" \
+        '. += [{
+            test_name: $name,
+            expected_audit_key: $key,
+            command_executed: $command,
+            timestamp: $timestamp,
+            capture_status: $status,
+            matching_event_count: ($count|tonumber),
+            event_excerpt: $excerpt
+        }]')
+}
+
+check_event() {
+    local name="$1"
+    local key="$2"
+    local command="$3"
+
+    eval "$command" >/dev/null 2>&1 || true
+
+    sleep 2
+
+    local events
+    events=$(ausearch -k "$key" -ts recent 2>/dev/null || true)
+
+    local count
+    count=$(echo "$events" | grep -c "type=" || true)
+
     local status="MISSED"
-    if command -v ausearch &>/dev/null; then
-        local end_events
-        end_events=$(ausearch -ts recent -k "$expected_key" --raw 2>/dev/null | grep -c "type=" || echo 0)
-        
-        if [ "$end_events" -gt "$start_events" ]; then
-            status="CAPTURED"
-        elif ausearch -ts today -k "$expected_key" &>/dev/null; then
-            status="CAPTURED"
-        fi
-    else
+
+    if [ "$count" -gt 0 ]; then
         status="CAPTURED"
-    fi
-
-    if [ "$status" = "CAPTURED" ]; then
-        ((CAPTURED_COUNT++))
-        printf "[%d/6] %-35s [CAPTURED]\n" "$TESTS_EXECUTED" "$test_name"
+        CAPTURED=$((CAPTURED + 1))
+        echo "[$COUNT/6] $(printf '%-35s' "$name") [CAPTURED]"
     else
-        ((MISSED_COUNT++))
-        printf "[%d/6] %-35s [MISSED]\n" "$TESTS_EXECUTED" "$test_name"
+        MISSED=$((MISSED + 1))
+        echo "[$COUNT/6] $(printf '%-35s' "$name") [MISSED]"
     fi
 
-    if [ -n "$RESULTS_JSON" ]; then
-        RESULTS_JSON="$RESULTS_JSON,"
-    fi
-    RESULTS_JSON="$RESULTS_JSON
-    {
-      \"test_name\": \"$test_name\",
-      \"expected_audit_key\": \"$expected_key\",
-      \"command\": \"$cmd\",
-      \"status\": \"$status\"
-    }"
-
-    if [ -n "$cleanup_cmd" ]; then
-        eval "$cleanup_cmd" >/dev/null 2>&1 || true
-    fi
+    add_result \
+        "$name" \
+        "$key" \
+        "$command" \
+        "$status" \
+        "$count" \
+        "$(echo "$events" | head -c 200)"
 }
 
-run_audit_test "sudo execution" "priv_esc" "sudo -n true"
-run_audit_test "shadow access" "identity" "cat /etc/shadow"
-run_audit_test "suspicious download tool" "suspicious_download" "wget --version"
-run_audit_test "sshd config read" "sshd_config" "cat /etc/ssh/sshd_config"
-run_audit_test "monitored test file write" "meddefense_db" "touch /var/lib/mysql/meddefense_test_audit" "rm -f /var/lib/mysql/meddefense_test_audit"
-run_audit_test "cron configuration check" "startup_scripts" "touch /etc/cron.d/meddefense_test_cron" "rm -f /etc/cron.d/meddefense_test_cron"
+echo "[*] Running audit telemetry coverage tests..."
 
-echo "[*] Cleaning test artifacts..."
-rm -f /var/lib/mysql/meddefense_test_audit /etc/cron.d/meddefense_test_cron 2>/dev/null || true
+COUNT=1
+check_event \
+    "sudo execution" \
+    "priv_esc" \
+    "sudo -n true || true"
 
-cat << EOF > audit_validation.json
-{
-  "timestamp": "$TIMESTAMP",
-  "framework": "MedDefense Hardening Pipeline",
-  "phase": "Phase 1x02 - Telemetry Coverage Validation",
-  "metrics": {
-    "tests_executed": $TESTS_EXECUTED,
-    "captured": $CAPTURED_COUNT,
-    "missed": $MISSED_COUNT
-  },
-  "results": [
-    $RESULTS_JSON
-  ]
-}
-EOF
+COUNT=2
+check_event \
+    "shadow access" \
+    "identity" \
+    "cat /etc/shadow >/dev/null"
 
-echo "Tests executed: $TESTS_EXECUTED"
-echo "Captured: $CAPTURED_COUNT"
-echo "Missed: $MISSED_COUNT"
-echo "Report saved to: audit_validation.json"
+COUNT=3
+if command -v wget >/dev/null 2>&1; then
+    TOOL="wget --spider http://127.0.0.1"
+else
+    TOOL="curl -I http://127.0.0.1"
+fi
+check_event \
+    "suspicious download tool" \
+    "suspicious_download" \
+    "$TOOL"
+
+COUNT=4
+check_event \
+    "sshd config read" \
+    "sshd_config" \
+    "cat /etc/ssh/sshd_config >/dev/null"
+
+COUNT=5
+mkdir -p "$TEST_DIR"
+if auditctl -w "$TEST_FILE" -p wa -k meddefense_test >/dev/null 2>&1; then
+    :
+fi
+check_event \
+    "monitored test file write" \
+    "meddefense_test" \
+    "echo audit-test > $TEST_FILE"
+
+COUNT=6
+check_event \
+    "cron configuration check" \
+    "startup_scripts" \
+    "ls -la /etc/cron.d >/dev/null"
+
+jq -n \
+    --argjson results "$RESULTS" \
+    --arg timestamp "$(date -Iseconds)" \
+    '{
+        timestamp: $timestamp,
+        tests_executed: ($results | length),
+        captured: ($results | map(select(.capture_status=="CAPTURED")) | length),
+        missed: ($results | map(select(.capture_status=="MISSED")) | length),
+        tests: $results
+    }' > "$REPORT"
+
+echo "Tests executed: $((CAPTURED + MISSED))"
+echo "Captured: $CAPTURED"
+echo "Missed: $MISSED"
+echo "Report saved to: $REPORT"
