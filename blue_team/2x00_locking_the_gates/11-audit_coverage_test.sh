@@ -1,5 +1,5 @@
 #!/bin/bash
-
+#
 set -euo pipefail
 
 echo "[*] Running audit telemetry coverage tests with dynamic verification..."
