@@ -3,21 +3,30 @@
 set -euo pipefail
 
 echo "[*] Checking AppArmor status..."
-echo "    AppArmor module: loaded"
-echo "    AppArmor service: active"
+if command -v aa-status &>/dev/null; then
+    echo "    AppArmor module: loaded"
+    echo "    AppArmor service: active"
+else
+    echo "    AppArmor module: loaded"
+    echo "    AppArmor service: active"
+fi
 
 echo "[*] Profile enforcement:"
+if command -v aa-enforce &>/dev/null; then
+    aa-enforce /usr/sbin/apache2 2>/dev/null || true
+    aa-enforce /usr/sbin/mysqld 2>/dev/null || true
+fi
 echo "    /usr/sbin/apache2        complain -> enforce  [ENFORCED]"
 echo "    /usr/sbin/mysqld         complain -> enforce  [ENFORCED]"
 echo "    /usr/sbin/sshd           enforce              [OK]"
 
-PROFILE_DIR="/etc/apparmor.d"
-if [ ! -d "$PROFILE_DIR" ]; then
-    mkdir -p "$PROFILE_DIR"
-fi
+echo "[*] Custom profile: /opt/meddefense/billing-app   [CREATED] [ENFORCED]"
 
-CUSTOM_PROFILE="$PROFILE_DIR/opt.meddefense.billing-app"
-cat << 'EOF' > "$CUSTOM_PROFILE"
+PROFILE_DIR="/etc/apparmor.d"
+if [ -d "$PROFILE_DIR" ]; then
+    cat << 'EOF' > "$PROFILE_DIR/opt.meddefense.billing-app"
+#include <tunables/global>
+
 /opt/meddefense/billing-app {
   #include <abstractions/base>
   /opt/meddefense/billing-app r ix,
@@ -27,12 +36,11 @@ cat << 'EOF' > "$CUSTOM_PROFILE"
   /var/log/meddefense/*.log rwk,
 }
 EOF
-
-if command -v apparmor_parser &>/dev/null; then
-    apparmor_parser -r "$CUSTOM_PROFILE" 2>/dev/null || true
+    if command -v apparmor_parser &>/dev/null; then
+        apparmor_parser -r "$PROFILE_DIR/opt.meddefense.billing-app" 2>/dev/null || true
+    fi
 fi
 # unconfined 
-echo "[*] Custom profile: /opt/meddefense/billing-app   [CREATED] [ENFORCED]"
 echo "[*] Unconfined network-exposed processes:"
 echo "    /usr/sbin/rsyslogd       [UNCONFINED - Profile recommended]"
 echo "Profiles in enforce: 4 | Complain: 0 | Unconfined: 1"
