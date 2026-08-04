@@ -8,7 +8,6 @@ check_value() {
     local name="$1"
     local actual="$2"
     local expected="$3"
-    
     if [ "$actual" = "$expected" ]; then
         echo "[PASS] $name = $actual"
     else
@@ -17,6 +16,8 @@ check_value() {
     fi
 }
 
+# Validate SSH configuration from /etc/ssh/sshd_config
+SSH_CONFIG_PATH="/etc/ssh/sshd_config"
 SSH_ROOT="no"
 SSH_PASS="no"
 SSH_TRIES="3"
