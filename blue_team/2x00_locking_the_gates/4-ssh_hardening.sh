@@ -54,7 +54,7 @@ if sshd -t; then
     systemctl restart ssh 2>/dev/null || systemctl restart sshd 2>/dev/null || service ssh restart 2>/dev/null || true
     echo "    ssh.service: active (running)"
 else
-    echo "    sshd -t: FAILED. Restoring backup..."
+    echo "    sshd -t: FAILED. Attempting to restore backup..."
     cp "$BACKUP" "$CONFIG"
     exit 1
 fi
