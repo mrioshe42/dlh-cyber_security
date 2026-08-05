@@ -99,6 +99,7 @@ check_event \
     "sudo -n true || true"
 
 COUNT=2
+# Validates identity and account management telemetry (covers /etc/shadow access and userdel monitoring)
 check_event \
     "shadow access" \
     "identity" \
