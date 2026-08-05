@@ -11,7 +11,7 @@
 .DATE
     2026-08-05
 .NOTES
-    Notes: Requires administrative execution for auditpol and Security log query privileges.
+    Notes: Requires administrative execution for auditpol and Security log query privileges. AddHours(-24)
 #>
 #requires -RunAsAdministrator
 
