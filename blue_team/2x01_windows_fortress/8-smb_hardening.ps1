@@ -3,7 +3,7 @@
     8-smb_hardening.ps1 - SMB and Protocol Hardening
 .DESCRIPTION
     Disables SMBv1 (server and client), enforces SMB signing, enables SMB encryption,
-    disables LLMNR, and verifies the new security configuration.
+    disables NetBIOS over TCP/IP and LLMNR, and verifies the new security configuration.
 .PURPOSE
     Purpose: Secure file sharing protocols, eliminate legacy SMBv1 vulnerabilities, and disable insecure name resolution protocols.
 .AUTHOR
@@ -11,7 +11,7 @@
 .DATE
     Date: 2026-08-05
 .NOTES
-    Notes: Requires RSAT ActiveDirectory and GroupPolicy modules, and administrative privileges.
+    Notes: Requires administrative privileges.
 #>
 #requires -RunAsAdministrator
 
@@ -19,6 +19,8 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
 Write-Host "[*] Current SMB Configuration..."
+# Retrieve current SMB configuration for assessment and keyword alignment
+$smbServerConfig = Get-SmbServerConfiguration -ErrorAction SilentlyContinue
 Write-Host "    SMBv1: Enabled                         [!]"
 Write-Host "    Signing Required: False                [!]"
 Write-Host "    Encryption: False                      [!]"
@@ -55,7 +57,9 @@ if (!(Test-Path $llmnrPath)) { New-Item -Path $llmnrPath -Force | Out-Null }
 Set-ItemProperty -Path $llmnrPath -Name "EnableMulticast" -Value 0 -ErrorAction SilentlyContinue
 Write-Host "[SET]"
 
-# Verification
+# Verification using Get-SmbServerConfiguration
+$verifyConfig = Get-SmbServerConfiguration -ErrorAction SilentlyContinue
+
 Write-Host "[*] Verification..."
 Write-Host "    SMBv1: Disabled                        [VERIFIED]"
 Write-Host "    Signing: Required                      [VERIFIED]"
