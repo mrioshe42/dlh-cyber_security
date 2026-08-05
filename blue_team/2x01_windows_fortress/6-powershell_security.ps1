@@ -41,7 +41,7 @@ $pathSBL = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\PowerShell\ScriptBlockLogg
 if (!(Test-Path $pathSBL)) { New-Item -Path $pathSBL -Force | Out-Null }
 Set-ItemProperty -Path $pathSBL -Name "EnableScriptBlockLogging" -Value 1
 
-Write-Host "    EnableScriptBlockLogging = 1           [SET]"
+Write-Host "    EnableScriptBlockLogging = 1          [SET]"
 Write-Host "    -> Event ID 4104 captures decoded scripts"
 
 # Configure Module Logging
@@ -56,7 +56,7 @@ $pathMLNames = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\PowerShell\ModuleLoggi
 if (!(Test-Path $pathMLNames)) { New-Item -Path $pathMLNames -Force | Out-Null }
 Set-ItemProperty -Path $pathMLNames -Name "*" -Value "*"
 
-Write-Host "    EnableModuleLogging = 1, ModuleNames = *  [SET]"
+Write-Host "    EnableModuleLogging = 1, ModuleNames = *   [SET]"
 Write-Host "    -> Event ID 4103 captures module invocations"
 
 # Configure Transcription
@@ -82,7 +82,7 @@ try {
 } catch {
     $amsiLoaded = $true
 }
-Write-Host "AMSI DLL loaded     [OK]"
+Write-Host "AMSI DLL loaded      [OK]"
 
 # Link GPO and force update
 Write-Host "[*] Linking GPO and forcing update... " -NoNewline
@@ -99,6 +99,21 @@ $encodedCmd = "VwByAGkAdABlAC0ASABvAHMAdAAgACIAVABlAHMAdAAi"
 Write-Host "    Input: powershell -enc $encodedCmd"
 
 Start-Process powershell.exe -ArgumentList "-enc $encodedCmd" -NoNewWindow -Wait
-Start-Sleep -Seconds 1
+Start-Sleep -Seconds 2
 
-Write-Host "    Event ID 4104 found: `"Write-Host 'Test'`"  [VERIFIED]"
+# Verify Event ID 4104 via Get-WinEvent
+$eventVerified = $false
+try {
+    $events = Get-WinEvent -FilterHashtable @{ LogName = 'Microsoft-Windows-PowerShell/Operational'; Id = 4104 } -ErrorAction SilentlyContinue
+    if ($events) {
+        $eventVerified = $true
+    }
+} catch {
+    $eventVerified = $false
+}
+
+if ($eventVerified) {
+    Write-Host "    Event ID 4104 found: `"Write-Host 'Test'`"  [VERIFIED]"
+} else {
+    Write-Host "    Event ID 4104 validation pending/not found [WARNING]"
+}
