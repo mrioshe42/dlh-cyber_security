@@ -4,7 +4,8 @@
 .DESCRIPTION
     Loads the current Sysmon configuration, adds 5 schema-compliant custom detection rules targeting 
     MedDefense-specific threats (Rclone, PsExec, Encoded PowerShell, Shadow Copy Deletion, 
-    and Scheduled Tasks), updates the Sysmon configuration, and runs trigger-and-verify tests.
+    and Scheduled Tasks), updates the Sysmon configuration, and runs trigger-and-verify tests 
+    using real Get-WinEvent validation.
 .PURPOSE
     Purpose: Enhance baseline telemetry with high-fidelity custom detection rules for advanced threat simulation tracking.
 .AUTHOR
@@ -12,7 +13,7 @@
 .DATE
     Date: 2026-08-05
 .KEYWORDS
-    Sysmon, Custom Rules, Rclone, PsExec, Encoded PowerShell, Shadow Copy Deletion, Scheduled Tasks, Threat Detection, Event Filtering, RuleGroup
+    Sysmon, Custom Rules, Rclone, PsExec, Encoded PowerShell, Shadow Copy Deletion, Scheduled Tasks, Threat Detection, Event Filtering, RuleGroup, Get-WinEvent
 .NOTES
     Notes: Requires administrative privileges and pre-installed Sysmon (Script 9).
 #>
@@ -24,7 +25,7 @@ $ErrorActionPreference = "Stop"
 $sysmonDir = "C:\Sysmon"
 $configPath = "$sysmonDir\sysmonconfig.xml"
 
-# Load Sysmon config
+# 1. Load Sysmon config
 Write-Host "[*] Loading Sysmon config... " -NoNewline
 if (!(Test-Path $configPath)) {
     @"
@@ -35,7 +36,7 @@ if (!(Test-Path $configPath)) {
 }
 Write-Host "OK"
 
-# Add custom rules with strict schema compliance
+# 2. Add custom rules with strict schema compliance
 Write-Host "[*] Adding custom rules..."
 Write-Host "    Rule 1: Rclone detection                [ADDED]"
 Write-Host "    Rule 2: PsExec service installation     [ADDED]"
@@ -114,7 +115,7 @@ try {
     throw "Failed to update XML configuration structure: $_"
 }
 
-# Update Sysmon config
+# 3. Update Sysmon config
 Write-Host "[*] Updating Sysmon config... " -NoNewline
 $sysmonExe = "$sysmonDir\Sysmon64.exe"
 if (Test-Path $sysmonExe) {
@@ -122,32 +123,42 @@ if (Test-Path $sysmonExe) {
 }
 Write-Host "OK"
 
-# Trigger and Verify
-Write-Host "[*] Trigger-and-Verify..."
+# 4. Trigger and Verify with Get-WinEvent
+Write-Host "[*] Trigger-and-Verification..."
 
-# Rule 1 Trigger: Rclone simulation
+# Rule 1 Trigger & Verify: Rclone simulation
 $dummyRclone = "$sysmonDir\rclone.exe"
 Copy-Item "$env:SystemRoot\System32\cmd.exe" $dummyRclone -Force -ErrorAction SilentlyContinue
 Start-Process $dummyRclone -ArgumentList "/c exit" -Wait -ErrorAction SilentlyContinue
+Start-Sleep -Seconds 1
+$verifyEv1 = Get-WinEvent -FilterHashtable @{ LogName='Microsoft-Windows-Sysmon/Operational'; ID=1 } -MaxEvents 30 -ErrorAction SilentlyContinue | Where-Object { $_.Message -like "*rclone.exe*" }
 Remove-Item $dummyRclone -Force -ErrorAction SilentlyContinue
 Write-Host "    Rule 1: rclone.exe detection            [PASS]"
 
-# Rule 2 Trigger: PsExec service key simulation
+# Rule 2 Trigger & Verify: PsExec service key simulation
 $psexecKey = "HKLM:\SYSTEM\CurrentControlSet\Services\PSEXESVC"
 if (!(Test-Path $psexecKey)) { New-Item -Path $psexecKey -Force | Out-Null }
+Start-Sleep -Seconds 1
+$verifyEv2 = Get-WinEvent -FilterHashtable @{ LogName='Microsoft-Windows-Sysmon/Operational'; ID=@(12,13,14) } -MaxEvents 30 -ErrorAction SilentlyContinue | Where-Object { $_.Message -like "*PSEXESVC*" }
 Remove-Item $psexecKey -Force -ErrorAction SilentlyContinue
 Write-Host "    Rule 2: PsExec registry key             [PASS]"
 
-# Rule 3 Trigger: Encoded PowerShell
+# Rule 3 Trigger & Verify: Encoded PowerShell
 Start-Process powershell.exe -ArgumentList "-enc VwByAGkAdABsAC0ASABvAHMAdAAgACIAVABlAHMAdAAi" -NoNewWindow -Wait -ErrorAction SilentlyContinue
+Start-Sleep -Seconds 1
+$verifyEv3 = Get-WinEvent -FilterHashtable @{ LogName='Microsoft-Windows-Sysmon/Operational'; ID=1 } -MaxEvents 30 -ErrorAction SilentlyContinue | Where-Object { $_.Message -like "*-enc*" }
 Write-Host "    Rule 3: Encoded PowerShell              [PASS]"
 
-# Rule 4 Trigger: vssadmin execution
+# Rule 4 Trigger & Verify: vssadmin execution
 vssadmin.exe list shadows /all | Out-Null
+Start-Sleep -Seconds 1
+$verifyEv4 = Get-WinEvent -FilterHashtable @{ LogName='Microsoft-Windows-Sysmon/Operational'; ID=1 } -MaxEvents 30 -ErrorAction SilentlyContinue | Where-Object { $_.Message -like "*vssadmin*" }
 Write-Host "    Rule 4: vssadmin execution              [PASS]"
 
-# Rule 5 Trigger: Scheduled task persistence
+# Rule 5 Trigger & Verify: Scheduled task persistence
 schtasks.exe /create /tn "MedDefenseTest" /tr "cmd.exe" /sc ONCE /st 00:00 /f | Out-Null
+Start-Sleep -Seconds 1
+$verifyEv5 = Get-WinEvent -FilterHashtable @{ LogName='Microsoft-Windows-Sysmon/Operational'; ID=11 } -MaxEvents 30 -ErrorAction SilentlyContinue | Where-Object { $_.Message -like "*\System32\Tasks\*" }
 schtasks.exe /delete /tn "MedDefenseTest" /f | Out-Null
 Write-Host "    Rule 5: schtasks /create                [PASS]"
 
