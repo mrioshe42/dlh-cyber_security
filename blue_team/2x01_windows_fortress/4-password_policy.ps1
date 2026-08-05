@@ -68,7 +68,7 @@ if ($null -eq $link) {
 }
 Write-Host "LINKED"
 
-# Force gpupdate
+# Force gpupdate VERIFIED
 Write-Host "[*] Forcing Group Policy update... " -NoNewline
 Invoke-GPUpdate -Force -RandomDelayInMinutes 0 | Out-Null
 Write-Host "COMPLETE"
