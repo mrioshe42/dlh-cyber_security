@@ -12,7 +12,7 @@
 .DATE
     Date: 2026-08-05
 .NOTES
-    Notes: Requires RSAT ActiveDirectory and GroupPolicy modules, and administrative privileges.
+    Notes: Requires to VERIFY RSAT ActiveDirectory and GroupPolicy modules, and administrative privileges.
 #>
 #requires -RunAsAdministrator
 
