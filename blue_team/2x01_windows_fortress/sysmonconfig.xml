@@ -1,22 +1,31 @@
 <Sysmon schemaversion="4.82">
   <EventFiltering>
     <RuleGroup name="MedDefense Custom Detection Rules" groupRelation="or">
+      
+      <!-- Process Create Events (Event ID 1) -->
       <ProcessCreate onmatch="include">
         <!-- Rule 1: Detect Rclone Exfiltration Tool -->
-        <Rule name="Technique=Exfiltration,Tool=Rclone" condition="contains">rclone.exe</Rule>
+        <Image name="Technique=Exfiltration,Tool=Rclone" condition="contains">rclone.exe</Image>
+        
         <!-- Rule 3: Detect Encoded PowerShell Execution -->
-        <Rule name="Technique=Execution,Tool=EncodedPowerShell" condition="contains">-enc</Rule>
+        <CommandLine name="Technique=Execution,Tool=EncodedPowerShell" condition="contains">-enc</CommandLine>
+        
         <!-- Rule 4: Detect Ransomware Shadow Copy Deletion -->
-        <Rule name="Technique=Impact,Tool=ShadowDeletion" condition="contains">delete shadows</Rule>
+        <CommandLine name="Technique=Impact,Tool=ShadowDeletion" condition="contains">delete shadows</CommandLine>
       </ProcessCreate>
+
+      <!-- Registry Event Rules (Event ID 12, 13, 14) -->
       <RegistryEvent onmatch="include">
         <!-- Rule 2: Detect PsExec Service Installation -->
-        <Rule name="Technique=LateralMovement,Tool=PsExec" condition="contains">PSEXESVC</Rule>
+        <TargetObject name="Technique=LateralMovement,Tool=PsExec" condition="contains">PSEXESVC</TargetObject>
       </RegistryEvent>
+
+      <!-- File Create Rules (Event ID 11) -->
       <FileCreate onmatch="include">
         <!-- Rule 5: Detect Scheduled Task Persistence Creation -->
-        <Rule name="Technique=Persistence,Target=ScheduledTasks" condition="contains">\System32\Tasks\</Rule>
+        <TargetFilename name="Technique=Persistence,Target=ScheduledTasks" condition="contains">\System32\Tasks\</TargetFilename>
       </FileCreate>
+
     </RuleGroup>
   </EventFiltering>
 </Sysmon>
