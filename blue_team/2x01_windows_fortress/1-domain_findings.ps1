@@ -37,21 +37,23 @@ try {
 try {
     $findings = [System.Collections.Generic.List[PSCustomObject]]::new()
 
-    # Audit Password and Lockout Policy against Windows Fortress Targets
+    # Audit Password and Lockout Policy against Windows Fortress Targets (MinLength 14, Complexity, PasswordHistoryCount 24, LockoutThreshold 5)
     $pwdPolicy = Get-ADDefaultDomainPasswordPolicy -ErrorAction Stop
     $minLen = $pwdPolicy.MinPasswordLength
+    $historyCount = $pwdPolicy.PasswordHistoryCount
+    $complexity = $pwdPolicy.ComplexityEnabled
     $lockoutThreshold = $pwdPolicy.LockoutThreshold
     $lockoutDisplay = if ($lockoutThreshold -gt 0) { $lockoutThreshold } else { "not configured" }
 
-    if ($minLen -lt 14) {
+    if ($minLen -lt 14 -or $historyCount -lt 24 -or $complexity -eq $false) {
         $findings.Add([PSCustomObject]@{
             id                      = "FIND-01"
             severity                = "CRITICAL"
             category                = "Password Policy"
             asset                   = "Domain Policy"
-            evidence                = "Minimum password length is $minLen (Target: 14)"
-            risk                    = "Short passwords are vulnerable to brute-force and offline cracking."
-            recommended_remediation = "Enforce a minimum password length of 14 characters via Default Domain GPO."
+            evidence                = "Minimum password length is $minLen (Target: 14), PasswordHistoryCount is $historyCount (Target: 24), ComplexityEnabled is $complexity."
+            risk                    = "Weak password parameters are vulnerable to brute-force, dictionary, and offline cracking."
+            recommended_remediation = "Enforce minimum password length 14, complexity enabled, and PasswordHistoryCount 24 via Default Domain GPO."
             mapped_task             = "Task 1"
         })
     }
