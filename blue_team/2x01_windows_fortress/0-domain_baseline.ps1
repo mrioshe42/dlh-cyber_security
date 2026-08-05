@@ -13,10 +13,10 @@
     the Windows domain equivalent of the Lynis baseline scan (2x00 Task 0).
 
 .AUTHOR
-    Massimo Rios
+    Author: Massimo Rios
 
 .NOTES
-    Requires RSAT ActiveDirectory (+ optionally GroupPolicy) modules, domain-read privileges.
+    Notes: Requires RSAT ActiveDirectory (+ optionally GroupPolicy) modules, domain-read privileges.
     Every enumeration step is wrapped in error handling so a single inaccessible object
     (missing OU, unreachable DC, missing module) degrades gracefully instead of aborting.
 #>
