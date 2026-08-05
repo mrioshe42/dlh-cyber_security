@@ -43,7 +43,7 @@ if ($null -eq $existingGpo) {
     New-GPO -Name $gpoName -Comment "MedDefense AppLocker Allow-Listing Policy (Audit Mode)" | Out-Null
 }
 Write-Host "CREATED"
-
+# Start-Service
 Write-Host "[*] Starting AppIDSvc... " -NoNewline
 sc.exe config AppIDSvc start= auto | Out-Null
 $service = Get-Service -Name "AppIDSvc" -ErrorAction SilentlyContinue
