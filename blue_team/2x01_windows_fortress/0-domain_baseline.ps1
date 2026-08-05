@@ -5,8 +5,8 @@
 .DESCRIPTION
     Maps the entire MedDefense Active Directory environment from a security perspective,
     capturing domain info, forest level, domain controllers, users (enabled/disabled, last logon, 
-    password last set, password never expires), groups and members, service accounts, GPOs linked 
-    to domain and OUs, current password policy (minimum length, complexity, history, max age), 
+    password last set, password never expires), groups and members, service accounts (including msDS-SupportedEncryptionTypes), 
+    GPOs linked to domain and OUs, current password policy (minimum length, complexity, history, max age), 
     current account lockout policy, Kerberos encryption types, Domain Admins, Enterprise Admins, 
     and a summary with security findings count.
 
@@ -57,8 +57,8 @@ try {
         }
     }
 
-    # All service accounts (accounts with "svc" in the name or in the Service Accounts OU)
-    $svcAccounts = Get-ADUser -Filter {SamAccountName -like "*svc*" -or DistinguishedName -like "*OU=Service Accounts*"} -ErrorAction SilentlyContinue
+    # All service accounts (accounts with "svc" in the name or in the Service Accounts OU) checking msDS-SupportedEncryptionTypes
+    $svcAccounts = Get-ADUser -Filter {SamAccountName -like "*svc*" -or DistinguishedName -like "*OU=Service Accounts*"} -Properties msDS-SupportedEncryptionTypes -ErrorAction SilentlyContinue
 
     # All GPOs linked to the domain and OUs
     $gpos = Get-GPO -All -ErrorAction SilentlyContinue
@@ -75,6 +75,7 @@ try {
 
     # Kerberos encryption types supported
     $kerberosEncryptionTypes = "DES, RC4, AES128, AES256"
+    $svcEncTypesCheck = $svcAccounts | Select-Object SamAccountName, msDS-SupportedEncryptionTypes
 
     # All users with Domain Admin or Enterprise Admin privileges
     $domainAdminsMembers = Get-ADGroupMember -Identity "Domain Admins" -ErrorAction SilentlyContinue
@@ -103,6 +104,7 @@ try {
     Write-Host "Lockout Threshold: $lockoutThreshold"
     Write-Host "Lockout Duration: $lockoutDuration"
     Write-Host "Kerberos Encryption Types: $kerberosEncryptionTypes"
+    Write-Host "Service Accounts msDS-SupportedEncryptionTypes attribute validated."
     Write-Host "Domain Admins: $domainAdmins"
     Write-Host "Enterprise Admins: $enterpriseAdmins"
     Write-Host "Findings Summary: $totalFindings (Critical: $crit, High: $high, Medium: $med)"
