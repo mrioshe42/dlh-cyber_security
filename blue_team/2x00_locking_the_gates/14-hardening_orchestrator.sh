@@ -1,4 +1,5 @@
 #!/bin/bash
+
 set -euo pipefail
 
 WORKFLOW=(
@@ -38,7 +39,7 @@ STEPS_COMPLETED=0
 STEPS_FAILED=0
 RUN_LOG_JSON="hardening_run.json"
 IMPROVEMENT_JSON="hardening_improvement.json"
-RESULTS_JSON=""
+OUTCOMES_JSON=""
 
 set +e # Temporarily disable set -e to handle exit codes manually in the loop
 for script in "${WORKFLOW[@]}"; do
@@ -56,11 +57,11 @@ for script in "${WORKFLOW[@]}"; do
     END_TIME=$(date +%s)
     DURATION=$((END_TIME - START_TIME))
     
-    if [ -n "$RESULTS_JSON" ]; then
-        RESULTS_JSON="$RESULTS_JSON,"
+    if [ -n "$OUTCOMES_JSON" ]; then
+        OUTCOMES_JSON="$OUTCOMES_JSON,"
     fi
     
-    RESULTS_JSON="$RESULTS_JSON
+    OUTCOMES_JSON="$OUTCOMES_JSON
     {
       \"step\": \"$script\",
       \"exit_code\": $EXIT_CODE,
@@ -98,7 +99,7 @@ cat << EOF > "$RUN_LOG_JSON"
     "failed": $STEPS_FAILED
   },
   "execution_log": [
-    $RESULTS_JSON
+    $OUTCOMES_JSON
   ]
 }
 EOF
