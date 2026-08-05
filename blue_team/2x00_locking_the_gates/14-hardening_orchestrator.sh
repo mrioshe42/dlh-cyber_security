@@ -42,6 +42,7 @@ IMPROVEMENT_JSON="hardening_improvement.json"
 OUTCOMES_JSON=""
 
 set +e # Temporarily disable set -e to handle exit codes manually in the loop
+# start the workflow execution
 for script in "${WORKFLOW[@]}"; do
     START_TIME=$(date +%s)
     
