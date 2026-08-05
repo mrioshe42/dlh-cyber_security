@@ -28,7 +28,7 @@ done
 
 for script in "${WORKFLOW[@]}"; do
     if [ ! -x "$script" ]; then
-        echo "Pre-checks: FAIL (Required script exists validation failed: $script)"
+        echo "Pre-checks: FAIL (required script exists validation failed: $script)"
         exit 1
     fi
 done
