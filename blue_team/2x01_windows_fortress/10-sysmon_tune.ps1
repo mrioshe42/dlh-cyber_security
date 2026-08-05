@@ -112,7 +112,7 @@ try {
     $eventFiltering.AppendChild($ruleGroup) | Out-Null
     $xml.Save($configPath)
 } catch {
-    throw "Failed to update XML configuration structure: $_"
+    throw "Failed to update XML configuration structure: $_" #FAIL
 }
 
 # 3. Update Sysmon config
