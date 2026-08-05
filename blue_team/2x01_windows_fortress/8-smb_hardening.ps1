@@ -2,7 +2,7 @@
 .SYNOPSIS
     8-smb_hardening.ps1 - SMB and Protocol Hardening
 .DESCRIPTION
-    Disables SMBv1 (server and client), enforces SMB signing, enables EnableSecuritySignature and SMB encryption,
+    Before disables SMBv1 (server and client), enforces SMB signing, enables EnableSecuritySignature and SMB encryption,
     disables NetBIOS over TCP/IP and LLMNR, and verifies the new security configuration.
 .PURPOSE
     Purpose: Secure file sharing protocols, eliminate legacy SMBv1 vulnerabilities, and disable insecure name resolution protocols.
