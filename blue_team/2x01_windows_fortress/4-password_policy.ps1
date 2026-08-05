@@ -35,8 +35,9 @@ Write-Host "CREATED"
 
 # Configure Password Policy
 Write-Host "[*] Configuring Password Policy..."
+$currentPolicy = Get-ADDefaultDomainPasswordPolicy -Identity "meddefense.local"
 Set-ADDefaultDomainPasswordPolicy -Identity "meddefense.local" `
-    -MinimumPasswordLength 14 `
+    -MinPasswordLength 14 `
     -ComplexityEnabled $true `
     -PasswordHistoryCount 24 `
     -MaxPasswordAge (New-TimeSpan -Days 0) `
