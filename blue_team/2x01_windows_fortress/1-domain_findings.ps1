@@ -8,7 +8,7 @@
     inventory (domain_security_findings.json), and printing summary telemetry.
 
 .PURPOSE
-    Purpose: Produce the actionable findings inventory that drives the Windows hardening workflow.
+    Purpose: Creation of the actionable findings inventory that drives the Windows hardening workflow.
 
 .AUTHOR
     Author: Massimo Rios
