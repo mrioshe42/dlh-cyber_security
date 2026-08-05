@@ -46,7 +46,7 @@ Write-Host "[SET]"
 # Disable NetBIOS over TCP/IP
 Write-Host "[*] Disabling NetBIOS over TCP/IP...       " -NoNewline
 Get-CimInstance Win32_NetworkAdapterConfiguration -Filter "IPEnabled = True" | ForEach-Object {
-    $_.SetTcpipNetbios(2) | Out-Null # 2 = Disable NetBIOS over TCP/IP
+    Invoke-CimMethod -InputObject $_ -MethodName SetTcpipNetbios -Arguments @{TcpipNetbiosOptions = 2} | Out-Null # 2 = Disable NetBIOS over TCP/IP
 }
 Write-Host "[SET]"
 
