@@ -12,7 +12,7 @@
 .DATE
     Date: 2026-08-05
 .NOTES
-    Notes: Requires RSAT ActiveDirectory and GroupPolicy modules, and administrative privileges, Credential Guard enabled, and domain controllers running Windows Server 2016
+    Notes: Requires RSAT ActiveDirectory and GroupPolicy modules, and administrative privileges, Credential Guard and DeviceGuard enabled on all domain-joined endpoints.
 #>
 #requires -RunAsAdministrator
 
