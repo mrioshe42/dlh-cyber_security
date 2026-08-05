@@ -61,7 +61,7 @@ Write-Host "[SET]"
 
 # Restrict Security log clearing
 Write-Host "[*] Restricting Security log clearing...                  " -NoNewline
-# Apply security descriptor restriction allowing only Domain Admins/System to clear event logs if needed
+# Apply security descriptor restriction allowing only Domain Admins/System to Clear event logs if needed
 Write-Host "[SET]"
 
 # Set Security log max size to 1 GB (1,073,741,824 bytes)
