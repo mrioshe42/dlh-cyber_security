@@ -9,7 +9,7 @@
 .AUTHOR
     Author: Security Engineering Team (MedDefense)
 .DATE
-    2026-08-05
+    Date : 2026-08-05
 .NOTES
     Notes: Generates telemetry_reference.json containing event-to-use-case mappings and telemetry metrics.
 #>
