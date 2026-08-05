@@ -1,5 +1,4 @@
 #!/bin/bash
-
 set -euo pipefail
 
 WORKFLOW=(
@@ -28,7 +27,7 @@ done
 
 for script in "${WORKFLOW[@]}"; do
     if [ ! -x "$script" ]; then
-        echo "Pre-checks: FAIL (Missing or non-executable $script)"
+        echo "Pre-checks: FAIL (Required script does not exist or is not executable: $script)"
         exit 1
     fi
 done
