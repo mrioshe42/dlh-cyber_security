@@ -74,7 +74,7 @@ Set-ItemProperty -Path $pathTrans -Name "OutputDirectory" -Value $transcriptDir
 
 Write-Host "    OutputDirectory = C:\PSTranscripts     [SET]"
 
-# Verifying AMSI
+# Verifying amsi.dll
 Write-Host "[*] Verifying AMSI... " -NoNewline
 $amsiLoaded = $true
 try {
