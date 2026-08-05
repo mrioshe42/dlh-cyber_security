@@ -1,0 +1,92 @@
+[
+    {
+        "id":  "FIND-01",
+        "severity":  "CRITICAL",
+        "category":  "Password Policy",
+        "asset":  "Domain Policy",
+        "evidence":  "Minimum password length is 7 (Target: 14)",
+        "risk":  "Short passwords are vulnerable to brute-force and offline cracking.",
+        "recommended_remediation":  "Enforce a minimum password length of 14 characters via Default Domain GPO.",
+        "mapped_task":  "Task 1"
+    },
+    {
+        "id":  "FIND-02",
+        "severity":  "CRITICAL",
+        "category":  "Account Lockout",
+        "asset":  "Domain Policy",
+        "evidence":  "Account lockout threshold is not configured.",
+        "risk":  "Unrestricted brute-force attacks against user accounts.",
+        "recommended_remediation":  "Configure account lockout threshold to 5 attempts.",
+        "mapped_task":  "Task 1"
+    },
+    {
+        "id":  "FIND-03",
+        "severity":  "CRITICAL",
+        "category":  "Kerberos",
+        "asset":  "Domain Controllers",
+        "evidence":  "Kerberos DES and RC4 encryption types are enabled.",
+        "risk":  "Downgrade attacks and weak cryptographic primitives.",
+        "recommended_remediation":  "Disable DES and RC4 support, enforce AES128/AES256.",
+        "mapped_task":  "Task 2"
+    },
+    {
+        "id":  "FIND-04",
+        "severity":  "HIGH",
+        "category":  "User Accounts",
+        "asset":  "Active Directory Users",
+        "evidence":  "6 accounts found with PasswordNeverExpires enabled.",
+        "risk":  "Long-lived credentials prone to compromise without forced rotation.",
+        "recommended_remediation":  "Disable PasswordNeverExpires for standard and service accounts where possible.",
+        "mapped_task":  "Task 3"
+    },
+    {
+        "id":  "FIND-05",
+        "severity":  "HIGH",
+        "category":  "Service Accounts",
+        "asset":  "Service Accounts OU",
+        "evidence":  "3 service accounts configured with unconstrained delegation.",
+        "risk":  "TGT theft allowing domain takeover if compromised.",
+        "recommended_remediation":  "Remove unconstrained delegation or restrict to constrained delegation with protocol transition.",
+        "mapped_task":  "Task 4"
+    },
+    {
+        "id":  "FIND-06",
+        "severity":  "HIGH",
+        "category":  "Audit Policy",
+        "asset":  "Advanced Audit Configuration",
+        "evidence":  "Advanced Audit Policy is not configured.",
+        "risk":  "Lack of visibility into security events, lateral movement, and credential access.",
+        "recommended_remediation":  "Deploy Advanced Audit Policy GPO covering process creation, special logon, and account management.",
+        "mapped_task":  "Task 5"
+    },
+    {
+        "id":  "FIND-07",
+        "severity":  "HIGH",
+        "category":  "Privileged Accounts",
+        "asset":  "Group Memberships",
+        "evidence":  "Disabled accounts or misconfigured permissions detected in privileged groups.",
+        "risk":  "Unmonitored dormant access vectors.",
+        "recommended_remediation":  "Purge disabled or unauthorized accounts from Domain Admins and Enterprise Admins.",
+        "mapped_task":  "Task 3"
+    },
+    {
+        "id":  "FIND-08",
+        "severity":  "MEDIUM",
+        "category":  "Computer Objects",
+        "asset":  "Stale Computers",
+        "evidence":  "Stale computer objects with no logon activity in 90+ days: 5",
+        "risk":  "Stale objects can be leveraged for computer account takeover or kerberoasting.",
+        "recommended_remediation":  "Archive and remove computer objects inactive for over 90 days.",
+        "mapped_task":  "Task 6"
+    },
+    {
+        "id":  "FIND-09",
+        "severity":  "MEDIUM",
+        "category":  "Group Policy",
+        "asset":  "GPO Deployment",
+        "evidence":  "No MedDefense hardening GPOs present; default baseline only.",
+        "risk":  "Lack of hardened security controls across workstations and servers.",
+        "recommended_remediation":  "Import and link MedDefense hardening GPOs to domain and target OUs.",
+        "mapped_task":  "Task 7"
+    }
+]
