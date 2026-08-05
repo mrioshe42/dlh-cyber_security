@@ -1,16 +1,27 @@
 <#
 .SYNOPSIS
-    0-domain_baseline.ps1 - Active Directory Domain Reconnaissance
+    0-domain_baseline.ps1 - Active Directory Security Baseline Reconnaissance Script for MedDefense
+
 .DESCRIPTION
-    Captures the complete security state of the MedDefense domain and produces
-    a structured security baseline report matching required metrics.
+    Maps the entire MedDefense Active Directory environment from a security perspective,
+    capturing domain info, users, groups, service accounts, GPOs, password/lockout policies,
+    Kerberos settings, and privileged accounts. Outputs a structured security baseline report
+    with a findings summary categorized by severity.
+
 .PURPOSE
-    Purpose is to establish an automated security baseline and discovery report for compliance, audit, and hardening verification.
+    Establish a security baseline and map the Active Directory environment,
+    the Windows domain equivalent of the Lynis baseline scan (2x00 Task 0).
+
 .AUTHOR
-    Security Engineering Team (MedDefense)
-.DATE
-    2026-07-05
+    Massimo Rios
+
+.NOTES
+    Requires RSAT ActiveDirectory (+ optionally GroupPolicy) modules, domain-read privileges.
+    Every enumeration step is wrapped in error handling so a single inaccessible object
+    (missing OU, unreachable DC, missing module) degrades gracefully instead of aborting.
 #>
+
+#requires -RunAsAdministrator
 
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
