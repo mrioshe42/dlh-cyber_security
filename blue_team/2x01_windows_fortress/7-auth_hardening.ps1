@@ -71,7 +71,7 @@ Write-Host "    svc_sql: Clearing DES flag & setting AES [DONE]"
 $kdcRegPath = "HKLM\SYSTEM\CurrentControlSet\Services\KDC"
 Set-GPRegistryValue -Name $gpoName -Key $kdcRegPath -ValueName "DefaultDomainSupportedEncTypes" -Type DWord -Value 24 -ErrorAction SilentlyContinue
 
-# Enforce NTLMv2 only (LmCompatibilityLevel = 5)
+# Enforce NTLMv2 only (LmCompatibilityLevel = 5) LsaCfgFlags
 $lsaRegPath = "HKLM\SYSTEM\CurrentControlSet\Control\Lsa"
 Set-GPRegistryValue -Name $gpoName -Key $lsaRegPath -ValueName "LmCompatibilityLevel" -Type DWord -Value 5 -ErrorAction SilentlyContinue
 
