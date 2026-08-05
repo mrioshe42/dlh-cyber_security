@@ -8,16 +8,16 @@
     matching project requirements.
 
 .PURPOSE
-    Produce the actionable findings inventory that drives the Windows hardening workflow.
+    Purpose is to produce the actionable findings inventory that drives the Windows hardening workflow.
 
 .AUTHOR
-    Massimo Rios
+    Author: Massimo Rios
 
 .DATE
     2026-07-05
 
 .NOTES
-    Requires RSAT ActiveDirectory and GroupPolicy modules, domain-read privileges.
+    Notes: Requires RSAT ActiveDirectory and GroupPolicy modules, domain-read privileges.
     Every enumeration step is wrapped in robust error handling.
 #>
 
