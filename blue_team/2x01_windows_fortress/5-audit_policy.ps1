@@ -6,7 +6,7 @@
     enables command-line logging for process creation, restricts event log clearing, sets log size,
     links the GPO, forces a policy update, and verifies with auditpol.
 .PURPOSE
-    Purpose: Configure comprehensive Advanced Audit Policies, enable process command-line auditing, and harden event logs across the domain.
+    Purpose: Configure comprehensive Advanced Audit Policies, enable process CommandLine auditing, and harden event logs across the domain.
 .AUTHOR
     Author: Security Engineering Team (MedDefense)
 .DATE
