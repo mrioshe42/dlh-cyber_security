@@ -69,6 +69,7 @@ for script in "${WORKFLOW[@]}"; do
       \"duration_seconds\": $DURATION
     }"
 done
+# end the workflow execution
 set -e # Re-enable strict error handling
 
 echo "Steps scheduled: $STEPS_SCHEDULED"
