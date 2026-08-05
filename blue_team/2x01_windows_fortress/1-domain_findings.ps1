@@ -71,13 +71,15 @@ try {
         })
     }
 
-    # Audit Kerberos Configuration (DES/RC4 status)
+    # Audit Kerberos Configuration (DES/RC4 status and UseDESKeyOnly check)
+    $domainInfo = Get-ADDomain -Properties UseDESKeyOnly -ErrorAction SilentlyContinue
+    $useDesKeyOnly = if ($domainInfo) { $domainInfo.UseDESKeyOnly } else { $false }
     $findings.Add([PSCustomObject]@{
         id                      = "FIND-03"
         severity                = "CRITICAL"
         category                = "Kerberos"
         asset                   = "Domain Controllers"
-        evidence                = "Kerberos DES and RC4 encryption types are enabled."
+        evidence                = "Kerberos DES and RC4 encryption types are enabled (UseDESKeyOnly: $useDesKeyOnly)."
         risk                    = "Downgrade attacks and weak cryptographic primitives."
         recommended_remediation = "Disable DES and RC4 support, enforce AES128/AES256."
         mapped_task             = "Task 2"
