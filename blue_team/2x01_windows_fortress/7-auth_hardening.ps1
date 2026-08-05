@@ -26,7 +26,7 @@ Write-Host "    [!] DES enabled - trivially breakable"
 Write-Host "    [!] RC4 enabled - Kerberoastable"
 
 Write-Host "[*] Accounts with DES flag..."
-$svcAccounts = Get-ADUser -Filter {ServicePrincipalName -ne "$null"} -Properties ServicePrincipalName, msDS-SupportedEncryptionTypes, UserAccountControl -ErrorAction SilentlyContinue
+$svcAccounts = Get-ADUser -Filter {ServicePrincipalName -ne "$null"} -Properties ServicePrincipalName, UserAccountControl -ErrorAction SilentlyContinue
 
 foreach ($acc in $svcAccounts) {
     if ($acc.Name -eq "svc_sql") {
@@ -46,7 +46,7 @@ Write-Host "    [!] All 3 SPNs are Kerberoastable targets"
 Write-Host "[*] Remediating..."
 foreach ($acc in $svcAccounts) {
     if ($acc.Name -eq "svc_sql") {
-        Set-ADUser -Identity $acc -Replace @{'msDS-SupportedEncryptionTypes' = 24} -ErrorAction SilentlyContinue
+        Set-ADAccountControl -Identity $acc -UseDESKeyOnly $false -ErrorAction SilentlyContinue
     }
 }
 Write-Host "    svc_sql: Clearing DES flag              [DONE]"
