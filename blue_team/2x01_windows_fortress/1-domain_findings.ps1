@@ -144,7 +144,7 @@ try {
     } catch {
         $auditPolConfigured = $false
     }
-    # Process Creation, Special Logon, and Account Management should be enabled for Success auditing
+    # Process Creation, interactive logon , and Account Management should be enabled for Success auditing
     if (-not $auditPolConfigured) {
         $findings.Add([PSCustomObject]@{
             id                      = "FIND-06"
