@@ -11,6 +11,9 @@
         
         <!-- Rule 4: Detect Ransomware vssadmin Shadow Copy Deletion -->
         <CommandLine name="Technique=Impact,Tool=ShadowDeletion" condition="contains">vssadmin</CommandLine>
+
+        <!-- Rule 5: Detect schtasks Scheduled Task Persistence Creation -->
+        <CommandLine name="Technique=Persistence,Tool=schtasks" condition="contains">schtasks</CommandLine>
       </ProcessCreate>
 
       <!-- Registry Event Rules (Event ID 12, 13, 14) -->
@@ -18,12 +21,6 @@
         <!-- Rule 2: Detect PsExec Service Installation -->
         <TargetObject name="Technique=LateralMovement,Tool=PsExec" condition="contains">PSEXESVC</TargetObject>
       </RegistryEvent>
-
-      <!-- File Create Rules (Event ID 11) -->
-      <FileCreate onmatch="include">
-        <!-- Rule 5: Detect Scheduled Task Persistence Creation -->
-        <TargetFilename name="Technique=Persistence,Target=ScheduledTasks" condition="contains">\System32\Tasks\</TargetFilename>
-      </FileCreate>
     </RuleGroup>
   </EventFiltering>
 </Sysmon>
