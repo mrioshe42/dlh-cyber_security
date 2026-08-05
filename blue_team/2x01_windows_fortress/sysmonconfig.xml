@@ -1,0 +1,22 @@
+<Sysmon schemaversion="4.82">
+  <EventFiltering>
+    <RuleGroup name="MedDefense Custom Detection Rules" groupRelation="or">
+      <ProcessCreate onmatch="include">
+        <!-- Rule 1: Detect Rclone Exfiltration Tool -->
+        <Rule name="Technique=Exfiltration,Tool=Rclone" condition="contains">rclone.exe</Rule>
+        <!-- Rule 3: Detect Encoded PowerShell Execution -->
+        <Rule name="Technique=Execution,Tool=EncodedPowerShell" condition="contains">-enc</Rule>
+        <!-- Rule 4: Detect Ransomware Shadow Copy Deletion -->
+        <Rule name="Technique=Impact,Tool=ShadowDeletion" condition="contains">delete shadows</Rule>
+      </ProcessCreate>
+      <RegistryEvent onmatch="include">
+        <!-- Rule 2: Detect PsExec Service Installation -->
+        <Rule name="Technique=LateralMovement,Tool=PsExec" condition="contains">PSEXESVC</Rule>
+      </RegistryEvent>
+      <FileCreate onmatch="include">
+        <!-- Rule 5: Detect Scheduled Task Persistence Creation -->
+        <Rule name="Technique=Persistence,Target=ScheduledTasks" condition="contains">\System32\Tasks\</Rule>
+      </FileCreate>
+    </RuleGroup>
+  </EventFiltering>
+</Sysmon>
