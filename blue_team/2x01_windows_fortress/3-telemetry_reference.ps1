@@ -34,7 +34,7 @@ $events = @(
     },
     @{
         event_id                  = 4625
-        event_name                = "Failed Logon"
+        event_name                = "failed logon"
         log_source                = "Security"
         audit_or_sensor_dependency = "Logon"
         security_meaning          = "Logon attempt failed due to bad credentials or account restrictions"
