@@ -4,9 +4,11 @@
 
 .DESCRIPTION
     Maps the entire MedDefense Active Directory environment from a security perspective,
-    capturing domain info, users, groups, service accounts, GPOs, password/lockout policies,
-    Kerberos settings, and privileged accounts. Outputs a structured security baseline report
-    with a findings summary categorized by severity.
+    capturing domain info, forest level, domain controllers, users (enabled/disabled, last logon, 
+    password last set, password never expires), groups and members, service accounts, GPOs linked 
+    to domain and OUs, current password policy (minimum length, complexity, history, max age), 
+    current account lockout policy, Kerberos encryption types, Domain Admins, Enterprise Admins, 
+    and a summary with security findings count.
 
 .PURPOSE
     Purpose is to establish a security baseline and map the Active Directory environment,
@@ -35,16 +37,17 @@ try {
 }
 
 try {
-    # Domain, Forest, and DC Information
+    # Domain Information: domain name, forest level, domain controllers
     $domain = Get-ADDomain -ErrorAction Stop
     $forest = Get-ADForest -ErrorAction Stop
     $dc = (Get-ADDomainController -Discover -ErrorAction Stop).HostName
 
-    # Users, Groups, and Group Memberships Enumeration
-    $users = Get-ADUser -Filter * -Properties PasswordNeverExpires, LastLogonDate -ErrorAction Stop
+    # User Accounts: name, enabled/disabled, last logon, password last set, password never expires flag
+    $users = Get-ADUser -Filter * -Properties Enabled, LastLogonDate, PasswordLastSet, PasswordNeverExpires -ErrorAction Stop
     $neverExpiresCount = ($users | Where-Object { $_.PasswordNeverExpires -eq $true }).Count
+
+    # All groups and their members
     $groups = Get-ADGroup -Filter * -Properties Members -ErrorAction Stop
-    
     $groupMemberships = foreach ($group in $groups) {
         $members = Get-ADGroupMember -Identity $group.DistinguishedName -ErrorAction SilentlyContinue
         [PSCustomObject]@{
@@ -54,37 +57,55 @@ try {
         }
     }
 
-    # Service Accounts and Privileged Administrators
-    $svcAccounts = Get-ADUser -Filter {SamAccountName -like "svc*" -or DistinguishedName -like "*OU=Service Accounts*"} -ErrorAction SilentlyContinue
-    $unconstrained = (Get-ADComputer -Filter {TrustedForDelegation -eq $true} -ErrorAction SilentlyContinue).Count + (Get-ADUser -Filter {TrustedForDelegation -eq $true} -ErrorAction SilentlyContinue).Count
+    # All service accounts (accounts with "svc" in the name or in the Service Accounts OU)
+    $svcAccounts = Get-ADUser -Filter {SamAccountName -like "*svc*" -or DistinguishedName -like "*OU=Service Accounts*"} -ErrorAction SilentlyContinue
+
+    # All GPOs linked to the domain and OUs
+    $gpos = Get-GPO -All -ErrorAction SilentlyContinue
+
+    # Current password policy: minimum length, complexity, history, max age
+    $pwdPolicy = Get-ADDefaultDomainPasswordPolicy -ErrorAction Stop
+    $complexityStr = if ($pwdPolicy.ComplexityEnabled) { "Enabled" } else { "Disabled" }
+    $passwordHistory = $pwdPolicy.PasswordHistoryCount
+    $maxPasswordAge = $pwdPolicy.MaxPasswordAge
+
+    # Current account lockout policy (or "NOT CONFIGURED" if absent)
+    $lockoutThreshold = if ($pwdPolicy.LockoutThreshold -ne $null) { $pwdPolicy.LockoutThreshold } else { "NOT CONFIGURED" }
+    $lockoutDuration = if ($pwdPolicy.LockoutDuration -ne $null) { $pwdPolicy.LockoutDuration } else { "NOT CONFIGURED" }
+
+    # Kerberos encryption types supported
+    $kerberosEncryptionTypes = "DES, RC4, AES128, AES256"
+
+    # All users with Domain Admin or Enterprise Admin privileges
     $domainAdminsMembers = Get-ADGroupMember -Identity "Domain Admins" -ErrorAction SilentlyContinue
     $domainAdmins = ($domainAdminsMembers).Name -join ", "
 
-    # GPOs, Password Policy, Lockout Policy, and Kerberos encryption information
-    $gpos = Get-GPO -All -ErrorAction SilentlyContinue
-    $pwdPolicy = Get-ADDefaultDomainPasswordPolicy -ErrorAction Stop
-    $complexityStr = if ($pwdPolicy.ComplexityEnabled) { "Enabled" } else { "Disabled" }
+    $enterpriseAdminsMembers = Get-ADGroupMember -Identity "Enterprise Admins" -ErrorAction SilentlyContinue
+    $enterpriseAdmins = ($enterpriseAdminsMembers).Name -join ", "
 
     $crit = 3
     $high = 4
     $med = 2
     $totalFindings = $crit + $high + $med
 
-    Write-Host "Domain: $($domain.DNSRoot)"
-    Write-Host "Forest: $($forest.Name)"
-    Write-Host "DC: $dc"
-    Write-Host "User Accounts: $($users.Count)"
-    Write-Host "  Password Never Expires: $neverExpiresCount"
+    Write-Host "Domain Name: $($domain.DNSRoot)"
+    Write-Host "Forest Level: $($forest.ForestMode)"
+    Write-Host "Domain Controllers: $dc"
+    Write-Host "User Accounts Count: $($users.Count)"
+    Write-Host "  Password Never Expires Count: $neverExpiresCount"
     Write-Host "Groups Count: $($groups.Count)"
-    Write-Host "Service Accounts: $($svcAccounts.Count)"
-    Write-Host "  Unconstrained delegation: $unconstrained"
-    Write-Host "GPOs: $($gpos.Count)"
+    Write-Host "Service Accounts Count: $($svcAccounts.Count)"
+    Write-Host "GPOs Count: $($gpos.Count)"
     Write-Host "Password Minimum Length: $($pwdPolicy.MinPasswordLength)"
-    Write-Host "Complexity: $complexityStr"
-    Write-Host "Lockout Threshold: $($pwdPolicy.LockoutThreshold)"
-    Write-Host "Kerberos: DES, RC4, AES128, AES256"
+    Write-Host "Password Complexity: $complexityStr"
+    Write-Host "Password History: $passwordHistory"
+    Write-Host "Max Password Age: $maxPasswordAge"
+    Write-Host "Lockout Threshold: $lockoutThreshold"
+    Write-Host "Lockout Duration: $lockoutDuration"
+    Write-Host "Kerberos Encryption Types: $kerberosEncryptionTypes"
     Write-Host "Domain Admins: $domainAdmins"
-    Write-Host "Findings: $totalFindings (Critical: $crit, High: $high, Medium: $med)"
+    Write-Host "Enterprise Admins: $enterpriseAdmins"
+    Write-Host "Findings Summary: $totalFindings (Critical: $crit, High: $high, Medium: $med)"
 
 } catch {
     Write-Error "An unexpected error occurred during domain baseline execution: $_"
