@@ -69,7 +69,7 @@ Write-Host "[*] Setting Security log max size to 1 GB...              " -NoNewli
 Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\EventLog\Security" -Name "MaxSize" -Value 1073741824 -ErrorAction SilentlyContinue
 Write-Host "[SET]"
 
-# Link GPO and force update
+# Link gpupdate
 Write-Host "[*] Linking GPO and forcing update... " -NoNewline
 $link = Get-GPLink -Name $gpoName -Target $domainDN -ErrorAction SilentlyContinue
 if ($null -eq $link) {
