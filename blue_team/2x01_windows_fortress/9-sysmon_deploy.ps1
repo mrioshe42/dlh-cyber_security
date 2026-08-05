@@ -13,7 +13,7 @@
 .KEYWORDS
     Sysmon, Sysmon64, Sysinternals, SwiftOnSecurity, Endpoint Telemetry, Event ID 11, SysmonDrv
 .NOTES
-    Notes: Requires administrative privileges and network access.
+    Notes: Requires administrative privileges and network access, Invoke-WebRequest may be blocked by TLS 1.0/1.1 restrictions, so TLS 1.2 and 1.3 are enforced.
 #>
 #requires -RunAsAdministrator
 
