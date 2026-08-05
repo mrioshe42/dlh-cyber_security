@@ -1,0 +1,38 @@
+<AppLockerPolicy Version="1">
+  <RuleCollection Type="Exe" EnforcementMode="AuditOnly">
+    <FilePathRule Id="a0000000-0000-0000-0000-000000000001" Name="Allow Windows System Directory" Description="Allow Windows System Directory" UserOrGroupSid="S-1-1-0" Action="Allow">
+      <Conditions>
+        <FilePathCondition Path="%WINDIR%\*" />
+      </Conditions>
+    </FilePathRule>
+    <FilePathRule Id="a0000000-0000-0000-0000-000000000002" Name="Allow Program Files" Description="Allow Program Files" UserOrGroupSid="S-1-1-0" Action="Allow">
+      <Conditions>
+        <FilePathCondition Path="%PROGRAMFILES%\*" />
+      </Conditions>
+    </FilePathRule>
+    <FilePathRule Id="a0000000-0000-0000-0000-000000000003" Name="Allow Program Files (x86)" Description="Allow Program Files (x86)" UserOrGroupSid="S-1-1-0" Action="Allow">
+      <Conditions>
+        <FilePathCondition Path="%PROGRAMFILES(X86)%\*" />
+      </Conditions>
+    </FilePathRule>
+    <FilePublisherRule Id="a0000000-0000-0000-0000-000000000004" Name="Allow DicomViewer" Description="Allow DicomViewer" UserOrGroupSid="S-1-1-0" Action="Allow">
+      <Conditions>
+        <FilePublisherCondition PublisherName="O=MEDIMAGE CORP, L=BOSTON, S=MASSACHUSETTS, C=US" ProductName="DicomViewer" BinaryName="*">
+          <BinaryVersionRange LowSection="0.0.0.0" HighSection="65535.65535.65535.65535" />
+        </FilePublisherCondition>
+      </Conditions>
+    </FilePublisherRule>
+  </RuleCollection>
+  <RuleCollection Type="Script" EnforcementMode="AuditOnly">
+    <FilePathRule Id="b0000000-0000-0000-0000-000000000001" Name="Allow Windows Scripts" Description="Allow Windows Scripts" UserOrGroupSid="S-1-1-0" Action="Allow">
+      <Conditions>
+        <FilePathCondition Path="%WINDIR%\*" />
+      </Conditions>
+    </FilePathRule>
+    <FilePathRule Id="b0000000-0000-0000-0000-000000000002" Name="Allow Admin Scripts" Description="Allow Admin Scripts" UserOrGroupSid="S-1-1-0" Action="Allow">
+      <Conditions>
+        <FilePathCondition Path="C:\MedDefense_Lab\Scripts\*" />
+      </Conditions>
+    </FilePathRule>
+  </RuleCollection>
+</AppLockerPolicy>
