@@ -93,7 +93,7 @@ if ($null -eq $link) {
 Invoke-GPUpdate -Force -RandomDelayInMinutes 0 | Out-Null
 Write-Host "COMPLETE"
 
-# Test encoded command
+# Test EncodedCommand
 Write-Host "[*] Testing encoded command..."
 $encodedCmd = "VwByAGkAdABlAC0ASABvAHMAdAAgACIAVABlAHMAdAAi"
 Write-Host "    Input: powershell -enc $encodedCmd"
