@@ -4,6 +4,7 @@
 .DESCRIPTION
     Before disables SMBv1 (server and client), enforces SMB signing, enables EnableSecuritySignature and SMB encryption,
     disables NetBIOS over TCP/IP and LLMNR, and verifies the new security configuration.
+    After the script runs, SMBv1 is disabled, SMB signing and encryption are enforced, and insecure name resolution protocols are disabled.
 .PURPOSE
     Purpose: Secure file sharing protocols, eliminate legacy SMBv1 vulnerabilities, and disable insecure name resolution protocols.
 .AUTHOR
