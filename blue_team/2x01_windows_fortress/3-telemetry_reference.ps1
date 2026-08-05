@@ -201,7 +201,7 @@ $events = @(
         normal_frequency          = "High"
         triage_priority           = "Medium"
         crimson_tide_phase        = "Impact"
-        example_suspicious_pattern = "Ransomware dropping note or encrypted files across endpoints"
+        example_suspicious_pattern = "ransomware dropping note or encrypted files across endpoints"
         validation_method         = "New-Item"
     },
     @{
