@@ -9,7 +9,7 @@
     with a findings summary categorized by severity.
 
 .PURPOSE
-    Establish a security baseline and map the Active Directory environment,
+    Purpose is to establish a security baseline and map the Active Directory environment,
     the Windows domain equivalent of the Lynis baseline scan (2x00 Task 0).
 
 .AUTHOR
