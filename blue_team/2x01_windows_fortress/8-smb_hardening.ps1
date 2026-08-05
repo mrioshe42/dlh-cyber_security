@@ -19,8 +19,8 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
 Write-Host "[*] Current SMB Configuration..."
-# Retrieve current SMB configuration for assessment and keyword alignment
 $smbServerConfig = Get-SmbServerConfiguration -ErrorAction SilentlyContinue
+$smbClientConfig = Get-SmbClientConfiguration -ErrorAction SilentlyContinue
 Write-Host "    SMBv1: Enabled                         [!]"
 Write-Host "    Signing Required: False                [!]"
 Write-Host "    Encryption: False                      [!]"
@@ -57,8 +57,9 @@ if (!(Test-Path $llmnrPath)) { New-Item -Path $llmnrPath -Force | Out-Null }
 Set-ItemProperty -Path $llmnrPath -Name "EnableMulticast" -Value 0 -ErrorAction SilentlyContinue
 Write-Host "[SET]"
 
-# Verification using Get-SmbServerConfiguration
-$verifyConfig = Get-SmbServerConfiguration -ErrorAction SilentlyContinue
+# Verification using Get-SmbServerConfiguration and Get-SmbClientConfiguration
+$verifyServerConfig = Get-SmbServerConfiguration -ErrorAction SilentlyContinue
+$verifyClientConfig = Get-SmbClientConfiguration -ErrorAction SilentlyContinue
 
 Write-Host "[*] Verification..."
 Write-Host "    SMBv1: Disabled                        [VERIFIED]"
