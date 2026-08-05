@@ -3,12 +3,12 @@
     1-domain_findings.ps1 - Active Directory Live Risk Findings Extractor for MedDefense
 
 .DESCRIPTION
-    Audits meddefense.local live using native AD and GPO cmdlets, identifying real 
-    security misconfigurations, generating a structured JSON findings inventory 
-    (domain_security_findings.json), and printing summary telemetry.
+    Audits meddefense.local live using native AD, GPO, and auditpol cmdlets/binaries, 
+    identifying real security misconfigurations, generating a structured JSON findings 
+    inventory (domain_security_findings.json), and printing summary telemetry.
 
 .PURPOSE
-    Purpose is to produce the actionable findings inventory that drives the Windows hardening workflow.
+    Purpose: Produce the actionable findings inventory that drives the Windows hardening workflow.
 
 .AUTHOR
     Author: Massimo Rios
@@ -17,8 +17,8 @@
     2026-08-05
 
 .NOTES
-    Notes: Requires RSAT ActiveDirectory and GroupPolicy modules, domain-read privileges.
-    Fully dynamic evaluation with robust error handling.
+    Notes: Requires RSAT ActiveDirectory and GroupPolicy modules, domain-read privileges, 
+    and administrative execution for auditpol checks.
 #>
 
 #requires -RunAsAdministrator
@@ -129,17 +129,27 @@ try {
         })
     }
 
-    # Audit Advanced Audit Policy
-    $auditGPOs = Get-GPO -All -ErrorAction SilentlyContinue | Where-Object { $_.DisplayName -like "*Audit*" -or $_.DisplayName -like "*Advanced Audit*" }
-    $auditConfigured = ($auditGPOs -ne $null)
+    # Audit Advanced Audit Policy using auditpol and GPO verification
+    $auditPolConfigured = $false
+    try {
+        $auditPolResults = & auditpol.exe /get /category:* 2>&1
+        if ($LASTEXITCODE -eq 0 -and $auditPolResults) {
+            $activeSubcategories = $auditPolResults | Where-Object { $_ -match "Success" -or $_ -match "Failure" }
+            if (@($activeSubcategories).Count -gt 5) {
+                $auditPolConfigured = $true
+            }
+        }
+    } catch {
+        $auditPolConfigured = $false
+    }
 
-    if (-not $auditConfigured) {
+    if (-not $auditPolConfigured) {
         $findings.Add([PSCustomObject]@{
             id                      = "FIND-06"
             severity                = "HIGH"
             category                = "Audit Policy"
-            asset                   = "Advanced Audit Configuration"
-            evidence                = "Advanced Audit Policy is not configured (missing process creation, special logon, account management, object access, PowerShell, Sysmon)."
+            asset                   = "Advanced Audit Configuration via auditpol"
+            evidence                = "Advanced Audit Policy is not configured or lacks robust subcategory coverage (verified via auditpol)."
             risk                    = "Lack of visibility into security events, lateral movement, and credential access."
             recommended_remediation = "Deploy Advanced Audit Policy GPO covering process creation, special logon, and account management."
             mapped_task             = "Task 5"
