@@ -13,7 +13,7 @@ fi
 
 mkdir -p "$TEST_DIR"
 
-RESULTS="[]"
+OUTCOMES="[]"
 CAPTURED=0
 MISSED=0
 COUNT=0
@@ -28,7 +28,7 @@ cleanup() {
 
 trap cleanup EXIT
 
-add_result() {
+add_outcome() {
     local name="$1"
     local key="$2"
     local command="$3"
@@ -36,7 +36,7 @@ add_result() {
     local count="$5"
     local excerpt="$6"
 
-    RESULTS=$(echo "$RESULTS" | jq \
+    OUTCOMES=$(echo "$OUTCOMES" | jq \
         --arg name "$name" \
         --arg key "$key" \
         --arg command "$command" \
@@ -49,7 +49,7 @@ add_result() {
             expected_audit_key: $key,
             command_executed: $command,
             timestamp: $timestamp,
-            capture_status: $status,
+            outcome_status: $status,
             matching_event_count: ($count|tonumber),
             event_excerpt: $excerpt
         }]')
@@ -81,7 +81,7 @@ check_event() {
         echo "[$COUNT/6] $(printf '%-35s' "$name") [MISSED]"
     fi
 
-    add_result \
+    add_outcome \
         "$name" \
         "$key" \
         "$command" \
@@ -138,14 +138,14 @@ check_event \
     "ls -la /etc/cron.d >/dev/null"
 
 jq -n \
-    --argjson results "$RESULTS" \
+    --argjson outcomes "$OUTCOMES" \
     --arg timestamp "$(date -Iseconds)" \
     '{
         timestamp: $timestamp,
-        tests_executed: ($results | length),
-        captured: ($results | map(select(.capture_status=="CAPTURED")) | length),
-        missed: ($results | map(select(.capture_status=="MISSED")) | length),
-        tests: $results
+        tests_executed: ($outcomes | length),
+        captured: ($outcomes | map(select(.outcome_status=="CAPTURED")) | length),
+        missed: ($outcomes | map(select(.outcome_status=="MISSED")) | length),
+        tests: $outcomes
     }' > "$REPORT"
 
 echo "Tests executed: $((CAPTURED + MISSED))"
