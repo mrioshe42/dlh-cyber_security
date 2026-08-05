@@ -13,7 +13,7 @@
 .DATE
     Date: 2026-08-05
 .KEYWORDS
-    AppLocker, GPO, Audit-Only, DicomViewer, Executable Rules, Script Rules, Application Identity, XML Export, Active Directory
+    AppLocker, GPO, Audit-Only, DicomViewer, Executable Rules, Script Rules, Application Identity, XML Export, Active Directory, .bat
 .NOTES
     Notes: Requires administrative privileges, domain-joined environment, and RSAT Group Policy module.
 #>
