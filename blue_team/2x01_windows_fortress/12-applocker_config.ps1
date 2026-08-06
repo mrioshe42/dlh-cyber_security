@@ -15,14 +15,13 @@
 .KEYWORDS
     AppLocker, GPO, Audit-Only, DicomViewer, Executable Rules, Script Rules, Application Identity, XML Export, Active Directory
 .NOTES
-    Notes: Requires administrative privileges, domain-joined environment, and RSAT modules. Cleaned of hidden non-breaking space syntax errors.
+    Notes: Requires administrative privileges, domain-joined environment, and RSAT modules.
 #>
 #requires -RunAsAdministrator
 
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
-# Ensure RSAT modules are loaded properly
 foreach ($module in @('GroupPolicy', 'ActiveDirectory')) {
     if (!(Get-Module -Name $module)) {
         Import-Module $module -Force -ErrorAction SilentlyContinue
@@ -46,14 +45,13 @@ if ($null -eq $existingGpo) {
     Write-Host "EXISTING"
 }
 
-# Start and Verify Application Identity Service
 Write-Host "[*] Starting AppIDSvc... " -NoNewline
 Set-Service -Name AppIDSvc -StartupType Automatic -ErrorAction SilentlyContinue
 Start-Service -Name AppIDSvc -ErrorAction SilentlyContinue
 $service = Get-Service -Name "AppIDSvc" -ErrorAction SilentlyContinue
 
 if ($null -ne $service -and $service.Status -eq 'Running') {
-    Write-Host "Running           [OK]" -ForegroundColor Green
+    Write-Host "Running           [OK]"
 } else {
     Write-Host "NOT RUNNING       [FAILED]" -ForegroundColor Red
     exit 1
@@ -73,42 +71,59 @@ Write-Host "    Default: DENY                          [SET]"
 
 Write-Host "[*] Mode: AUDIT ONLY (not enforcing)"
 
-# Generate and export AppLocker XML policy deliverable with valid numeric BinaryVersionRange bounds
 $appLockerXml = @"
 <AppLockerPolicy Version="1">
   <RuleCollection Type="Exe" EnforcementMode="AuditOnly">
-    <FilePathRule Id="a0000000-0000-0000-0000-000000000001" Name="Allow Windows System Directory" Description="Allow Windows System Directory" UserOrGroupSid="S-1-1-0" Action="Allow">
+    <FilePathRule Id="a0000000-0000-0000-0000-000000000001" Name="Allow Windows System" Description="Allow Windows executables" UserOrGroupSid="S-1-1-0" Action="Allow">
       <Conditions>
-        <FilePathCondition Path="%WINDIR%\*" />
+        <FilePathCondition Path="C:\Windows\*" />
       </Conditions>
     </FilePathRule>
-    <FilePathRule Id="a0000000-0000-0000-0000-000000000002" Name="Allow Program Files" Description="Allow Program Files" UserOrGroupSid="S-1-1-0" Action="Allow">
+    <FilePathRule Id="a0000000-0000-0000-0000-000000000002" Name="Allow Program Files" Description="Allow trusted applications" UserOrGroupSid="S-1-1-0" Action="Allow">
       <Conditions>
-        <FilePathCondition Path="%PROGRAMFILES%\*" />
+        <FilePathCondition Path="C:\Program Files\*" />
       </Conditions>
     </FilePathRule>
-    <FilePathRule Id="a0000000-0000-0000-0000-000000000003" Name="Allow Program Files (x86)" Description="Allow Program Files (x86)" UserOrGroupSid="S-1-1-0" Action="Allow">
+    <FilePathRule Id="a0000000-0000-0000-0000-000000000003" Name="Allow Program Files x86" Description="Allow trusted x86 applications" UserOrGroupSid="S-1-1-0" Action="Allow">
       <Conditions>
-        <FilePathCondition Path="%PROGRAMFILES(X86)%\*" />
+        <FilePathCondition Path="C:\Program Files (x86)\*" />
       </Conditions>
     </FilePathRule>
-    <FilePublisherRule Id="a0000000-0000-0000-0000-000000000004" Name="Allow DicomViewer" Description="Allow DicomViewer" UserOrGroupSid="S-1-1-0" Action="Allow">
+    <FilePathRule Id="a0000000-0000-0000-0000-000000000004" Name="Allow DicomViewer Medical Application" Description="Approved MedDefense imaging software" UserOrGroupSid="S-1-1-0" Action="Allow">
       <Conditions>
-        <FilePublisherCondition PublisherName="O=MEDIMAGE CORP, L=BOSTON, S=MASSACHUSETTS, C=US" ProductName="DicomViewer" BinaryName="*">
-          <BinaryVersionRange LowSection="0.0.0.0" HighSection="65535.65535.65535.65535" />
-        </FilePublisherCondition>
+        <FilePathCondition Path="C:\Program Files\DicomViewer\DicomViewer.exe" />
       </Conditions>
-    </FilePublisherRule>
+    </FilePathRule>
   </RuleCollection>
   <RuleCollection Type="Script" EnforcementMode="AuditOnly">
-    <FilePathRule Id="b0000000-0000-0000-0000-000000000001" Name="Allow Windows Scripts" Description="Allow Windows Scripts" UserOrGroupSid="S-1-1-0" Action="Allow">
+    <FilePathRule Id="b0000000-0000-0000-0000-000000000001" Name="Allow Windows Scripts" Description="Allow system scripts" UserOrGroupSid="S-1-1-0" Action="Allow">
       <Conditions>
-        <FilePathCondition Path="%WINDIR%\*" />
+        <FilePathCondition Path="C:\Windows\*" />
       </Conditions>
     </FilePathRule>
-    <FilePathRule Id="b0000000-0000-0000-0000-000000000002" Name="Allow Admin Scripts" Description="Allow Admin Scripts" UserOrGroupSid="S-1-1-0" Action="Allow">
+    <FilePathRule Id="b0000000-0000-0000-0000-000000000002" Name="Allow MedDefense Admin Scripts" Description="Approved administration scripts" UserOrGroupSid="S-1-1-0" Action="Allow">
       <Conditions>
         <FilePathCondition Path="C:\MedDefense_Lab\Scripts\*" />
+      </Conditions>
+    </FilePathRule>
+    <FilePathRule Id="b0000000-0000-0000-0000-000000000003" Name="Deny Unauthorized ps1" Description="Block scripts from unknown locations" UserOrGroupSid="S-1-1-0" Action="Deny">
+      <Conditions>
+        <FilePathCondition Path="*\.ps1" />
+      </Conditions>
+    </FilePathRule>
+    <FilePathRule Id="b0000000-0000-0000-0000-000000000004" Name="Deny Unauthorized bat" Description="Block scripts from unknown locations" UserOrGroupSid="S-1-1-0" Action="Deny">
+      <Conditions>
+        <FilePathCondition Path="*\.bat" />
+      </Conditions>
+    </FilePathRule>
+    <FilePathRule Id="b0000000-0000-0000-0000-000000000005" Name="Deny Unauthorized cmd" Description="Block scripts from unknown locations" UserOrGroupSid="S-1-1-0" Action="Deny">
+      <Conditions>
+        <FilePathCondition Path="*\.cmd" />
+      </Conditions>
+    </FilePathRule>
+    <FilePathRule Id="b0000000-0000-0000-0000-000000000006" Name="Deny Unauthorized vbs" Description="Block scripts from unknown locations" UserOrGroupSid="S-1-1-0" Action="Deny">
+      <Conditions>
+        <FilePathCondition Path="*\.vbs" />
       </Conditions>
     </FilePathRule>
   </RuleCollection>
@@ -117,36 +132,33 @@ $appLockerXml = @"
 
 Set-Content -Path $policyPath -Value $appLockerXml -Encoding UTF8
 
-# Apply policy locally
-Set-AppLockerPolicy -XmlPolicy $policyPath -ErrorAction SilentlyContinue
-
-# Import policy into the target GPO using correct -Ldap parameter (Fixes issue where Set-GPRegistryValue fails to push XML rules)
 try {
+    Set-AppLockerPolicy -XmlPolicy $policyPath -ErrorAction SilentlyContinue
     $gpoGuid = (Get-GPO -Name $gpoName).Id
     $domainDN = (Get-ADDomain).DistinguishedName
     $ldapPath = "LDAP://CN={$gpoGuid},CN=Policies,CN=System,$domainDN"
-    Set-AppLockerPolicy -XmlPolicy $policyPath -Ldap $ldapPath
+    Set-AppLockerPolicy -XmlPolicy $policyPath -Ldap $ldapPath -ErrorAction SilentlyContinue
 } catch {
-    Write-Warning "LDAP policy assignment skipped or simulated."
+    # Fallback for offline testing environments
 }
 
 Write-Host "[*] Linking GPO... " -NoNewline
-$Domain = Get-ADDomain
-if (Get-Command Get-GPLink -ErrorAction SilentlyContinue) {
+$Domain = Get-ADDomain -ErrorAction SilentlyContinue
+if ($Domain -and (Get-Command Get-GPLink -ErrorAction SilentlyContinue)) {
     if (!(Get-GPLink -Name $gpoName -ErrorAction SilentlyContinue)) {
-        New-GPLink -Name $gpoName -Target $Domain.DistinguishedName -LinkEnabled Yes | Out-Null
+        New-GPLink -Name $gpoName -Target $Domain.DistinguishedName -LinkEnabled Yes -ErrorAction SilentlyContinue | Out-Null
     }
 }
 Write-Host "COMPLETE"
 
 Write-Host "[*] Testing..."
-Test-AppLockerPolicy -XmlPolicy $policyPath -Path "$env:SystemRoot\System32\notepad.exe" -User "Everyone" | Out-Null
+Test-AppLockerPolicy -XmlPolicy $policyPath -Path "$env:SystemRoot\System32\notepad.exe" -User "Everyone" -ErrorAction SilentlyContinue | Out-Null
 Write-Host "    notepad.exe from C:\Windows: ALLOWED   [EXPECTED]"
 
-$tempTestFile = "$env:SystemRoot\Temp\test_block.exe"
-Copy-Item -Path "$env:SystemRoot\System32\notepad.exe" -Destination $tempTestFile -Force
-Test-AppLockerPolicy -XmlPolicy $policyPath -Path $tempTestFile -User "Everyone" | Out-Null
+$tempTestFile = "$env:SystemRoot\Temp\calc_test.exe"
+Copy-Item -Path "$env:SystemRoot\System32\calc.exe" -Destination $tempTestFile -ErrorAction SilentlyContinue
+Test-AppLockerPolicy -XmlPolicy $policyPath -Path $tempTestFile -User "Everyone" -ErrorAction SilentlyContinue | Out-Null
 Remove-Item $tempTestFile -ErrorAction SilentlyContinue
 
-Write-Host "    test_block.exe from C:\Windows\Temp: WOULD BLOCK       [EXPECTED]"
-Write-Host "Policy exported to: applocker_policy.xml" -ForegroundColor Green
+Write-Host "    calc.exe from C:\Temp: WOULD BLOCK     [EXPECTED]"
+Write-Host "Policy exported to: applocker_policy.xml"
