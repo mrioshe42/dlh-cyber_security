@@ -12,7 +12,7 @@
 .DATE
     Date: 2026-08-06
 .KEYWORDS
-    Evidence Export, JSON, GPO Inventory, Audit Policy, PowerShell Logging, Sysmon, Firewall, AppLocker, RDP, Authentication Protocols, SMB, Service Accounts, Get-ADDomain, Get-GPO, Stop , Start, auditpol 4624
+    Evidence Export, JSON, GPO Inventory, Audit Policy, PowerShell Logging, Sysmon, Firewall, AppLocker, RDP, Authentication Protocols, SMB, Service Accounts, Get-ADDomain, Get-GPO, Stop , Start, auditpol 4624 4625 4688 4672 4697 4698 4720 1102
 .NOTES
     Notes: Requires administrative privileges and RSAT modules. Execute on Domain Controller or Domain-joined Admin Server.
 #>
