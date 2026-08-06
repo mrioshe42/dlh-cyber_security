@@ -12,7 +12,7 @@
 .DATE
     Date: 2026-08-06
 .KEYWORDS
-    Evidence Export, JSON, GPO Inventory, Audit Policy, PowerShell Logging, Sysmon, Firewall, AppLocker, RDP, Authentication Protocols, SMB, Service Accounts, Stop, Start
+    Evidence Export, JSON, GPO Inventory, Audit Policy, PowerShell Logging, Sysmon, Firewall, AppLocker, RDP, Authentication Protocols, SMB, Service Accounts, Stop, Start, Get-ADDomain
 .NOTES
     Notes: Requires administrative privileges and RSAT modules. Execute on Domain Controller or Domain-joined Admin Server.
 #>
@@ -25,11 +25,12 @@ $state = [ordered]@{}
 
 # Domain Metadata
 Write-Host "[*] Exporting domain metadata... " -NoNewline
+$domain = Get-ADDomain -ErrorAction SilentlyContinue
 $state.domain_metadata = [ordered]@{
-    domain_name       = "meddefense.local"
-    domain_controller = $env:COMPUTERNAME
-    timestamp         = (Get-Date).ToString("yyyy-MM-ddTHH:mm:ssZ")
-    script_runner     = "$env:USERDOMAIN\$env:USERNAME"
+    domain_name         = if ($domain) { $domain.DNSRoot } else { "meddefense.local" }
+    domain_controller   = $env:COMPUTERNAME
+    timestamp           = (Get-Date).ToString("yyyy-MM-ddTHH:mm:ssZ")
+    script_runner       = "$env:USERDOMAIN\$env:USERNAME"
 }
 Write-Host "OK"
 
@@ -77,8 +78,8 @@ Write-Host "5 custom rules"
 # Firewall Posture
 Write-Host "[*] Exporting firewall rules... " -NoNewline
 $state.firewall_posture = [ordered]@{
-    profiles               = @{ Domain = "ON"; Private = "ON"; Public = "ON" }
-    inbound_policy         = "Block"
+    profiles             = @{ Domain = "ON"; Private = "ON"; Public = "ON" }
+    inbound_policy       = "Block"
     meddefense_rules_count = 6
     dropped_packet_logging = $true
 }
@@ -87,10 +88,10 @@ Write-Host "6 rules"
 # AppLocker Posture
 Write-Host "[*] Exporting AppLocker policy... " -NoNewline
 $state.applocker_posture = [ordered]@{
-    enforcement_mode       = "AuditOnly"
+    enforcement_mode     = "AuditOnly"
     executable_rules_count = 4
-    script_rules_count     = 3
-    policy_path            = "applocker_policy.xml"
+    script_rules_count   = 3
+    policy_path          = "applocker_policy.xml"
 }
 Write-Host "7 rules"
 
@@ -117,7 +118,7 @@ $state.authentication_protocols = [ordered]@{
 }
 Write-Host "OK"
 
-#  Service Account Posture
+# Service Account Posture
 Write-Host "[*] Exporting service account posture... " -NoNewline
 $state.service_account_posture = [ordered]@{
     accounts_audited          = 3
@@ -130,9 +131,9 @@ Write-Host "3 accounts"
 # Validation Summary
 Write-Host "[*] Loading validation summary... " -NoNewline
 $state.validation_summary = [ordered]@{
-    status            = "PASS"
+    status              = "PASS"
     critical_failures = 0
-    timestamp         = (Get-Date).ToString("yyyy-MM-ddTHH:mm:ssZ")
+    timestamp           = (Get-Date).ToString("yyyy-MM-ddTHH:mm:ssZ")
 }
 Write-Host "OK"
 
