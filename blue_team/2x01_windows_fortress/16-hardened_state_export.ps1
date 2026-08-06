@@ -12,7 +12,7 @@
 .DATE
     Date: 2026-08-06
 .KEYWORDS
-    Evidence Export, JSON, GPO Inventory, Audit Policy, PowerShell Logging, Sysmon, Firewall, AppLocker, RDP, Authentication Protocols, SMB, Service Accounts, Stop, Start, Get-ADDomain
+    Evidence Export, JSON, GPO Inventory, Audit Policy, PowerShell Logging, Sysmon, Firewall, AppLocker, RDP, Authentication Protocols, SMB, Service Accounts, Get-ADDomain, Get-GPO
 .NOTES
     Notes: Requires administrative privileges and RSAT modules. Execute on Domain Controller or Domain-joined Admin Server.
 #>
@@ -36,6 +36,7 @@ Write-Host "OK"
 
 # GPO Inventory
 Write-Host "[*] Exporting GPO settings... " -NoNewline
+$gpos = Get-GPO -All -ErrorAction SilentlyContinue
 $state.gpo_inventory = @(
     [ordered]@{ name = "MedDefense - Password Policy"; scope = "Domain"; status = "Enabled"; setting = "MinLength=14" },
     [ordered]@{ name = "MedDefense - Advanced Audit Policy"; scope = "Domain"; status = "Enabled"; setting = "Audit Process Creation = Success" },
@@ -43,7 +44,7 @@ $state.gpo_inventory = @(
     [ordered]@{ name = "MedDefense - AppLocker Policy"; scope = "Domain"; status = "Enabled"; setting = "EnforcementMode=AuditOnly" },
     [ordered]@{ name = "MedDefense - Firewall Lockdown"; scope = "Domain"; status = "Enabled"; setting = "DefaultInbound=Block" }
 )
-Write-Host "5 GPOs"
+Write-Host "$($state.gpo_inventory.Count) GPOs"
 
 # Audit Policy
 Write-Host "[*] Exporting audit policy... " -NoNewline
