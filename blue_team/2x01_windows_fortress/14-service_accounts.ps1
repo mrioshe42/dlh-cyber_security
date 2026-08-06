@@ -35,7 +35,7 @@ Write-Host "svc_sql:"
 Write-Host "  Password age: 293 days                  [!]"
 Write-Host "  UseDESKeyOnly: True                     [!]"
 
-# Remediations for service accounts in Active Directory including LastLogonDate auditing telemetry
+# Remediations for service accounts in Active Directory including LastLogonDate auditing telemetry and old password age checks.
 $serviceAccounts = @("svc_backup", "svc_ehr", "svc_sql")
 
 foreach ($acc in $serviceAccounts) {
