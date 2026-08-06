@@ -47,6 +47,7 @@ foreach ($acc in $serviceAccounts) {
             
             # Set Account is sensitive and cannot be delegated (TrustedToAuthForDelegation = $false, TrustedForDelegation = $false)
             Set-ADUser -Identity $acc -TrustedForDelegation $false -AccountNotDelegated $true -ErrorAction SilentlyContinue
+            Set-ADAccountControl -Identity $acc -AccountSensitive $true -NotDelegated $true -ErrorAction SilentlyContinue
             
             if ($acc -eq "svc_sql") {
                 Set-ADUser -Identity $acc -KerberosEncryptionTypes AES128,AES256 -ErrorAction SilentlyContinue
