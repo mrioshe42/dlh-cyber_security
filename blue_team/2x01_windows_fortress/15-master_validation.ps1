@@ -83,7 +83,7 @@ Write-Host "--- RDP ---"
 Test-Check -Message "NLA: Required" -Status "PASS"
 Test-Check -Message "G_IT_Admins only" -Status "PASS"
 
-# Service Accounts
+# service accounts
 Write-Host "--- Service Accounts ---"
 $svcAccountCheck = Get-ADUser -Identity "svc_backup" -Properties PasswordLastSet, TrustedForDelegation -ErrorAction SilentlyContinue
 Test-Check -Message "Delegation restricted: 3/3" -Status "PASS"
