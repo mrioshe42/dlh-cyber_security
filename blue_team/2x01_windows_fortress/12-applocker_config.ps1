@@ -15,7 +15,7 @@
 .KEYWORDS
     AppLocker, GPO, Audit-Only, DicomViewer, Executable Rules, Script Rules, Application Identity, XML Export, Active Directory
 .NOTES
-    Notes: Requires administrative privileges, domain-joined environment, and RSAT modules.
+    Notes: Requires administrative privileges, domain-joined environment, and RSAT modules. Export-AppLockerPolicy
 #>
 #requires -RunAsAdministrator
 
