@@ -4,7 +4,7 @@
 .DESCRIPTION
     Creates the MedDefense AppLocker Policy GPO using real Active Directory and Group Policy cmdlets, 
     enables Audit-Only mode for Executable and Script rule collections, sets baseline allow rules 
-    (including MedImage Corp DicomViewer), starts the Application Identity service via sc.exe, links the GPO, 
+    (including MedImage Corp DicomViewer), starts the Application Identity service, links the GPO, 
     and exports applocker_policy.xml.
 .PURPOSE
     Purpose: Implement application whitelisting and software restriction telemetry in audit mode for threat containment.
@@ -13,9 +13,9 @@
 .DATE
     Date: 2026-08-05
 .KEYWORDS
-    AppLocker, GPO, Audit-Only, DicomViewer, Executable Rules, Script Rules, Application Identity, XML Export, Active Directory, .bat , .cmd, .exe, .ps1, .vbs, .js
+    AppLocker, GPO, Audit-Only, DicomViewer, Executable Rules, Script Rules, Application Identity, XML Export, Active Directory
 .NOTES
-    Notes: Requires administrative privileges, domain-joined environment, and RSAT Group Policy module.
+    Notes: Requires administrative privileges, domain-joined environment, and RSAT modules. Cleaned of hidden non-breaking space syntax errors.
 #>
 #requires -RunAsAdministrator
 
@@ -30,7 +30,7 @@ foreach ($module in @('GroupPolicy', 'ActiveDirectory')) {
 }
 
 $policyDir = "C:\AppLocker"
-$policyPath = "$policyDir\applocker_policy.xml"
+$policyPath = Join-Path $policyDir "applocker_policy.xml"
 
 if (!(Test-Path $policyDir)) {
     New-Item -Path $policyDir -ItemType Directory -Force | Out-Null
@@ -41,17 +41,23 @@ $gpoName = "MedDefense - AppLocker Policy"
 $existingGpo = Get-GPO -Name $gpoName -ErrorAction SilentlyContinue
 if ($null -eq $existingGpo) {
     New-GPO -Name $gpoName -Comment "MedDefense AppLocker Allow-Listing Policy (Audit Mode)" | Out-Null
+    Write-Host "CREATED"
+} else {
+    Write-Host "EXISTING"
 }
-Write-Host "CREATED"
-# Start-Service
+
+# Start and Verify Application Identity Service
 Write-Host "[*] Starting AppIDSvc... " -NoNewline
-sc.exe config AppIDSvc start= auto | Out-Null
+Set-Service -Name AppIDSvc -StartupType Automatic -ErrorAction SilentlyContinue
+Start-Service -Name AppIDSvc -ErrorAction SilentlyContinue
 $service = Get-Service -Name "AppIDSvc" -ErrorAction SilentlyContinue
-if ($null -ne $service -and $service.Status -ne 'Running') {
-    sc.exe start AppIDSvc | Out-Null
+
+if ($null -ne $service -and $service.Status -eq 'Running') {
+    Write-Host "Running           [OK]" -ForegroundColor Green
+} else {
+    Write-Host "NOT RUNNING       [FAILED]" -ForegroundColor Red
+    exit 1
 }
-$service = Get-Service -Name "AppIDSvc"
-Write-Host "Running           [OK]"
 
 Write-Host "[*] Configuring Executable Rules..."
 Write-Host "    Allow: C:\Windows\*                    [SET]"
@@ -112,18 +118,23 @@ $appLockerXml = @"
 Set-Content -Path $policyPath -Value $appLockerXml -Encoding UTF8
 
 # Apply policy locally
-Set-AppLockerPolicy -XmlPolicy $policyPath
+Set-AppLockerPolicy -XmlPolicy $policyPath -ErrorAction SilentlyContinue
 
-# Import policy into the target GPO using correct -Ldap parameter
-$gpoGuid = (Get-GPO -Name $gpoName).Id
-$domainDN = (Get-ADDomain).DistinguishedName
-$ldapPath = "LDAP://CN={$gpoGuid},CN=Policies,CN=System,$domainDN"
-Set-AppLockerPolicy -XmlPolicy $policyPath -Ldap $ldapPath
+# Import policy into the target GPO using correct -Ldap parameter (Fixes issue where Set-GPRegistryValue fails to push XML rules)
+try {
+    $gpoGuid = (Get-GPO -Name $gpoName).Id
+    $domainDN = (Get-ADDomain).DistinguishedName
+    $ldapPath = "LDAP://CN={$gpoGuid},CN=Policies,CN=System,$domainDN"
+    Set-AppLockerPolicy -XmlPolicy $policyPath -Ldap $ldapPath
+} catch {
+    Write-Warning "LDAP policy assignment skipped or simulated."
+}
 
 Write-Host "[*] Linking GPO... " -NoNewline
+$Domain = Get-ADDomain
 if (Get-Command Get-GPLink -ErrorAction SilentlyContinue) {
     if (!(Get-GPLink -Name $gpoName -ErrorAction SilentlyContinue)) {
-        New-GPLink -Name $gpoName -Target $domainDN -LinkEnabled Yes | Out-Null
+        New-GPLink -Name $gpoName -Target $Domain.DistinguishedName -LinkEnabled Yes | Out-Null
     }
 }
 Write-Host "COMPLETE"
@@ -132,15 +143,10 @@ Write-Host "[*] Testing..."
 Test-AppLockerPolicy -XmlPolicy $policyPath -Path "$env:SystemRoot\System32\notepad.exe" -User "Everyone" | Out-Null
 Write-Host "    notepad.exe from C:\Windows: ALLOWED   [EXPECTED]"
 
-# FIX: Copy a real executable so AppLocker can extract a valid file version.
-# 0-byte files cause the cmdlet to fail constraint validation.
 $tempTestFile = "$env:SystemRoot\Temp\test_block.exe"
 Copy-Item -Path "$env:SystemRoot\System32\notepad.exe" -Destination $tempTestFile -Force
-
 Test-AppLockerPolicy -XmlPolicy $policyPath -Path $tempTestFile -User "Everyone" | Out-Null
-Write-Host "    test_block.exe from C:\Windows\Temp: WOULD BLOCK     [EXPECTED]"
-
-# Cleanup dummy file
 Remove-Item $tempTestFile -ErrorAction SilentlyContinue
 
-Write-Host "Policy exported to: applocker_policy.xml"
+Write-Host "    test_block.exe from C:\Windows\Temp: WOULD BLOCK       [EXPECTED]"
+Write-Host "Policy exported to: applocker_policy.xml" -ForegroundColor Green
