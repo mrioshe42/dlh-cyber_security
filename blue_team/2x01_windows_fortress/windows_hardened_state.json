@@ -1,0 +1,114 @@
+{
+    "domain_metadata":  {
+                            "domain_name":  "meddefense.local",
+                            "domain_controller":  "DC01",
+                            "timestamp":  "2026-08-05T22:09:04Z",
+                            "script_runner":  "MEDDEFENSE\\analyst"
+                        },
+    "gpo_inventory":  [
+                          {
+                              "name":  "MedDefense - Password Policy",
+                              "scope":  "Domain",
+                              "status":  "Enabled",
+                              "setting":  "MinLength=14"
+                          },
+                          {
+                              "name":  "MedDefense - Advanced Audit Policy",
+                              "scope":  "Domain",
+                              "status":  "Enabled",
+                              "setting":  "Audit Process Creation = Success"
+                          },
+                          {
+                              "name":  "MedDefense - PowerShell Security",
+                              "scope":  "Domain",
+                              "status":  "Enabled",
+                              "setting":  "ScriptBlockLogging=1"
+                          },
+                          {
+                              "name":  "MedDefense - AppLocker Policy",
+                              "scope":  "Domain",
+                              "status":  "Enabled",
+                              "setting":  "EnforcementMode=AuditOnly"
+                          },
+                          {
+                              "name":  "MedDefense - Firewall Lockdown",
+                              "scope":  "Domain",
+                              "status":  "Enabled",
+                              "setting":  "DefaultInbound=Block"
+                          }
+                      ],
+    "audit_policy":  {
+                         "raw_output_status":  "Captured",
+                         "subcategories_enabled":  11,
+                         "status":  "Enforced"
+                     },
+    "powershell_logging":  {
+                               "script_block_logging":  1,
+                               "module_logging":  1,
+                               "transcription_path":  "C:\\PSTranscripts",
+                               "captured_event_ids":  [
+                                                          4103,
+                                                          4104
+                                                      ]
+                           },
+    "sysmon_posture":  {
+                           "service_status":  "Running",
+                           "driver_status":  "Loaded",
+                           "config_path":  "C:\\Sysmon\\sysmonconfig.xml",
+                           "custom_rule_count":  5,
+                           "active_event_ids":  [
+                                                    1,
+                                                    3,
+                                                    11,
+                                                    12,
+                                                    13
+                                                ]
+                       },
+    "firewall_posture":  {
+                             "profiles":  {
+                                              "Private":  "ON",
+                                              "Domain":  "ON",
+                                              "Public":  "ON"
+                                          },
+                             "inbound_policy":  "Block",
+                             "meddefense_rules_count":  6,
+                             "dropped_packet_logging":  true
+                         },
+    "applocker_posture":  {
+                              "enforcement_mode":  "AuditOnly",
+                              "executable_rules_count":  4,
+                              "script_rules_count":  3,
+                              "policy_path":  "applocker_policy.xml"
+                          },
+    "rdp_posture":  {
+                        "nla_required":  true,
+                        "allowed_group":  "G_IT_Admins",
+                        "clipboard_redirection":  "Disabled",
+                        "drive_redirection":  "Disabled",
+                        "idle_timeout_min":  15
+                    },
+    "authentication_protocols":  {
+                                     "des_enabled":  false,
+                                     "rc4_enabled":  false,
+                                     "aes_supported":  [
+                                                           "AES128",
+                                                           "AES256"
+                                                       ],
+                                     "ntlmv1_allowed":  false,
+                                     "smbv1_enabled":  false,
+                                     "smb_signing_required":  true
+                                 },
+    "service_account_posture":  {
+                                    "accounts_audited":  3,
+                                    "delegation_restricted":  "3/3",
+                                    "interactive_logon_blocked":  true,
+                                    "findings":  [
+                                                     "svc_backup password age: 235 days (WARN)"
+                                                 ]
+                                },
+    "validation_summary":  {
+                               "status":  "PASS",
+                               "critical_failures":  0,
+                               "timestamp":  "2026-08-05T22:09:08Z"
+                           }
+}
