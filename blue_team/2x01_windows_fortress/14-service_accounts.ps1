@@ -12,7 +12,7 @@
 .DATE
     Date: 2026-08-06
 .KEYWORDS
-    Service Accounts, Active Directory, Unconstrained Delegation, Kerberos, DES Encryption, Hardening, MemberOf, LastLogonDate, ServicePrincipalName
+    Service Accounts, Active Directory, Unconstrained Delegation, Kerberos, DES Encryption, Hardening, MemberOf, LastLogonDate, ServicePrincipalName, SPN
 .NOTES
     Notes: Requires domain administrator privileges and RSAT ActiveDirectory module.
 #>
