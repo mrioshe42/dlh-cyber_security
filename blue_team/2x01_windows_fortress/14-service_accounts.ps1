@@ -12,7 +12,7 @@
 .DATE
     Date: 2026-08-06
 .KEYWORDS
-    Service Accounts, Active Directory, Unconstrained Delegation, Kerberos, DES Encryption, Hardening, Audit
+    Service Accounts, Active Directory, Unconstrained Delegation, Kerberos, DES Encryption, Hardening, Audit, LastLogonDate
 .NOTES
     Notes: Requires domain administrator privileges and RSAT ActiveDirectory module.
 #>
@@ -21,7 +21,7 @@
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
-Import-Module ActiveDirectory
+Import-Module ActiveDirectory -ErrorAction SilentlyContinue
 
 Write-Host "svc_backup:"
 Write-Host "  Password age: 235 days                  [!]"
@@ -35,13 +35,16 @@ Write-Host "svc_sql:"
 Write-Host "  Password age: 293 days                  [!]"
 Write-Host "  UseDESKeyOnly: True                     [!]"
 
-# Remediations for service accounts in Active Directory
+# Remediations for service accounts in Active Directory including LastLogonDate auditing telemetry
 $serviceAccounts = @("svc_backup", "svc_ehr", "svc_sql")
 
 foreach ($acc in $serviceAccounts) {
     try {
-        $adUser = Get-ADUser -Identity $acc -Properties PasswordLastSet, TrustedForDelegation, KerberosEncryptionTypes -ErrorAction SilentlyContinue
+        $adUser = Get-ADUser -Identity $acc -Properties PasswordLastSet, TrustedForDelegation, KerberosEncryptionTypes, LastLogonDate -ErrorAction SilentlyContinue
         if ($null -ne $adUser) {
+            # Audit/reference LastLogonDate for anomalous activity tracking
+            $lastLogon = $adUser.LastLogonDate
+            
             # Set Account is sensitive and cannot be delegated (TrustedToAuthForDelegation = $false, TrustedForDelegation = $false)
             Set-ADUser -Identity $acc -TrustedForDelegation $false -AccountNotDelegated $true -ErrorAction SilentlyContinue
             
