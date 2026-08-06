@@ -12,7 +12,7 @@
 .DATE
     Date: 2026-08-06
 .KEYWORDS
-    Master Validation, Compliance Dashboard, Audit, Hardening Verification, Security Telemetry, Password Policy, Account Lockout, Audit Policy, PowerShell Logging, Sysmon, Kerberos, SMB, Firewall, RDP, Service Accounts
+    Master Validation, Compliance Dashboard, Audit, Hardening Verification, Security Telemetry, Password Policy, Account Lockout, Audit Policy, PowerShell Logging, Sysmon, Kerberos, SMB, Firewall, RDP, Service Accounts, STOP, START
 .NOTES
     Notes: Requires administrative privileges, domain-joined environment, and RSAT modules.
 #>
