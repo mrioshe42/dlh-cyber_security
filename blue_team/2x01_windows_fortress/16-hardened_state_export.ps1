@@ -119,7 +119,7 @@ $state.authentication_protocols = [ordered]@{
 }
 Write-Host "OK"
 
-# Service Account Posture
+# Service Account Posture, interactive logon risk
 Write-Host "[*] Exporting service account posture... " -NoNewline
 $state.service_account_posture = [ordered]@{
     accounts_audited          = 3
