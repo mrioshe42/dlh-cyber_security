@@ -137,7 +137,7 @@ $state.validation_summary = [ordered]@{
     timestamp           = (Get-Date).ToString("yyyy-MM-ddTHH:mm:ssZ")
 }
 Write-Host "OK"
-
+# not_found 
 $outputPath = "windows_hardened_state.json"
 $state | ConvertTo-Json -Depth 5 | Out-File -FilePath $outputPath -Encoding utf8 -Force
 
