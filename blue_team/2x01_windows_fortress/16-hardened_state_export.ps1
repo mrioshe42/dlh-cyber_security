@@ -14,7 +14,7 @@
 .KEYWORDS
     Evidence Export, NLA, GPO Inventory, Audit Policy, PowerShell Logging, Get-NetFirewallProfile, Set-AppLockerPolicy ,Test-AppLockerPolicy Get-AppLockerFileInformation, Get-NetFirewallRule, Set-NetFirewallProfile New-NetFirewallRule Set-NetFirewallRule Get-NetFirewallSetting Set-NetFirewallSetting Get-NetFirewallPortFilter Get-NetFirewallAddressFilter Firewall, AppLocker, RDP, Authentication Protocols, SMB, Service Accounts, Get-ADDomain, Get-GPO, Stop , Start, auditpol 4624 4625 4688 4672 4697 4698 4720 1102 Script Block Logging Get-AppLockerPolicy, Set-AppLockerPolicy, Test-AppLockerPolicy, New-AppLockerPolicy, Get-AppLockerFileInformation, Get-NetFirewallProfile, Set-NetFirewallProfile, Get-NetFirewallRule, Set-NetFirewallRule, New-NetFirewallRule, Remove-NetFirewallRule, Get-NetFirewallSetting, Set-NetFirewallSetting, Get-NetFirewallPortFilter, Set-NetFirewallPortFilter, Get-NetFirewallAddressFilter, Set-NetFirewallAddressFilter Get-GPOReport, Get-GPInheritance, Get-NetFirewallSetting, Get-WinEvent, Get-EventLog, and progress indicator formatting brackets ([*]) RC4, DES, NTLMv1, SMBv1, SMB signing, EnableSMB1Protocol, RequireSecuritySignature, LmCompatibilityLevel, DefaultDomainSupportedEncTypes, msDS-SupportedEncryptionTypes 
 .NOTES
-    Notes: Requires administrative privileged membership and RSAT modules. Execute on Domain Controller or Domain-joined Admin Server.
+    Notes: Requires administrative privileged membership and RSAT modules. Execute on Domain Controller or Domain-joined Admin Server. Task 15 must be completed first to ensure all hardening artifacts are present for export.
 #>
 #requires -RunAsAdministrator
 
