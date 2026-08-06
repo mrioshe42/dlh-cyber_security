@@ -40,7 +40,7 @@ $serviceAccounts = @("svc_backup", "svc_ehr", "svc_sql")
 
 foreach ($acc in $serviceAccounts) {
     try {
-        $adUser = Get-ADUser -Identity $acc -Properties PasswordLastSet, TrustedForDelegation, KerberosEncryptionTypes, LastLogonDate -ErrorAction SilentlyContinue
+        $adUser = Get-ADUser -Identity $acc -Properties PasswordLastSet, TrustedForDelegation, KerberosEncryptionTypes, LastLogonDate, MemberOf -ErrorAction SilentlyContinue
         if ($null -ne $adUser) {
             # Audit/reference LastLogonDate for anomalous activity tracking
             $lastLogon = $adUser.LastLogonDate
@@ -48,6 +48,11 @@ foreach ($acc in $serviceAccounts) {
             # Set Account is sensitive and cannot be delegated (TrustedToAuthForDelegation = $false, TrustedForDelegation = $false)
             Set-ADUser -Identity $acc -TrustedForDelegation $false -AccountNotDelegated $true -ErrorAction SilentlyContinue
             Set-ADAccountControl -Identity $acc -AccountSensitive $true -NotDelegated $true -ErrorAction SilentlyContinue
+            
+            # Remove service accounts from high-privileged groups
+            foreach ($group in @("Domain Admins", "Administrators", "Enterprise Admins")) {
+                Remove-ADGroupMember -Identity $group -Members $acc -Confirm:$false -ErrorAction SilentlyContinue
+            }
             
             if ($acc -eq "svc_sql") {
                 Set-ADUser -Identity $acc -KerberosEncryptionTypes AES128,AES256 -ErrorAction SilentlyContinue
