@@ -24,7 +24,7 @@ if (!(Test-Path $InputJsonPath)) {
 
 Write-Host "[*] Analyzing windows_events_export.json..." -ForegroundColor Cyan
 
-# Load exported events per hour
+# Load exported events per hour = 2 x 30 minutes
 $Events = @(Get-Content $InputJsonPath -Raw | ConvertFrom-Json)
 $TotalEvents = $Events.Count
 
@@ -74,7 +74,7 @@ function Get-Percent {
     return [math]::Round(($Good / $Total) * 100, 2)
 }
 
-# 1. Event Distribution
+# Event Distribution
 $EventDistribution = [ordered]@{}
 $EventIdGroups = $Events | Group-Object event_id | Sort-Object Count -Descending
 foreach ($Group in $EventIdGroups) {
