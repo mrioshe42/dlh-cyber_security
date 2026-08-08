@@ -24,7 +24,7 @@ if (!(Test-Path $InputJsonPath)) {
 
 Write-Host "[*] Analyzing windows_events_export.json..." -ForegroundColor Cyan
 
-# Load exported events
+# Load exported events per hour
 $Events = @(Get-Content $InputJsonPath -Raw | ConvertFrom-Json)
 $TotalEvents = $Events.Count
 
