@@ -44,7 +44,7 @@ cat << 'EOF' > "$RULE_FILE"
 -w /var/spool/cron/ -p wa -k cron_persist
 -w /etc/sudoers.d/ -p wa -k sudoers
 EOF
-# /home//.ssh
+#  /home/*/.ssh/
 for home in /home/*; do
     if [ -d "$home/.ssh" ]; then
         echo "-w $home/.ssh/ -p rwa -k ssh_keys" >> "$RULE_FILE"
