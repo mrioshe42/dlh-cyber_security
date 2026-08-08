@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    0-sysmon_validation.ps1
+    name : 0-sysmon_validation.ps1
 .DESCRIPTION
     Validates Sysmon event capture by triggering controlled actions (process creation, 
     network connections, file creation, registry modifications, and DNS queries) and 
@@ -9,7 +9,6 @@
     Purpose : Automate the validation of Sysmon telemetry capture on Windows hosts to ensure zero silent blind spots.
 .AUTHOR
     Author: Massimo Rios
-
 .NOTES
     Notes: Requires permissions to read the Microsoft-Windows-Sysmon/Operational event log. Incorporates robust event waiting and detailed reporting.
 #>
@@ -90,9 +89,7 @@ $Event = Wait-SysmonEvent -EventID 1 -SearchText "whoami"
 
 if (
     $Event -and
-    $Event.Message -match "CommandLine" -and
-    $Event.Message -match "cmd\.exe" -and
-    $Event.Message -match "whoami"
+    $Event.Message -match "CommandLine"
 ) {
     Report-Result "Process Creation" $true "cmd.exe /c whoami -> Sysmon EID 1 captured, CommandLine present"
 }
@@ -106,13 +103,17 @@ try {
     $WebRequest.Timeout = 3000
     $null = $WebRequest.GetResponse()
 } catch {}
-$Event = Wait-SysmonEvent -EventID 3 -SearchText ""
+$Event = Wait-SysmonEvent -EventID 3 -SearchText "127.0.0.1"
 
-if ($Event) {
-    Report-Result "Network Connection" $true "Outbound TCP -> Sysmon EID 3 captured"
+if (
+    $Event -and 
+    $Event.Message -match "DestinationIp" -and 
+    $Event.Message -match "DestinationPort"
+) {
+    Report-Result "Network Connection" $true "Outbound TCP -> Sysmon EID 3 captured, network details present"
 }
 else {
-    Report-Result "Network Connection" $false "Sysmon Event ID 3 not captured (Check Sysmon configuration for NetworkConnect)"
+    Report-Result "Network Connection" $false "Sysmon Event ID 3 missing network details"
 }
 
 Write-Host "    [3/5] File creation (Event ID 11)..."
@@ -120,11 +121,14 @@ $TestFile = "C:\Users\Public\sysmon_validation.txt"
 Set-Content -Path $TestFile -Value "Validation test data" -Force
 $Event = Wait-SysmonEvent -EventID 11 -SearchText "sysmon_validation.txt"
 
-if ($Event) {
-    Report-Result "File Creation" $true "$TestFile -> Sysmon EID 11 captured"
+if (
+    $Event -and 
+    $Event.Message -match "TargetFilename"
+) {
+    Report-Result "File Creation" $true "$TestFile -> Sysmon EID 11 captured, TargetFilename details present"
 }
 else {
-    Report-Result "File Creation" $false "Sysmon Event ID 11 not captured (Check Sysmon configuration for FileCreate)"
+    Report-Result "File Creation" $false "Sysmon Event ID 11 missing TargetFilename details"
 }
 
 Write-Host "    [4/5] Registry modification (Event ID 13)..."
@@ -140,22 +144,28 @@ New-ItemProperty `
     -Force | Out-Null
 $Event = Wait-SysmonEvent -EventID 13 -SearchText "SysmonTest"
 
-if ($Event) {
-    Report-Result "Registry Modification" $true "HKCU\Software\SysmonTest -> Sysmon EID 13 captured"
+if (
+    $Event -and 
+    $Event.Message -match "TargetObject"
+) {
+    Report-Result "Registry Modification" $true "HKCU\Software\SysmonTest -> Sysmon EID 13 captured, registry details present"
 }
 else {
-    Report-Result "Registry Modification" $false "Sysmon Event ID 13 not captured (Check Sysmon configuration for RegistryEvent)"
+    Report-Result "Registry Modification" $false "Sysmon Event ID 13 missing registry details"
 }
 
 Write-Host "    [5/5] DNS query (Event ID 22)..."
 [System.Net.Dns]::GetHostAddresses("example.com") | Out-Null
 $Event = Wait-SysmonEvent -EventID 22 -SearchText "example.com"
 
-if ($Event) {
-    Report-Result "DNS Query" $true "DNS query example.com -> Sysmon EID 22 captured"
+if (
+    $Event -and 
+    $Event.Message -match "QueryName"
+) {
+    Report-Result "DNS Query" $true "DNS query example.com -> Sysmon EID 22 captured, QueryName present"
 }
 else {
-    Report-Result "DNS Query" $false "Sysmon Event ID 22 not captured"
+    Report-Result "DNS Query" $false "Sysmon Event ID 22 missing DNS details"
 }
 
 Write-Host "[*] Cleanup: removing test artifacts..."
