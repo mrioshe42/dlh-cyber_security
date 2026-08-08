@@ -145,7 +145,7 @@ $Event4 = Wait-PowerShellEvent -EventID 4104 -SearchText "PSLOG_LINE_01"
 
 if ($Event4 -and $Event4.Message -match "PSLOG_LINE_12") {
     Report-Result "Multi-line Script Block" $true "EID 4104: Full block captured (12 lines)"
-} else {
+} else { #MISSED
     Report-Result "Multi-line Script Block" $false "EID 4104: Multi-line block missing"
 }
 
