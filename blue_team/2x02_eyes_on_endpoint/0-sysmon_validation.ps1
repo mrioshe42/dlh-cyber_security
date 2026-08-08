@@ -99,6 +99,7 @@ else {
 
 Write-Host "    [2/5] Network connection (Event ID 3)..."
 try {
+    Test-NetConnection 127.0.0.1 -Port 443 -InformationLevel Quiet -WarningAction SilentlyContinue | Out-Null
     $WebRequest = [System.Net.HttpWebRequest]::Create("http://127.0.0.1/")
     $WebRequest.Timeout = 3000
     $null = $WebRequest.GetResponse()
