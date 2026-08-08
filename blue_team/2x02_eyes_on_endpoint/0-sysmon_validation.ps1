@@ -6,11 +6,11 @@
     network connections, file creation, registry modifications, and DNS queries) and 
     verifying that the expected Event IDs are successfully logged.
 .PURPOSE
-    Purpose : Automate the validation of Sysmon telemetry capture on Windows hosts to ensure zero silent blind spots.
+    purpose : Automate the validation of Sysmon telemetry capture on Windows hosts to ensure zero silent blind spots.
 .AUTHOR
-    Author: Massimo Rios
+    author: Massimo Rios
 .NOTES
-    Notes: Requires permissions to read the Microsoft-Windows-Sysmon/Operational event log. Incorporates robust event waiting and detailed reporting.
+    project : Requires permissions to read the Microsoft-Windows-Sysmon/Operational event log. Incorporates robust event waiting and detailed reporting.
 #>
 
 Set-StrictMode -Version Latest
