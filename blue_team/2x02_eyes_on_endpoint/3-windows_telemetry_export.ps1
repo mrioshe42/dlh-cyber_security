@@ -34,7 +34,7 @@ foreach ($ChannelConfig in $Channels) {
         LogName   = $ChannelName
         StartTime = $StartTime
     } -ErrorAction SilentlyContinue
-
+    # EndTime
     $Count = 0
     if ($RawEvents) {
         foreach ($Event in $RawEvents) {
