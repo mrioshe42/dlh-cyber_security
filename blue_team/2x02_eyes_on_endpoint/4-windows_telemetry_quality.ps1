@@ -187,7 +187,7 @@ if ($SortedTimes.Count -gt 0) {
 
 $MaxGapMinutes = if ($AllGapMinutes.Count -gt 0) { ($AllGapMinutes | Measure-Object -Maximum).Maximum } else { 0 }
 
-# Field Completeness
+# Field Completeness CommandLine
 $ProcessEvents = @($Events | Where-Object { $_.event_id -eq 4688 -or ($_.source_type -eq "Sysmon" -and $_.event_id -eq 1) })
 $CmdLineGood = 0
 foreach ($Ev in $ProcessEvents) {
