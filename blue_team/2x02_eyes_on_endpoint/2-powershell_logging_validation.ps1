@@ -2,7 +2,7 @@
 .SYNOPSIS
     name : 2-powershell_logging_validation.ps1
 .PURPOSE
-    purpose : Validate PowerShell Script Block Logging (EID 4104), Module Logging (EID 4103), and Session Transcription with full log separation and proactive transcript generation.
+    purpose : Validate PowerShell Script Block Logging (EID 4104), Module Logging (EID 4103), and Session Transcription with full log separation and proactive multi-line transcript generation.
     author: Massimo Rios
 .NOTES
     project : Endpoint Telemetry & Detection Engineering Suite
