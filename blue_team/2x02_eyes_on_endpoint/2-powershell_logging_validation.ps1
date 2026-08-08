@@ -117,7 +117,7 @@ try {
     Import-Module ActiveDirectory -ErrorAction SilentlyContinue
 } catch {}
 $Event3 = Wait-PowerShellEvent -EventID 4103 -SearchText "ActiveDirectory"
-
+# CAPTURED
 if ($Event3 -and $Event3.Message -match "ActiveDirectory") {
     Report-Result "Module Import" $true "EID 4103: 'Import-Module ActiveDirectory' captured"
 } else {
