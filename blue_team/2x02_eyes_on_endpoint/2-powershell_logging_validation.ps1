@@ -95,7 +95,7 @@ if ($Event1 -and $Event1.Message -match "Get-Process") {
     Report-Result "Simple Command" $false "EID 4104: 'Get-Process' missing"
 }
 
-# Encoded Command (Event ID 4104 Decoded)
+# EncodedCommand (Event ID 4104 Decoded)
 Write-Host "    [2/5] Encoded command..."
 $EncodedInput = 'VwByAGkAdAC0ASABvAHMAdAAgACIAVABlAHMAdAAi'
 Write-Host "          Input: -enc $EncodedInput"
