@@ -5,7 +5,7 @@
     purpose : Export, normalize, and enrich Windows Security, Sysmon, and PowerShell telemetry into an analyst-ready JSON package.
     author: Massimo Rios
 .NOTES
-    project : Endpoint Telemetry & Detection Engineering Suite
+    project : Endpoint Telemetry & Detection Engineering Suite, ScriptBlockText
 #>
 
 Set-StrictMode -Version Latest
