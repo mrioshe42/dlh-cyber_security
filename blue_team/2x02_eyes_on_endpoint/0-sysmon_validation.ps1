@@ -32,10 +32,11 @@ function Test-TelemetryCapture {
     Write-Host "    [Executing] Checking vector: $ActivityName (Event ID $TargetEventId)..." -ForegroundColor Yellow
     
     $CheckpointTime = Get-Date
-    
+
     & $ExecutionBlock
     Start-Sleep -Seconds 2
 
+    # Query event logs via hashtable filter
     $MatchedEvent = Get-WinEvent -FilterHashtable @{
         LogName   = $TelemetryLogChannel
         Id        = $TargetEventId
@@ -62,6 +63,8 @@ function Test-TelemetryCapture {
         return $false
     }
 }
+
+# Process Creation (ID 1)
 Test-TelemetryCapture `
     -TargetEventId 1 `
     -ActivityName "Process Creation" `
@@ -70,6 +73,7 @@ Test-TelemetryCapture `
     -SuccessLogMessage "cmd.exe /c whoami -> Sysmon EID 1 captured, CommandLine present" `
     -FailureLogMessage "Process creation vector not captured"
 
+# Network Connection (ID 3)
 Test-TelemetryCapture `
     -TargetEventId 3 `
     -ActivityName "Network Connection" `
@@ -78,6 +82,7 @@ Test-TelemetryCapture `
     -SuccessLogMessage "Outbound TCP -> Sysmon EID 3 captured, DestinationIp / DestinationPort present" `
     -FailureLogMessage "Network telemetry vector not captured"
 
+# File Creation (ID 11)
 $ValidationArtifact = "C:\Windows\Temp\sysmon_test_artifact.dat"
 Test-TelemetryCapture `
     -TargetEventId 11 `
@@ -87,6 +92,7 @@ Test-TelemetryCapture `
     -SuccessLogMessage "$ValidationArtifact -> Sysmon EID 11 captured" `
     -FailureLogMessage "File creation vector not captured"
 
+# Registry Modification (ID 13)
 $RegistryTargetHive = "HKCU:\Software\SysmonValidationKey"
 $TargetRegistryValue = "VerificationToken"
 Test-TelemetryCapture `
@@ -100,6 +106,7 @@ Test-TelemetryCapture `
     -SuccessLogMessage "HKCU Registry Path -> Sysmon EID 13 captured" `
     -FailureLogMessage "Registry mutation vector not captured"
 
+# DNS Query (ID 22)
 Test-TelemetryCapture `
     -TargetEventId 22 `
     -ActivityName "DNS Query" `
