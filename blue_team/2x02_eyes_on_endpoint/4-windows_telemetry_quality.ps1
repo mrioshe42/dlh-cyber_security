@@ -24,6 +24,7 @@ if (!(Test-Path $InputJsonPath)) {
 
 Write-Host "[*] Analyzing windows_events_export.json..." -ForegroundColor Cyan
 
+# Load exported events
 $Events = @(Get-Content $InputJsonPath -Raw | ConvertFrom-Json)
 $TotalEvents = $Events.Count
 
@@ -34,7 +35,9 @@ if ($TotalEvents -eq 0) {
 
 function Get-EventValue {
     param($Event, [string]$Name)
-    if ($null -eq $Event) { return $null }
+    if ($null -eq $Event) { 
+        return $null
+    }
     
     if ($Event.PSObject.Properties['enriched_fields'] -and $null -ne $Event.enriched_fields) {
         if ($Event.enriched_fields.PSObject.Properties[$Name]) {
@@ -71,7 +74,7 @@ function Get-Percent {
     return [math]::Round(($Good / $Total) * 100, 2)
 }
 
-# Event Distribution
+# 1. Event Distribution
 $EventDistribution = [ordered]@{}
 $EventIdGroups = $Events | Group-Object event_id | Sort-Object Count -Descending
 foreach ($Group in $EventIdGroups) {
@@ -99,15 +102,15 @@ foreach ($Chan in @("Security", "Sysmon", "PowerShell")) {
 $EndTime = (Get-Date).ToUniversalTime()
 $StartTime = $EndTime.AddHours(-$WindowHours)
 
-$TimedEvents = @()
+$TimedEvents = [System.Collections.Generic.List[PSCustomObject]]::new()
 foreach ($Event in $Events) {
     try {
         $Time = [DateTimeOffset]::Parse($Event.timestamp).UtcDateTime
         if ($Time -ge $StartTime -and $Time -le $EndTime) {
-            $TimedEvents += [PSCustomObject]@{
+            $TimedEvents.Add([PSCustomObject]@{
                 time  = $Time
                 event = $Event
-            }
+            })
         }
     }
     catch {
@@ -139,7 +142,7 @@ $HoursWithoutEventsCount = [Math]::Max(0, $WindowHours - $HoursWithEventsCount)
 # Gap Detection
 $Gaps = @()
 $AllGapMinutes = @()
-$SortedTimes = @($TimedEvents.time | Sort-Object)
+$SortedTimes = @($TimedEvents | Sort-Object time | Select-Object -ExpandProperty time)
 
 if ($SortedTimes.Count -gt 0) {
     $FirstGap = ($SortedTimes[0] - $StartTime).TotalMinutes
@@ -184,7 +187,7 @@ if ($SortedTimes.Count -gt 0) {
 
 $MaxGapMinutes = if ($AllGapMinutes.Count -gt 0) { ($AllGapMinutes | Measure-Object -Maximum).Maximum } else { 0 }
 
-#Field Completeness
+# Field Completeness
 $ProcessEvents = @($Events | Where-Object { $_.event_id -eq 4688 -or ($_.source_type -eq "Sysmon" -and $_.event_id -eq 1) })
 $CmdLineGood = 0
 foreach ($Ev in $ProcessEvents) {
@@ -208,7 +211,7 @@ foreach ($Ev in $PsEvents) {
 }
 $ScriptBlockCompleteness = Get-Percent $ScriptGood $PsEvents.Count
 
-# --- 5. Quality Score Calculation ---
+# Quality Score Calculation
 $CompletenessAvg = ($CmdLineCompleteness + $SourceIpCompleteness + $ScriptBlockCompleteness) / 3
 $ContinuityScore = ($HoursWithEventsCount / $WindowHours) * 100
 
