@@ -114,7 +114,7 @@ Test-TelemetryCapture `
     -ExpectedKeywords @("example.com") `
     -SuccessLogMessage "Resolve-DnsName example.com -> Sysmon EventID 22 captured" `
     -FailureLogMessage "DNS resolution vector not captured"
-
+# Cleanup
 Write-Host "[*] Purging test artifacts and cleaning state..." -ForegroundColor Cyan
 Remove-Item $ValidationArtifact -Force -ErrorAction SilentlyContinue
 Remove-ItemProperty -Path $RegistryTargetHive -Name $TargetRegistryValue -ErrorAction SilentlyContinue
