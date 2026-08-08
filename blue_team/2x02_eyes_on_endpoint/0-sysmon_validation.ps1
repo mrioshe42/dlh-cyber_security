@@ -8,7 +8,7 @@
 .AUTHOR
     author: Massimo Rios
 .NOTES
-    project : Built for high-fidelity endpoint assurance and compliance checks, SysmonTest 
+    project : Built for high-fidelity endpoint assurance and compliance checks, SysmonTest nslookup
 #>
 
 Set-StrictMode -Version Latest
