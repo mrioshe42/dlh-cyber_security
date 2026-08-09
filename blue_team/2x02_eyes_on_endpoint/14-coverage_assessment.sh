@@ -6,7 +6,9 @@
 set -e
 set -u
 set -o pipefail
-
+# telemetry_handoff/windows_events.json
+# telemetry_handoff/linux_events.json
+# telemetry_handoff/attack_ground_truth.json
 HANDOFF_DIR="telemetry_handoff"
 WIN_EVENTS="$HANDOFF_DIR/windows_events.json"
 LIN_EVENTS="$HANDOFF_DIR/linux_events.json"
