@@ -73,8 +73,8 @@ Invoke-AttackStep -StepNumber 1 -Description "Creating local user 'support_updat
 }
 
 # Add the user to the Administrators group
-Invoke-AttackStep -StepNumber 2 -Description "Adding to Administrators group" -ExpectedSource "Security Event ID 4728 / 4732" -MitreTechnique "MITRE ATT&CK T1098 - Account Manipulation" -ActionBlock {
-    Add-LocalGroupMember -Group "Administrators" -Member "support_update"
+Invoke-AttackStep -StepNumber 2 -Description "Adding to Domain Admins group" -ExpectedSource "Security Event ID 4728 / 4732" -MitreTechnique "MITRE ATT&CK T1098 - Account Manipulation" -ActionBlock {
+    Add-ADGroupMember -Identity "Domain Admins" -Members "support_update"
 }
 
 # Run an encoded PowerShell command -enc
