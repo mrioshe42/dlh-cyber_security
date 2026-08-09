@@ -2,6 +2,7 @@
 # name: 14-coverage_assessment.sh
 # purpose: Produce simulated actions , a comprehensive cross-platform telemetry coverage assessment combining handoff data, detection matrices, and quality scores into a final metadata report. multi-source
 # author: Massimo Rios
+# recommendation : 
 
 set -e
 set -u
