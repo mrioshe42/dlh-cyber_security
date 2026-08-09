@@ -102,7 +102,7 @@ check_log() {
                 "apache2 access" | "apache2 error") rotation="14 days" ;;
                 "dpkg.log") rotation="365 days" ;;
                 *) rotation="30 days" ;;
-            es-ac 2>/dev/null || true
+            esac
         fi
 
         printf "%-18s %-32s %-10s %-14s %-10s %-10s\n" "$name" "$actual_path" "$format" "$rotation" "$events" "$relevance"
