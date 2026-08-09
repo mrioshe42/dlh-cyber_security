@@ -1,0 +1,166 @@
+{
+  "metadata": {
+    "generated_at": "2026-08-09T21:00:36Z",
+    "confidence_rating": "acceptable"
+  },
+  "event_summary": {
+    "total_events": 2648,
+    "by_platform": {
+      "windows": 2303,
+      "linux": 345
+    },
+    "by_source_type": {
+      "windows": [
+        {
+          "source": "PowerShell",
+          "count": 76
+        },
+        {
+          "source": "Security",
+          "count": 1385
+        },
+        {
+          "source": "Sysmon",
+          "count": 842
+        }
+      ],
+      "linux": [
+        {
+          "source": "auth",
+          "count": 168
+        },
+        {
+          "source": "syslog",
+          "count": 177
+        }
+      ]
+    },
+    "by_event_category": {
+      "windows": [
+        {
+          "category": "DNSQuery",
+          "count": 134
+        },
+        {
+          "category": "FileCreate",
+          "count": 69
+        },
+        {
+          "category": "General",
+          "count": 82
+        },
+        {
+          "category": "Logon",
+          "count": 1349
+        },
+        {
+          "category": "NetworkConnect",
+          "count": 12
+        },
+        {
+          "category": "ProcessCreate",
+          "count": 403
+        },
+        {
+          "category": "ProcessCreation",
+          "count": 11
+        },
+        {
+          "category": "Registry",
+          "count": 193
+        },
+        {
+          "category": "ScriptBlock",
+          "count": 50
+        }
+      ],
+      "linux": [
+        {
+          "category": "PAM",
+          "count": 19
+        },
+        {
+          "category": "error",
+          "count": 9
+        },
+        {
+          "category": "other",
+          "count": 135
+        },
+        {
+          "category": "service",
+          "count": 33
+        },
+        {
+          "category": "ssh_login_success",
+          "count": 2
+        },
+        {
+          "category": "su",
+          "count": 2
+        },
+        {
+          "category": "sudo",
+          "count": 145
+        }
+      ]
+    }
+  },
+  "detection_matrix_summary": {
+    "total_simulated_actions": 12,
+    "captured_actions": 12,
+    "missed_actions": 0,
+    "multi_source_detections": 3
+  },
+  "attck_coverage": {
+    "covered_techniques_count": 9,
+    "partially_covered_techniques_count": 2,
+    "blind_techniques_count": 1,
+    "details": [
+      {
+        "technique": "T1078",
+        "status": "covered",
+        "source": "Sysmon / Security Event Log"
+      },
+      {
+        "technique": "T1548.003",
+        "status": "covered",
+        "source": "auditd / sudoers"
+      },
+      {
+        "technique": "T1059.004",
+        "status": "covered",
+        "source": "Sysmon / Process Creation"
+      },
+      {
+        "technique": "T1021.001",
+        "status": "partial",
+        "source": "Windows Security Logs"
+      },
+      {
+        "technique": "T1053.003",
+        "status": "covered",
+        "source": "auditd / cron"
+      },
+      {
+        "technique": "T1003.008",
+        "status": "blind",
+        "source": "None"
+      }
+    ]
+  },
+  "known_gaps": [
+    {
+      "description": "Lack of deep kernel telemetry for specific unauthorized memory reads.",
+      "impacted_platform": "Linux",
+      "impacted_technique": "T1003.008",
+      "reason": "Auditd rules did not capture raw memory syscalls under high load.",
+      "recommended_instrumentation_improvement": "Deploy eBPF-based runtime monitoring alongside auditd."
+    }
+  ],
+  "quality_summary": {
+    "windows_score": 94.2,
+    "linux_score": 75,
+    "final_handoff_confidence_rating": "acceptable"
+  }
+}
