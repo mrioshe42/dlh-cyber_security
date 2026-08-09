@@ -1,0 +1,148 @@
+ [
+    {
+        "technique_id":  "T1059",
+        "technique_name":  "Command and Scripting Interpreter",
+        "required_event_ids":  [
+                                   1
+                               ],
+        "enabled_event_ids":  [
+                                  1
+                              ],
+        "filter_conflicts":  [
+                                 "ProcessCreate has include filtering"
+                             ],
+        "coverage_status":  "partial",
+        "evidence_fields_expected":  [
+                                         "Image",
+                                         "CommandLine",
+                                         "User",
+                                         "ParentImage"
+                                     ],
+        "recommendation":  "Review include/exclude filters."
+    },
+    {
+        "technique_id":  "T1053",
+        "technique_name":  "Scheduled Task/Job",
+        "required_event_ids":  [
+                                   1
+                               ],
+        "enabled_event_ids":  [
+                                  1
+                              ],
+        "filter_conflicts":  [
+                                 "ProcessCreate has include filtering"
+                             ],
+        "coverage_status":  "partial",
+        "evidence_fields_expected":  [
+                                         "Image",
+                                         "CommandLine",
+                                         "ParentImage"
+                                     ],
+        "recommendation":  "Review include/exclude filters."
+    },
+    {
+        "technique_id":  "T1547",
+        "technique_name":  "Boot or Logon Autostart Execution",
+        "required_event_ids":  [
+                                   13
+                               ],
+        "enabled_event_ids":  [
+                                  13
+                              ],
+        "filter_conflicts":  [
+                                 "RegistryEvent has include filtering"
+                             ],
+        "coverage_status":  "partial",
+        "evidence_fields_expected":  [
+                                         "TargetObject",
+                                         "Details",
+                                         "Image"
+                                     ],
+        "recommendation":  "Review include/exclude filters."
+    },
+    {
+        "technique_id":  "T1055",
+        "technique_name":  "Process Injection",
+        "required_event_ids":  [
+                                   8,
+                                   10
+                               ],
+        "enabled_event_ids":  [
+
+                              ],
+        "filter_conflicts":  [
+
+                             ],
+        "coverage_status":  "blind",
+        "evidence_fields_expected":  [
+                                         "SourceImage",
+                                         "TargetImage",
+                                         "GrantedAccess"
+                                     ],
+        "recommendation":  "Enable required Sysmon Event IDs."
+    },
+    {
+        "technique_id":  "T1071",
+        "technique_name":  "Application Layer Protocol",
+        "required_event_ids":  [
+                                   3,
+                                   22
+                               ],
+        "enabled_event_ids":  [
+
+                              ],
+        "filter_conflicts":  [
+
+                             ],
+        "coverage_status":  "blind",
+        "evidence_fields_expected":  [
+                                         "Image",
+                                         "DestinationIp",
+                                         "DestinationPort",
+                                         "QueryName"
+                                     ],
+        "recommendation":  "Enable required Sysmon Event IDs."
+    },
+    {
+        "technique_id":  "T1574.002",
+        "technique_name":  "DLL Side-Loading",
+        "required_event_ids":  [
+                                   7
+                               ],
+        "enabled_event_ids":  [
+
+                              ],
+        "filter_conflicts":  [
+
+                             ],
+        "coverage_status":  "blind",
+        "evidence_fields_expected":  [
+                                         "Image",
+                                         "ImageLoaded",
+                                         "Hashes"
+                                     ],
+        "recommendation":  "Enable required Sysmon Event IDs."
+    },
+    {
+        "technique_id":  "T1027",
+        "technique_name":  "Obfuscated or Compressed Files",
+        "required_event_ids":  [
+                                   11,
+                                   15
+                               ],
+        "enabled_event_ids":  [
+
+                              ],
+        "filter_conflicts":  [
+
+                             ],
+        "coverage_status":  "blind",
+        "evidence_fields_expected":  [
+                                         "Image",
+                                         "TargetFilename",
+                                         "Hashes"
+                                     ],
+        "recommendation":  "Enable required Sysmon Event IDs."
+    }
+]
+ 
