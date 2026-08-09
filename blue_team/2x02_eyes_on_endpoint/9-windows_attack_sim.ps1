@@ -11,6 +11,7 @@
 [CmdletBinding()]
 param()
 
+Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
 $OutputJson = "windows_attack_log.json"
@@ -47,17 +48,16 @@ function Invoke-AttackStep {
     }
 
     $script:Actions.Add([PSCustomObject]@{
-        action_number            = $StepNumber
-        description              = $Description
-        timestamp                = $timestamp
+        action_number             = $StepNumber
+        description               = $Description
+        timestamp                 = $timestamp
         expected_detection_source = $ExpectedSource
-        mitre_attack_technique   = $MitreTechnique
+        mitre_attack_technique    = $MitreTechnique
     })
     
     Start-Sleep -Milliseconds 500
 }
 
-# Pre-cleanup to ensure a clean slate before execution
 try {
     net user support_update /delete >$null 2>&1
     schtasks /delete /tn "SupportUpdateTask" /f >$null 2>&1
@@ -105,7 +105,7 @@ Invoke-AttackStep -StepNumber 6 -Description "Dropping file in Startup" -Expecte
     }
     Set-Content -Path $StartupFile -Value "echo C2 Pulse" -Encoding UTF8
 }
-+
+
 Write-Host "[*] Cleaning up artifacts..." -ForegroundColor Yellow
 
 $cleanupStatus = "[CLEAN]"
@@ -121,7 +121,7 @@ try {
 
 Write-Host "    User removed, task deleted, file removed           $cleanupStatus" -ForegroundColor Green
 Write-Host "Actions executed: 6"
-+
+
 $GroundTruth = [PSCustomObject]@{
     metadata = [PSCustomObject]@{
         simulation = "Windows Attacker Simulation"
@@ -133,3 +133,4 @@ $GroundTruth = [PSCustomObject]@{
 
 $GroundTruth | ConvertTo-Json -Depth 5 | Out-File -FilePath $OutputJson -Encoding utf8
 Write-Host "Ground truth saved to: $OutputJson" -ForegroundColor Cyan
+
