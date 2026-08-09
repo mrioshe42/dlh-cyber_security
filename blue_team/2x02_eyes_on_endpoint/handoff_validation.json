@@ -1,0 +1,83 @@
+{
+  "generated_at": "2026-08-09T21:12:36Z",
+  "verdict": "FAIL",
+  "checks_passed": 10,
+  "checks_total": 14,
+  "timestamp_range": {
+    "min": "2026-08-08T08:06:59Z",
+    "max": "2026-08-09T19:28:15Z"
+  },
+  "cross_platform_overlap_hours": 0,
+  "results": [
+    {
+      "category": "file_existence",
+      "status": "PASS",
+      "message": "windows_events.json exists (6.1 MB)"
+    },
+    {
+      "category": "file_existence",
+      "status": "PASS",
+      "message": "linux_events.json exists (133 KB)"
+    },
+    {
+      "category": "file_existence",
+      "status": "PASS",
+      "message": "attack_ground_truth.json exists (3 KB)"
+    },
+    {
+      "category": "json_validity",
+      "status": "PASS",
+      "message": "windows_events.json: valid JSON, 2303 objects"
+    },
+    {
+      "category": "json_validity",
+      "status": "PASS",
+      "message": "linux_events.json: valid JSON, 345 objects"
+    },
+    {
+      "category": "json_validity",
+      "status": "PASS",
+      "message": "attack_ground_truth.json: valid JSON, 6 objects"
+    },
+    {
+      "category": "required_fields",
+      "status": "PASS",
+      "message": "All events have timestamp, hostname, source_type, event_category"
+    },
+    {
+      "category": "min_counts",
+      "status": "PASS",
+      "message": "Windows: 2,303 >= 1,000"
+    },
+    {
+      "category": "min_counts",
+      "status": "FAIL",
+      "message": "Linux: 345 >= 500"
+    },
+    {
+      "category": "min_counts",
+      "status": "FAIL",
+      "message": "Ground truth: 6 >= 10"
+    },
+    {
+      "category": "timestamps",
+      "status": "PASS",
+      "message": "All timestamps valid ISO 8601"
+    },
+    {
+      "category": "timestamps",
+      "status": "PASS",
+      "message": "No future timestamps"
+    },
+    {
+      "category": "alignment",
+      "status": "FAIL",
+      "message": "Windows and Linux time ranges do not overlap"
+    },
+    {
+      "category": "ground_truth",
+      "status": "FAIL",
+      "message": "0/6 actions have detection matrix entries"
+    }
+  ]
+}
