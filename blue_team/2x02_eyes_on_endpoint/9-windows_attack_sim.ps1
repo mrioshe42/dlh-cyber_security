@@ -57,7 +57,7 @@ function Invoke-AttackStep {
     
     Start-Sleep -Milliseconds 500
 }
-
+# Remove-LocalUser
 try {
     net user support_update /delete >$null 2>&1
     schtasks /delete /tn "SupportUpdateTask" /f >$null 2>&1
