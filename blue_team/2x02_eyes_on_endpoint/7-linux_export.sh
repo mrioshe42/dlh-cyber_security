@@ -144,25 +144,34 @@ if [ -f "$AUDIT_LOG" ]; then
         iso=$(date -u -d "@$audit_epoch" "+%Y-%m-%dT%H:%M:%SZ")
         host=$(hostname)
 
-        if echo "$line" | grep -q "type=EXECVE"; then
-            command=$(echo "$line" | grep -oE 'a[0-9]+="[^"]*"' | sed 's/a[0-9]*=//g' | tr '\n' ' ' || true)
-            add_event "$iso" "$host" "auditd" "execve" "" "" "$command" "" "" "$line"
-            execve_count=$((execve_count + 1))
-        elif echo "$line" | grep -q "type=PATH"; then
-            path=$(echo "$line" | sed -n 's/.*name="\([^"]*\)".*/\1/p')
-            add_event "$iso" "$host" "auditd" "file_access" "" "" "" "$path" "" "$line"
-            file_count=$((file_count + 1))
-        elif echo "$line" | grep -Eq "type=SOCKADDR|network_connect"; then
-            destination=$(echo "$line" | sed -n 's/.*saddr=\([^ ]*\).*/\1/p')
-            add_event "$iso" "$host" "auditd" "network" "" "" "" "" "$destination" "$line"
-            network_count=$((network_count + 1))
-        else
-            add_event "$iso" "$host" "auditd" "other" "" "" "" "" "" "$line"
-            audit_other=$((audit_other + 1))
-        }
+        if [[ "$line" == *"type=EXECVE"* ]]; then
+    command=""
+    if [[ "$line" =~ a[0-9]+=\"([^\"]*)\" ]]; then
+        command="${BASH_REMATCH[1]}"
+    fi
+    add_event "$iso" "$host" "auditd" "execve" "" "" "$command" "" "" "$line"
+    execve_count=$((execve_count + 1))
+elif [[ "$line" == *"type=PATH"* ]]; then
+    path=""
+    if [[ "$line" =~ name=\"([^\"]*)\" ]]; then
+        path="${BASH_REMATCH[1]}"
+    fi
+    add_event "$iso" "$host" "auditd" "file_access" "" "" "" "$path" "" "$line"
+    file_count=$((file_count + 1))
+elif [[ "$line" == *"type=SOCKADDR"* || "$line" == *"network_connect"* ]]; then
+    destination=""
+    if [[ "$line" =~ saddr=([^\ ]*) ]]; then
+        destination="${BASH_REMATCH[1]}"
+    fi
+    add_event "$iso" "$host" "auditd" "network" "" "" "" "" "$destination" "$line"
+    network_count=$((network_count + 1))
+else
+    add_event "$iso" "$host" "auditd" "other" "" "" "" "" "" "$line"
+    audit_other=$((audit_other + 1))
+fi
 
         audit_count=$((audit_count + 1))
-    done < <(ausearch --raw 2>/dev/null || true)
+    done < <(ausearch --raw -ts recent 2>/dev/null || true)
 fi
 
 echo " $audit_count events"
