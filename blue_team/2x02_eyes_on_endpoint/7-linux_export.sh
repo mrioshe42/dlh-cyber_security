@@ -43,7 +43,9 @@ syslog_other=0
 # Convert normal Linux log timestamp to ISO 8601 UTC
 to_iso() {
     local stamp="$1"
-    date -u -d "$YEAR $stamp" "+%Y-%m-%dT%H:%M:%SZ" 2>/dev/null || echo ""
+    local month_day="${stamp% *}"
+    local time_part="${stamp##* }"
+    date -d "$month_day $YEAR $time_part +0200" -u "+%Y-%m-%dT%H:%M:%SZ" 2>/dev/null || echo ""
 }
 
 # Check if timestamp is inside selected time window
