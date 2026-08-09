@@ -1,4 +1,4 @@
-<#
+ <#
 .SYNOPSIS
     name : 1-sysmon_coverage_matrix.ps1
 .PURPOSE
@@ -109,9 +109,9 @@ $ThreatCatalog = @(
 $MatrixResults = [System.Collections.Generic.List[PSCustomObject]]::new()
 
 foreach ($Item in $ThreatCatalog) {
-    $ValidIds = foreach ($ReqId in $Item.Need) {
-        if ($ActiveTelemetryIds.Contains($ReqId)) { $ReqId }
-    }
+    $ValidIds = @(foreach ($ReqId in $Item.Need) {
+    if ($ActiveTelemetryIds.Contains($ReqId)) { $ReqId }
+})
 
     $RuleConflicts = [System.Collections.Generic.List[string]]::new()
     foreach ($Sign in $Item.Tags) {
@@ -153,13 +153,13 @@ foreach ($Item in $ThreatCatalog) {
 
 $MatrixResults | ConvertTo-Json -Depth 5 | Set-Content $JsonTarget
 
-$CountCovered = ($MatrixResults | Where-Object { $_.coverage_status -eq "covered" }).Count
-$CountPartial = ($MatrixResults | Where-Object { $_.coverage_status -eq "partial" }).Count
-$CountBlind   = ($MatrixResults | Where-Object { $_.coverage_status -eq "blind" }).Count
+$CountCovered = @($MatrixResults | Where-Object { $_.coverage_status -eq "covered" }).Count
+$CountPartial = @($MatrixResults | Where-Object { $_.coverage_status -eq "partial" }).Count
+$CountBlind   = @($MatrixResults | Where-Object { $_.coverage_status -eq "blind" }).Count
 
 Write-Host "Enabled Event IDs: $(($ActiveTelemetryIds | Sort-Object) -join ', ')"
 Write-Host "Techniques assessed: $($MatrixResults.Count)"
 Write-Host "Covered: $CountCovered"
 Write-Host "Partial: $CountPartial"
 Write-Host "Blind: $CountBlind"
-Write-Host "Report saved to: sysmon_coverage_matrix.json"
+Write-Host "Report saved to: sysmon_coverage_matrix.json" 
