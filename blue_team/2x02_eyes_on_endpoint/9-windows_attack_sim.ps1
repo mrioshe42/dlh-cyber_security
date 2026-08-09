@@ -77,7 +77,7 @@ Invoke-AttackStep -StepNumber 2 -Description "Adding to Administrators group" -E
     Add-LocalGroupMember -Group "Administrators" -Member "support_update"
 }
 
-# Run an encoded PowerShell command
+# Run an encoded PowerShell command -enc
 Invoke-AttackStep -StepNumber 3 -Description "Running encoded PowerShell" -ExpectedSource "Sysmon Event ID 1 / PowerShell Script Block ID 4104" -MitreTechnique "MITRE ATT&CK T1059.001 - PowerShell" -ActionBlock {
     $CommandText = 'Write-Host "C2 beacon active"'
     $Bytes = [System.Text.Encoding]::Unicode.GetBytes($CommandText)
