@@ -1,6 +1,6 @@
 #!/bin/bash
 # name: 12-linux_detection_proof.sh
-# purpose: Correlate Linux attack simulation logs against captured telemetry to produce a validation matrix.
+# purpose: Correlate Linux attack simulation logs against captured telemetry to produce a jq validation matrix.
 # author: Massimo Rios
 
 set -e
