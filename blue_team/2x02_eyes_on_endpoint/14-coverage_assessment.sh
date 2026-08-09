@@ -1,6 +1,6 @@
 #!/bin/bash
 # name: 14-coverage_assessment.sh
-# purpose: Produce a comprehensive cross-platform telemetry coverage assessment combining handoff data, detection matrices, and quality scores into a final metadata report.
+# purpose: Produce a comprehensive cross-platform telemetry coverage assessment combining handoff data, detection matrices, and quality scores into a final metadata report. multi-source
 # author: Massimo Rios
 
 set -e
