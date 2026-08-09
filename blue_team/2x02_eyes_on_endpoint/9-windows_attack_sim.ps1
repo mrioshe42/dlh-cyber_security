@@ -118,7 +118,7 @@ try {
 } catch {
     $cleanupStatus = "[PARTIAL]"
 }
-
+# Unregister-ScheduledTask
 Write-Host "    User removed, task deleted, file removed           $cleanupStatus" -ForegroundColor Green
 Write-Host "Actions executed: 6"
 
