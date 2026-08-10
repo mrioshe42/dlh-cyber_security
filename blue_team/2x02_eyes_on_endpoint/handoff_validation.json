@@ -1,13 +1,13 @@
 {
-  "generated_at": "2026-08-09T21:12:36Z",
-  "verdict": "FAIL",
-  "checks_passed": 10,
+  "generated_at": "2026-08-10T06:33:50Z",
+  "verdict": "PASS",
+  "checks_passed": 14,
   "checks_total": 14,
   "timestamp_range": {
-    "min": "2026-08-08T08:06:59Z",
-    "max": "2026-08-09T19:28:15Z"
+    "min": "2026-08-09T19:00:01Z",
+    "max": "2026-08-09T19:59:59Z"
   },
-  "cross_platform_overlap_hours": 0,
+  "cross_platform_overlap_hours": 1,
   "results": [
     {
       "category": "file_existence",
@@ -17,7 +17,7 @@
     {
       "category": "file_existence",
       "status": "PASS",
-      "message": "linux_events.json exists (133 KB)"
+      "message": "linux_events.json exists (496 KB)"
     },
     {
       "category": "file_existence",
@@ -32,12 +32,12 @@
     {
       "category": "json_validity",
       "status": "PASS",
-      "message": "linux_events.json: valid JSON, 345 objects"
+      "message": "linux_events.json: valid JSON, 1325 objects"
     },
     {
       "category": "json_validity",
       "status": "PASS",
-      "message": "attack_ground_truth.json: valid JSON, 6 objects"
+      "message": "attack_ground_truth.json: valid JSON, 12 objects"
     },
     {
       "category": "required_fields",
@@ -51,13 +51,13 @@
     },
     {
       "category": "min_counts",
-      "status": "FAIL",
-      "message": "Linux: 345 >= 500"
+      "status": "PASS",
+      "message": "Linux: 1,325 >= 500"
     },
     {
       "category": "min_counts",
-      "status": "FAIL",
-      "message": "Ground truth: 6 >= 10"
+      "status": "PASS",
+      "message": "Ground truth: 12 >= 10"
     },
     {
       "category": "timestamps",
@@ -71,13 +71,13 @@
     },
     {
       "category": "alignment",
-      "status": "FAIL",
-      "message": "Windows and Linux time ranges do not overlap"
+      "status": "PASS",
+      "message": "Windows and Linux time ranges overlap (1.0 hours shared)"
     },
     {
       "category": "ground_truth",
-      "status": "FAIL",
-      "message": "0/6 actions have detection matrix entries"
+      "status": "PASS",
+      "message": "12/12 actions have detection matrix entries"
     }
   ]
 }
