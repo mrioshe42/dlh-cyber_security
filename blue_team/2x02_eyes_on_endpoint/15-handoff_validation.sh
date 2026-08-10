@@ -1,6 +1,6 @@
 #!/bin/bash
 # name: 15-handoff_validation.sh
-# purpose: Validate the telemetry handoff package against quality gates to ensure readiness for analyst consumption.
+# purpose: Validate the telemetry handoff package against quality gates to ensure Minimum Event Counts readiness for analyst consumption.
 # author: Massimo Rios
 
 set -e
