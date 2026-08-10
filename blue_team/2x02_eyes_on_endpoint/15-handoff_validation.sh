@@ -23,13 +23,13 @@ done
 
 TOTAL_CHECKS=14
 PASSED_CHECKS=0
-RESULTS=()
+VALIDATION_LOGS=()
 
 add_result() { # category, status(PASS/FAIL), message
     local cat="$1"
     local status="$2"
     local msg="$3"
-    RESULTS+=("$(jq -n --arg c "$cat" --arg s "$status" --arg m "$msg" '{category: $c, status: $s, message: $m}')")
+    VALIDATION_LOGS+=("$(jq -n --arg c "$cat" --arg s "$status" --arg m "$msg" '{category: $c, status: $s, message: $m}')")
     if [ "$status" = "PASS" ]; then
         PASSED_CHECKS=$((PASSED_CHECKS + 1))
         echo "[PASS] $msg"
@@ -216,7 +216,7 @@ GT_CHECK=$(jq -n \
     --slurpfile gt "telemetry_handoff/attack_ground_truth.json" \
     --slurpfile wdm "windows_detection_matrix.json" \
     --slurpfile ldm "linux_detection_matrix.json" '
-    (($gt[0].actions // $gt[0].windows_actions // [])) as $A
+     (($gt[0].actions // $gt[0].windows_actions // [])) as $A
     | ([ (($wdm[0].matrix // $wdm[0].actions // []))[] | {p: "windows", n: (.action_number // .id)} ]
       + [ (($ldm[0].matrix // $ldm[0].actions // []))[] | {p: "linux", n: (.action_number // .id)} ]) as $M
     | {
@@ -243,7 +243,7 @@ else
     echo "VERDICT: FAIL ($PASSED_CHECKS/$TOTAL_CHECKS checks passed)" >&2
 fi
 
-RESULTS_JSON=$(printf '%s\n' "${RESULTS[@]}" | jq -s '.')
+LOGS_JSON=$(printf '%s\n' "${VALIDATION_LOGS[@]}" | jq -s '.')
 jq -n \
     --arg verdict "$VERDICT" \
     --argjson passed "$PASSED_CHECKS" \
@@ -251,7 +251,7 @@ jq -n \
     --arg range_min "${R_MIN:-}" \
     --arg range_max "${R_MAX:-}" \
     --arg overlap_hours "${OV_HOURS:-0}" \
-    --argjson results "$RESULTS_JSON" \
+    --argjson results "$LOGS_JSON" \
     '{
         generated_at: (now | todateiso8601),
         verdict: $verdict,
@@ -263,3 +263,4 @@ jq -n \
     }' > "$VALIDATION_OUT"
 
 echo "Report saved to: $VALIDATION_OUT"
+
