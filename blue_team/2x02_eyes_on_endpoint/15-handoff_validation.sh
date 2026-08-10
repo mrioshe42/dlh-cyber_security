@@ -227,7 +227,7 @@ GT_CHECK=$(jq -n \
 
 MATCHED=$(jq -r '.matched // 0' <<<"$GT_CHECK")
 GT_TOTAL=$(jq -r '.total // 0' <<<"$GT_CHECK")
-
+# Ground Truth Completeness
 if [ "$GT_TOTAL" -gt 0 ] && [ "$MATCHED" = "$GT_TOTAL" ]; then
     add_result "ground_truth" "PASS" "$MATCHED/$GT_TOTAL actions have detection matrix entries"
 else
