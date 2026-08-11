@@ -1,0 +1,470 @@
+{
+  "generated_at": "2026-08-11T14:16:26Z",
+  "weights": {
+    "cvss_weight": 0.4,
+    "kev_weight": 2,
+    "criticality_weight": 1.5,
+    "exposure_weight": 1.1
+  },
+  "plan": [
+    {
+      "package": "snapd",
+      "score": 6.2,
+      "bucket": "urgent",
+      "affected_services": [
+        "snapd.apparmor.service",
+        "snapd.seeded.service",
+        "snapd.service"
+      ],
+      "requires_restart": true,
+      "requires_reboot": false,
+      "rollback_target_version": "2.73+ubuntu22.04.1",
+      "rank": 1
+    },
+    {
+      "package": "libldap-common",
+      "score": 6.12,
+      "bucket": "urgent",
+      "affected_services": [],
+      "requires_restart": false,
+      "requires_reboot": false,
+      "rollback_target_version": "2.5.18+dfsg-0ubuntu0.22.04.2",
+      "rank": 2
+    },
+    {
+      "package": "systemd-hwe-hwdb",
+      "score": 6.12,
+      "bucket": "urgent",
+      "affected_services": [],
+      "requires_restart": false,
+      "requires_reboot": true,
+      "rollback_target_version": "249.11.5",
+      "rank": 3
+    },
+    {
+      "package": "cloud-init",
+      "score": 5.72,
+      "bucket": "urgent",
+      "affected_services": [
+        "cloud-config.service",
+        "cloud-final.service",
+        "cloud-init.service"
+      ],
+      "requires_restart": true,
+      "requires_reboot": false,
+      "rollback_target_version": "25.1.4-0ubuntu0~22.04.1",
+      "rank": 4
+    },
+    {
+      "package": "open-iscsi",
+      "score": 5.48,
+      "bucket": "urgent",
+      "affected_services": [],
+      "requires_restart": false,
+      "requires_reboot": false,
+      "rollback_target_version": "2.1.5-1ubuntu1",
+      "rank": 5
+    },
+    {
+      "package": "cryptsetup-bin",
+      "score": 5.32,
+      "bucket": "urgent",
+      "affected_services": [],
+      "requires_restart": false,
+      "requires_reboot": false,
+      "rollback_target_version": "2:2.4.3-1ubuntu1.2",
+      "rank": 6
+    },
+    {
+      "package": "cryptsetup-initramfs",
+      "score": 5.32,
+      "bucket": "urgent",
+      "affected_services": [],
+      "requires_restart": false,
+      "requires_reboot": false,
+      "rollback_target_version": "2:2.4.3-1ubuntu1.2",
+      "rank": 7
+    },
+    {
+      "package": "cryptsetup",
+      "score": 5.32,
+      "bucket": "urgent",
+      "affected_services": [],
+      "requires_restart": false,
+      "requires_reboot": false,
+      "rollback_target_version": "2:2.4.3-1ubuntu1.2",
+      "rank": 8
+    },
+    {
+      "package": "dmidecode",
+      "score": 5.04,
+      "bucket": "urgent",
+      "affected_services": [],
+      "requires_restart": false,
+      "requires_reboot": false,
+      "rollback_target_version": "3.3-3ubuntu0.1",
+      "rank": 9
+    },
+    {
+      "package": "fwupd",
+      "score": 4.8,
+      "bucket": "urgent",
+      "affected_services": [],
+      "requires_restart": false,
+      "requires_reboot": false,
+      "rollback_target_version": "1.7.9-1~22.04.3",
+      "rank": 10
+    },
+    {
+      "package": "netplan.io",
+      "score": 4.8,
+      "bucket": "urgent",
+      "affected_services": [],
+      "requires_restart": false,
+      "requires_reboot": false,
+      "rollback_target_version": "0.106.1-7ubuntu0.22.04.4",
+      "rank": 11
+    },
+    {
+      "package": "apt-utils",
+      "score": 4.4,
+      "bucket": "urgent",
+      "affected_services": [],
+      "requires_restart": false,
+      "requires_reboot": false,
+      "rollback_target_version": "2.4.13",
+      "rank": 12
+    },
+    {
+      "package": "apt",
+      "score": 4.4,
+      "bucket": "urgent",
+      "affected_services": [],
+      "requires_restart": false,
+      "requires_reboot": false,
+      "rollback_target_version": "2.4.13",
+      "rank": 13
+    },
+    {
+      "package": "lvm2",
+      "score": 3.12,
+      "bucket": "scheduled",
+      "affected_services": [
+        "lvm2-monitor.service",
+        "lvm2-pvscan@8:3.service"
+      ],
+      "requires_restart": true,
+      "requires_reboot": false,
+      "rollback_target_version": "2.03.11-2.1ubuntu4",
+      "rank": 14
+    },
+    {
+      "package": "dmeventd",
+      "score": 2.2,
+      "bucket": "scheduled",
+      "affected_services": [],
+      "requires_restart": false,
+      "requires_reboot": false,
+      "rollback_target_version": "2:1.02.175-2.1ubuntu4",
+      "rank": 15
+    },
+    {
+      "package": "dmsetup",
+      "score": 2.2,
+      "bucket": "scheduled",
+      "affected_services": [],
+      "requires_restart": false,
+      "requires_reboot": false,
+      "rollback_target_version": "2:1.02.175-2.1ubuntu4",
+      "rank": 16
+    },
+    {
+      "package": "ethtool",
+      "score": 2.2,
+      "bucket": "scheduled",
+      "affected_services": [],
+      "requires_restart": false,
+      "requires_reboot": false,
+      "rollback_target_version": "1:5.16-1ubuntu0.1",
+      "rank": 17
+    },
+    {
+      "package": "initramfs-tools-bin",
+      "score": 2.2,
+      "bucket": "scheduled",
+      "affected_services": [],
+      "requires_restart": false,
+      "requires_reboot": false,
+      "rollback_target_version": "0.140ubuntu13.4",
+      "rank": 18
+    },
+    {
+      "package": "initramfs-tools-core",
+      "score": 2.2,
+      "bucket": "scheduled",
+      "affected_services": [],
+      "requires_restart": false,
+      "requires_reboot": false,
+      "rollback_target_version": "0.140ubuntu13.4",
+      "rank": 19
+    },
+    {
+      "package": "initramfs-tools",
+      "score": 2.2,
+      "bucket": "scheduled",
+      "affected_services": [],
+      "requires_restart": false,
+      "requires_reboot": false,
+      "rollback_target_version": "0.140ubuntu13.4",
+      "rank": 20
+    },
+    {
+      "package": "iproute2",
+      "score": 2.2,
+      "bucket": "scheduled",
+      "affected_services": [],
+      "requires_restart": false,
+      "requires_reboot": false,
+      "rollback_target_version": "5.15.0-1ubuntu2",
+      "rank": 21
+    },
+    {
+      "package": "landscape-common",
+      "score": 2.2,
+      "bucket": "scheduled",
+      "affected_services": [],
+      "requires_restart": false,
+      "requires_reboot": false,
+      "rollback_target_version": "23.02-0ubuntu1~22.04.3",
+      "rank": 22
+    },
+    {
+      "package": "libmbim-proxy",
+      "score": 2.2,
+      "bucket": "scheduled",
+      "affected_services": [],
+      "requires_restart": false,
+      "requires_reboot": false,
+      "rollback_target_version": "1.28.0-1~ubuntu20.04.1",
+      "rank": 23
+    },
+    {
+      "package": "libopeniscsiusr",
+      "score": 2.2,
+      "bucket": "scheduled",
+      "affected_services": [],
+      "requires_restart": false,
+      "requires_reboot": false,
+      "rollback_target_version": "2.1.5-1ubuntu1",
+      "rank": 24
+    },
+    {
+      "package": "linux-base",
+      "score": 2.2,
+      "bucket": "scheduled",
+      "affected_services": [],
+      "requires_restart": false,
+      "requires_reboot": false,
+      "rollback_target_version": "4.5ubuntu9",
+      "rank": 25
+    },
+    {
+      "package": "lshw",
+      "score": 2.2,
+      "bucket": "scheduled",
+      "affected_services": [],
+      "requires_restart": false,
+      "requires_reboot": false,
+      "rollback_target_version": "02.19.git.2021.06.19.996aaad9c7-2build1",
+      "rank": 26
+    },
+    {
+      "package": "modemmanager",
+      "score": 2.2,
+      "bucket": "scheduled",
+      "affected_services": [
+        "ModemManager.service"
+      ],
+      "requires_restart": true,
+      "requires_reboot": false,
+      "rollback_target_version": "1.20.0-1~ubuntu22.04.3",
+      "rank": 27
+    },
+    {
+      "package": "pci.ids",
+      "score": 2.2,
+      "bucket": "scheduled",
+      "affected_services": [],
+      "requires_restart": false,
+      "requires_reboot": false,
+      "rollback_target_version": "0.0~2022.01.22-1",
+      "rank": 28
+    },
+    {
+      "package": "powermgmt-base",
+      "score": 2.2,
+      "bucket": "scheduled",
+      "affected_services": [],
+      "requires_restart": false,
+      "requires_reboot": false,
+      "rollback_target_version": "1.36",
+      "rank": 29
+    },
+    {
+      "package": "python3-attr",
+      "score": 2.2,
+      "bucket": "scheduled",
+      "affected_services": [],
+      "requires_restart": false,
+      "requires_reboot": false,
+      "rollback_target_version": "21.2.0-1",
+      "rank": 30
+    },
+    {
+      "package": "python3-distupgrade",
+      "score": 2.2,
+      "bucket": "scheduled",
+      "affected_services": [],
+      "requires_restart": false,
+      "requires_reboot": false,
+      "rollback_target_version": "1:22.04.20",
+      "rank": 31
+    },
+    {
+      "package": "python3-update-manager",
+      "score": 2.2,
+      "bucket": "scheduled",
+      "affected_services": [],
+      "requires_restart": false,
+      "requires_reboot": false,
+      "rollback_target_version": "1:22.04.21",
+      "rank": 32
+    },
+    {
+      "package": "sosreport",
+      "score": 2.2,
+      "bucket": "scheduled",
+      "affected_services": [],
+      "requires_restart": false,
+      "requires_reboot": false,
+      "rollback_target_version": "4.5.6-0ubuntu1~22.04.2",
+      "rank": 33
+    },
+    {
+      "package": "ubuntu-advantage-tools",
+      "score": 2.2,
+      "bucket": "scheduled",
+      "affected_services": [],
+      "requires_restart": false,
+      "requires_reboot": false,
+      "rollback_target_version": "33.2~22.04",
+      "rank": 34
+    },
+    {
+      "package": "ubuntu-drivers-common",
+      "score": 2.2,
+      "bucket": "scheduled",
+      "affected_services": [],
+      "requires_restart": false,
+      "requires_reboot": false,
+      "rollback_target_version": "1:0.9.6.2~0.22.04.8",
+      "rank": 35
+    },
+    {
+      "package": "ubuntu-minimal",
+      "score": 2.2,
+      "bucket": "scheduled",
+      "affected_services": [],
+      "requires_restart": false,
+      "requires_reboot": false,
+      "rollback_target_version": "1.481.3",
+      "rank": 36
+    },
+    {
+      "package": "ubuntu-pro-client-l10n",
+      "score": 2.2,
+      "bucket": "scheduled",
+      "affected_services": [],
+      "requires_restart": false,
+      "requires_reboot": false,
+      "rollback_target_version": "33.2~22.04",
+      "rank": 37
+    },
+    {
+      "package": "ubuntu-pro-client",
+      "score": 2.2,
+      "bucket": "scheduled",
+      "affected_services": [],
+      "requires_restart": false,
+      "requires_reboot": false,
+      "rollback_target_version": "33.2~22.04",
+      "rank": 38
+    },
+    {
+      "package": "ubuntu-release-upgrader-core",
+      "score": 2.2,
+      "bucket": "scheduled",
+      "affected_services": [],
+      "requires_restart": false,
+      "requires_reboot": false,
+      "rollback_target_version": "1:22.04.20",
+      "rank": 39
+    },
+    {
+      "package": "ubuntu-server-minimal",
+      "score": 2.2,
+      "bucket": "scheduled",
+      "affected_services": [],
+      "requires_restart": false,
+      "requires_reboot": false,
+      "rollback_target_version": "1.481.3",
+      "rank": 40
+    },
+    {
+      "package": "ubuntu-server",
+      "score": 2.2,
+      "bucket": "scheduled",
+      "affected_services": [],
+      "requires_restart": false,
+      "requires_reboot": false,
+      "rollback_target_version": "1.481.3",
+      "rank": 41
+    },
+    {
+      "package": "ubuntu-standard",
+      "score": 2.2,
+      "bucket": "scheduled",
+      "affected_services": [],
+      "requires_restart": false,
+      "requires_reboot": false,
+      "rollback_target_version": "1.481.3",
+      "rank": 42
+    },
+    {
+      "package": "update-manager-core",
+      "score": 2.2,
+      "bucket": "scheduled",
+      "affected_services": [],
+      "requires_restart": false,
+      "requires_reboot": false,
+      "rollback_target_version": "1:22.04.21",
+      "rank": 43
+    },
+    {
+      "package": "xfsprogs",
+      "score": 2.2,
+      "bucket": "scheduled",
+      "affected_services": [],
+      "requires_restart": false,
+      "requires_reboot": false,
+      "rollback_target_version": "5.13.0-1ubuntu2",
+      "rank": 44
+    }
+  ],
+  "summary": {
+    "emergency_count": 0,
+    "urgent_count": 13,
+    "scheduled_count": 31,
+    "reboot_required_by_plan": true
+  }
+}
