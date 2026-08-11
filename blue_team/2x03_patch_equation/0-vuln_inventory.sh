@@ -25,7 +25,7 @@ FEED_KEYS=$(mktemp)
 trap 'rm -f "$INSTALLED_PKGS" "$UPGRADABLE_PKGS" "$JSON_ENTRIES" "$FEED_KEYS"' EXIT
 
 dpkg-query -W -f='${binary:Package} ${Version} ${Status}\n' | grep "installed" > "$INSTALLED_PKGS"
-
+# apt-get changelog
 apt list --upgradable 2>/dev/null | tail -n +2 > "$UPGRADABLE_PKGS" || true
 
 jq -r 'keys[]' "$FEED_FILE" > "$FEED_KEYS" 2>/dev/null || true
