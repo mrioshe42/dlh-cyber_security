@@ -1,0 +1,668 @@
+{
+  "started_at": "2026-08-11T21:53:52Z",
+  "finished_at": "2026-08-11T22:05:27Z",
+  "hostname": "billing-srv-01",
+  "plan_source_hash": "8fe0971a70bcf6249e7949293ad6d9a9ede60895e079e0b230c832a11d49f30a",
+  "entries": [
+    {
+      "package": "snapd",
+      "status": "OK",
+      "duration_seconds": 13,
+      "pre": {
+        "version": "2.76+ubuntu22.04.1",
+        "services": {}
+      },
+      "post": {
+        "version": "2.76+ubuntu22.04.1",
+        "services": {}
+      },
+      "stdout_tail": "snapd is already the newest version (2.76+ubuntu22.04.1).\nThe following packages were automatically installed and are no longer required:\n  libfwupd2 libfwupdplugin5 libgcab-1.0-0 libgusb2 libsmbios-c2\nUse 'sudo apt autoremove' to remove them.\n0 upgraded, 0 newly installed, 0 to remove and 8 not upgraded.",
+      "stderr_tail": ""
+    },
+    {
+      "package": "libldap-common",
+      "status": "OK",
+      "duration_seconds": 12.5,
+      "pre": {
+        "version": "2.5.20+dfsg-0ubuntu0.22.04.1",
+        "services": {}
+      },
+      "post": {
+        "version": "2.5.20+dfsg-0ubuntu0.22.04.1",
+        "services": {}
+      },
+      "stdout_tail": "libldap-common is already the newest version (2.5.20+dfsg-0ubuntu0.22.04.1).\nThe following packages were automatically installed and are no longer required:\n  libfwupd2 libfwupdplugin5 libgcab-1.0-0 libgusb2 libsmbios-c2\nUse 'sudo apt autoremove' to remove them.\n0 upgraded, 0 newly installed, 0 to remove and 8 not upgraded.",
+      "stderr_tail": ""
+    },
+    {
+      "package": "systemd-hwe-hwdb",
+      "status": "OK",
+      "duration_seconds": 13.9,
+      "pre": {
+        "version": "249.11.6",
+        "services": {}
+      },
+      "post": {
+        "version": "249.11.6",
+        "services": {}
+      },
+      "stdout_tail": "systemd-hwe-hwdb is already the newest version (249.11.6).\nThe following packages were automatically installed and are no longer required:\n  libfwupd2 libfwupdplugin5 libgcab-1.0-0 libgusb2 libsmbios-c2\nUse 'sudo apt autoremove' to remove them.\n0 upgraded, 0 newly installed, 0 to remove and 8 not upgraded.",
+      "stderr_tail": ""
+    },
+    {
+      "package": "cloud-init",
+      "status": "OK",
+      "duration_seconds": 13.7,
+      "pre": {
+        "version": "26.1-0ubuntu1~22.04.1",
+        "services": {}
+      },
+      "post": {
+        "version": "26.1-0ubuntu1~22.04.1",
+        "services": {}
+      },
+      "stdout_tail": "cloud-init is already the newest version (26.1-0ubuntu1~22.04.1).\nThe following packages were automatically installed and are no longer required:\n  libfwupd2 libfwupdplugin5 libgcab-1.0-0 libgusb2 libsmbios-c2\nUse 'sudo apt autoremove' to remove them.\n0 upgraded, 0 newly installed, 0 to remove and 8 not upgraded.",
+      "stderr_tail": ""
+    },
+    {
+      "package": "open-iscsi",
+      "status": "OK",
+      "duration_seconds": 11.8,
+      "pre": {
+        "version": "2.1.5-1ubuntu1.1",
+        "services": {}
+      },
+      "post": {
+        "version": "2.1.5-1ubuntu1.1",
+        "services": {}
+      },
+      "stdout_tail": "open-iscsi is already the newest version (2.1.5-1ubuntu1.1).\nThe following packages were automatically installed and are no longer required:\n  libfwupd2 libfwupdplugin5 libgcab-1.0-0 libgusb2 libsmbios-c2\nUse 'sudo apt autoremove' to remove them.\n0 upgraded, 0 newly installed, 0 to remove and 8 not upgraded.",
+      "stderr_tail": ""
+    },
+    {
+      "package": "cryptsetup-bin",
+      "status": "OK",
+      "duration_seconds": 11.1,
+      "pre": {
+        "version": "2:2.4.3-1ubuntu1.3",
+        "services": {}
+      },
+      "post": {
+        "version": "2:2.4.3-1ubuntu1.3",
+        "services": {}
+      },
+      "stdout_tail": "cryptsetup-bin is already the newest version (2:2.4.3-1ubuntu1.3).\nThe following packages were automatically installed and are no longer required:\n  libfwupd2 libfwupdplugin5 libgcab-1.0-0 libgusb2 libsmbios-c2\nUse 'sudo apt autoremove' to remove them.\n0 upgraded, 0 newly installed, 0 to remove and 8 not upgraded.",
+      "stderr_tail": ""
+    },
+    {
+      "package": "cryptsetup-initramfs",
+      "status": "OK",
+      "duration_seconds": 11.9,
+      "pre": {
+        "version": "2:2.4.3-1ubuntu1.3",
+        "services": {}
+      },
+      "post": {
+        "version": "2:2.4.3-1ubuntu1.3",
+        "services": {}
+      },
+      "stdout_tail": "cryptsetup-initramfs is already the newest version (2:2.4.3-1ubuntu1.3).\nThe following packages were automatically installed and are no longer required:\n  libfwupd2 libfwupdplugin5 libgcab-1.0-0 libgusb2 libsmbios-c2\nUse 'sudo apt autoremove' to remove them.\n0 upgraded, 0 newly installed, 0 to remove and 8 not upgraded.",
+      "stderr_tail": ""
+    },
+    {
+      "package": "cryptsetup",
+      "status": "OK",
+      "duration_seconds": 11.1,
+      "pre": {
+        "version": "2:2.4.3-1ubuntu1.3",
+        "services": {}
+      },
+      "post": {
+        "version": "2:2.4.3-1ubuntu1.3",
+        "services": {}
+      },
+      "stdout_tail": "cryptsetup is already the newest version (2:2.4.3-1ubuntu1.3).\nThe following packages were automatically installed and are no longer required:\n  libfwupd2 libfwupdplugin5 libgcab-1.0-0 libgusb2 libsmbios-c2\nUse 'sudo apt autoremove' to remove them.\n0 upgraded, 0 newly installed, 0 to remove and 8 not upgraded.",
+      "stderr_tail": ""
+    },
+    {
+      "package": "dmidecode",
+      "status": "OK",
+      "duration_seconds": 10.8,
+      "pre": {
+        "version": "3.3-3ubuntu0.2",
+        "services": {}
+      },
+      "post": {
+        "version": "3.3-3ubuntu0.2",
+        "services": {}
+      },
+      "stdout_tail": "dmidecode is already the newest version (3.3-3ubuntu0.2).\nThe following packages were automatically installed and are no longer required:\n  libfwupd2 libfwupdplugin5 libgcab-1.0-0 libgusb2 libsmbios-c2\nUse 'sudo apt autoremove' to remove them.\n0 upgraded, 0 newly installed, 0 to remove and 8 not upgraded.",
+      "stderr_tail": ""
+    },
+    {
+      "package": "fwupd",
+      "status": "OK",
+      "duration_seconds": 11.4,
+      "pre": {
+        "version": "2.0.20-1ubuntu2~22.04.2",
+        "services": {}
+      },
+      "post": {
+        "version": "2.0.20-1ubuntu2~22.04.2",
+        "services": {}
+      },
+      "stdout_tail": "fwupd is already the newest version (2.0.20-1ubuntu2~22.04.2).\nThe following packages were automatically installed and are no longer required:\n  libfwupd2 libfwupdplugin5 libgcab-1.0-0 libgusb2 libsmbios-c2\nUse 'sudo apt autoremove' to remove them.\n0 upgraded, 0 newly installed, 0 to remove and 8 not upgraded.",
+      "stderr_tail": ""
+    },
+    {
+      "package": "netplan.io",
+      "status": "OK",
+      "duration_seconds": 11.1,
+      "pre": {
+        "version": "0.107.1-3ubuntu0.22.04.4",
+        "services": {}
+      },
+      "post": {
+        "version": "0.107.1-3ubuntu0.22.04.4",
+        "services": {}
+      },
+      "stdout_tail": "netplan.io is already the newest version (0.107.1-3ubuntu0.22.04.4).\nThe following packages were automatically installed and are no longer required:\n  libfwupd2 libfwupdplugin5 libgcab-1.0-0 libgusb2 libsmbios-c2\nUse 'sudo apt autoremove' to remove them.\n0 upgraded, 0 newly installed, 0 to remove and 8 not upgraded.",
+      "stderr_tail": ""
+    },
+    {
+      "package": "apt-utils",
+      "status": "OK",
+      "duration_seconds": 11.5,
+      "pre": {
+        "version": "2.4.14",
+        "services": {}
+      },
+      "post": {
+        "version": "2.4.14",
+        "services": {}
+      },
+      "stdout_tail": "apt-utils is already the newest version (2.4.14).\nThe following packages were automatically installed and are no longer required:\n  libfwupd2 libfwupdplugin5 libgcab-1.0-0 libgusb2 libsmbios-c2\nUse 'sudo apt autoremove' to remove them.\n0 upgraded, 0 newly installed, 0 to remove and 8 not upgraded.",
+      "stderr_tail": ""
+    },
+    {
+      "package": "apt",
+      "status": "OK",
+      "duration_seconds": 13.1,
+      "pre": {
+        "version": "2.4.14",
+        "services": {}
+      },
+      "post": {
+        "version": "2.4.14",
+        "services": {}
+      },
+      "stdout_tail": "apt is already the newest version (2.4.14).\nThe following packages were automatically installed and are no longer required:\n  libfwupd2 libfwupdplugin5 libgcab-1.0-0 libgusb2 libsmbios-c2\nUse 'sudo apt autoremove' to remove them.\n0 upgraded, 0 newly installed, 0 to remove and 8 not upgraded.",
+      "stderr_tail": ""
+    },
+    {
+      "package": "lvm2",
+      "status": "OK",
+      "duration_seconds": 13.3,
+      "pre": {
+        "version": "2.03.11-2.1ubuntu5",
+        "services": {}
+      },
+      "post": {
+        "version": "2.03.11-2.1ubuntu5",
+        "services": {}
+      },
+      "stdout_tail": "lvm2 is already the newest version (2.03.11-2.1ubuntu5).\nThe following packages were automatically installed and are no longer required:\n  libfwupd2 libfwupdplugin5 libgcab-1.0-0 libgusb2 libsmbios-c2\nUse 'sudo apt autoremove' to remove them.\n0 upgraded, 0 newly installed, 0 to remove and 8 not upgraded.",
+      "stderr_tail": ""
+    },
+    {
+      "package": "dmeventd",
+      "status": "OK",
+      "duration_seconds": 12.9,
+      "pre": {
+        "version": "2:1.02.175-2.1ubuntu5",
+        "services": {}
+      },
+      "post": {
+        "version": "2:1.02.175-2.1ubuntu5",
+        "services": {}
+      },
+      "stdout_tail": "dmeventd is already the newest version (2:1.02.175-2.1ubuntu5).\nThe following packages were automatically installed and are no longer required:\n  libfwupd2 libfwupdplugin5 libgcab-1.0-0 libgusb2 libsmbios-c2\nUse 'sudo apt autoremove' to remove them.\n0 upgraded, 0 newly installed, 0 to remove and 8 not upgraded.",
+      "stderr_tail": ""
+    },
+    {
+      "package": "dmsetup",
+      "status": "OK",
+      "duration_seconds": 13.2,
+      "pre": {
+        "version": "2:1.02.175-2.1ubuntu5",
+        "services": {}
+      },
+      "post": {
+        "version": "2:1.02.175-2.1ubuntu5",
+        "services": {}
+      },
+      "stdout_tail": "dmsetup is already the newest version (2:1.02.175-2.1ubuntu5).\nThe following packages were automatically installed and are no longer required:\n  libfwupd2 libfwupdplugin5 libgcab-1.0-0 libgusb2 libsmbios-c2\nUse 'sudo apt autoremove' to remove them.\n0 upgraded, 0 newly installed, 0 to remove and 8 not upgraded.",
+      "stderr_tail": ""
+    },
+    {
+      "package": "ethtool",
+      "status": "OK",
+      "duration_seconds": 14.2,
+      "pre": {
+        "version": "1:5.16-1ubuntu0.2",
+        "services": {}
+      },
+      "post": {
+        "version": "1:5.16-1ubuntu0.2",
+        "services": {}
+      },
+      "stdout_tail": "ethtool is already the newest version (1:5.16-1ubuntu0.2).\nThe following packages were automatically installed and are no longer required:\n  libfwupd2 libfwupdplugin5 libgcab-1.0-0 libgusb2 libsmbios-c2\nUse 'sudo apt autoremove' to remove them.\n0 upgraded, 0 newly installed, 0 to remove and 8 not upgraded.",
+      "stderr_tail": ""
+    },
+    {
+      "package": "initramfs-tools-bin",
+      "status": "OK",
+      "duration_seconds": 12.3,
+      "pre": {
+        "version": "0.140ubuntu13.5",
+        "services": {}
+      },
+      "post": {
+        "version": "0.140ubuntu13.5",
+        "services": {}
+      },
+      "stdout_tail": "initramfs-tools-bin is already the newest version (0.140ubuntu13.5).\nThe following packages were automatically installed and are no longer required:\n  libfwupd2 libfwupdplugin5 libgcab-1.0-0 libgusb2 libsmbios-c2\nUse 'sudo apt autoremove' to remove them.\n0 upgraded, 0 newly installed, 0 to remove and 8 not upgraded.",
+      "stderr_tail": ""
+    },
+    {
+      "package": "initramfs-tools-core",
+      "status": "OK",
+      "duration_seconds": 7.5,
+      "pre": {
+        "version": "0.140ubuntu13.5",
+        "services": {}
+      },
+      "post": {
+        "version": "0.140ubuntu13.5",
+        "services": {}
+      },
+      "stdout_tail": "initramfs-tools-core is already the newest version (0.140ubuntu13.5).\nThe following packages were automatically installed and are no longer required:\n  libfwupd2 libfwupdplugin5 libgcab-1.0-0 libgusb2 libsmbios-c2\nUse 'sudo apt autoremove' to remove them.\n0 upgraded, 0 newly installed, 0 to remove and 8 not upgraded.",
+      "stderr_tail": ""
+    },
+    {
+      "package": "initramfs-tools",
+      "status": "OK",
+      "duration_seconds": 11.3,
+      "pre": {
+        "version": "0.140ubuntu13.5",
+        "services": {}
+      },
+      "post": {
+        "version": "0.140ubuntu13.5",
+        "services": {}
+      },
+      "stdout_tail": "initramfs-tools is already the newest version (0.140ubuntu13.5).\nThe following packages were automatically installed and are no longer required:\n  libfwupd2 libfwupdplugin5 libgcab-1.0-0 libgusb2 libsmbios-c2\nUse 'sudo apt autoremove' to remove them.\n0 upgraded, 0 newly installed, 0 to remove and 8 not upgraded.",
+      "stderr_tail": ""
+    },
+    {
+      "package": "iproute2",
+      "status": "OK",
+      "duration_seconds": 11.5,
+      "pre": {
+        "version": "5.15.0-1ubuntu2.2",
+        "services": {}
+      },
+      "post": {
+        "version": "5.15.0-1ubuntu2.2",
+        "services": {}
+      },
+      "stdout_tail": "iproute2 is already the newest version (5.15.0-1ubuntu2.2).\nThe following packages were automatically installed and are no longer required:\n  libfwupd2 libfwupdplugin5 libgcab-1.0-0 libgusb2 libsmbios-c2\nUse 'sudo apt autoremove' to remove them.\n0 upgraded, 0 newly installed, 0 to remove and 8 not upgraded.",
+      "stderr_tail": ""
+    },
+    {
+      "package": "landscape-common",
+      "status": "OK",
+      "duration_seconds": 11.3,
+      "pre": {
+        "version": "23.02-0ubuntu1~22.04.7",
+        "services": {}
+      },
+      "post": {
+        "version": "23.02-0ubuntu1~22.04.7",
+        "services": {}
+      },
+      "stdout_tail": "landscape-common is already the newest version (23.02-0ubuntu1~22.04.7).\nThe following packages were automatically installed and are no longer required:\n  libfwupd2 libfwupdplugin5 libgcab-1.0-0 libgusb2 libsmbios-c2\nUse 'sudo apt autoremove' to remove them.\n0 upgraded, 0 newly installed, 0 to remove and 8 not upgraded.",
+      "stderr_tail": ""
+    },
+    {
+      "package": "libmbim-proxy",
+      "status": "OK",
+      "duration_seconds": 12.1,
+      "pre": {
+        "version": "1.28.0-1~ubuntu20.04.2",
+        "services": {}
+      },
+      "post": {
+        "version": "1.28.0-1~ubuntu20.04.2",
+        "services": {}
+      },
+      "stdout_tail": "libmbim-proxy is already the newest version (1.28.0-1~ubuntu20.04.2).\nThe following packages were automatically installed and are no longer required:\n  libfwupd2 libfwupdplugin5 libgcab-1.0-0 libgusb2 libsmbios-c2\nUse 'sudo apt autoremove' to remove them.\n0 upgraded, 0 newly installed, 0 to remove and 8 not upgraded.",
+      "stderr_tail": ""
+    },
+    {
+      "package": "libopeniscsiusr",
+      "status": "OK",
+      "duration_seconds": 9.1,
+      "pre": {
+        "version": "2.1.5-1ubuntu1.1",
+        "services": {}
+      },
+      "post": {
+        "version": "2.1.5-1ubuntu1.1",
+        "services": {}
+      },
+      "stdout_tail": "libopeniscsiusr is already the newest version (2.1.5-1ubuntu1.1).\nThe following packages were automatically installed and are no longer required:\n  libfwupd2 libfwupdplugin5 libgcab-1.0-0 libgusb2 libsmbios-c2\nUse 'sudo apt autoremove' to remove them.\n0 upgraded, 0 newly installed, 0 to remove and 8 not upgraded.",
+      "stderr_tail": ""
+    },
+    {
+      "package": "linux-base",
+      "status": "OK",
+      "duration_seconds": 15.7,
+      "pre": {
+        "version": "4.5ubuntu9+22.04.1",
+        "services": {}
+      },
+      "post": {
+        "version": "4.5ubuntu9+22.04.1",
+        "services": {}
+      },
+      "stdout_tail": "linux-base is already the newest version (4.5ubuntu9+22.04.1).\nThe following packages were automatically installed and are no longer required:\n  libfwupd2 libfwupdplugin5 libgcab-1.0-0 libgusb2 libsmbios-c2\nUse 'sudo apt autoremove' to remove them.\n0 upgraded, 0 newly installed, 0 to remove and 8 not upgraded.",
+      "stderr_tail": ""
+    },
+    {
+      "package": "lshw",
+      "status": "OK",
+      "duration_seconds": 13.1,
+      "pre": {
+        "version": "02.19.git.2021.06.19.996aaad9c7-2ubuntu0.22.04.1",
+        "services": {}
+      },
+      "post": {
+        "version": "02.19.git.2021.06.19.996aaad9c7-2ubuntu0.22.04.1",
+        "services": {}
+      },
+      "stdout_tail": "lshw is already the newest version (02.19.git.2021.06.19.996aaad9c7-2ubuntu0.22.04.1).\nThe following packages were automatically installed and are no longer required:\n  libfwupd2 libfwupdplugin5 libgcab-1.0-0 libgusb2 libsmbios-c2\nUse 'sudo apt autoremove' to remove them.\n0 upgraded, 0 newly installed, 0 to remove and 8 not upgraded.",
+      "stderr_tail": ""
+    },
+    {
+      "package": "modemmanager",
+      "status": "OK",
+      "duration_seconds": 12.7,
+      "pre": {
+        "version": "1.20.0-1~ubuntu22.04.4",
+        "services": {}
+      },
+      "post": {
+        "version": "1.20.0-1~ubuntu22.04.4",
+        "services": {}
+      },
+      "stdout_tail": "modemmanager is already the newest version (1.20.0-1~ubuntu22.04.4).\nThe following packages were automatically installed and are no longer required:\n  libfwupd2 libfwupdplugin5 libgcab-1.0-0 libgusb2 libsmbios-c2\nUse 'sudo apt autoremove' to remove them.\n0 upgraded, 0 newly installed, 0 to remove and 8 not upgraded.",
+      "stderr_tail": ""
+    },
+    {
+      "package": "pci.ids",
+      "status": "OK",
+      "duration_seconds": 12.7,
+      "pre": {
+        "version": "0.0~2022.01.22-1ubuntu0.1",
+        "services": {}
+      },
+      "post": {
+        "version": "0.0~2022.01.22-1ubuntu0.1",
+        "services": {}
+      },
+      "stdout_tail": "pci.ids is already the newest version (0.0~2022.01.22-1ubuntu0.1).\nThe following packages were automatically installed and are no longer required:\n  libfwupd2 libfwupdplugin5 libgcab-1.0-0 libgusb2 libsmbios-c2\nUse 'sudo apt autoremove' to remove them.\n0 upgraded, 0 newly installed, 0 to remove and 8 not upgraded.",
+      "stderr_tail": ""
+    },
+    {
+      "package": "powermgmt-base",
+      "status": "OK",
+      "duration_seconds": 12.7,
+      "pre": {
+        "version": "1.36ubuntu0.22.04.1",
+        "services": {}
+      },
+      "post": {
+        "version": "1.36ubuntu0.22.04.1",
+        "services": {}
+      },
+      "stdout_tail": "powermgmt-base is already the newest version (1.36ubuntu0.22.04.1).\nThe following packages were automatically installed and are no longer required:\n  libfwupd2 libfwupdplugin5 libgcab-1.0-0 libgusb2 libsmbios-c2\nUse 'sudo apt autoremove' to remove them.\n0 upgraded, 0 newly installed, 0 to remove and 8 not upgraded.",
+      "stderr_tail": ""
+    },
+    {
+      "package": "python3-attr",
+      "status": "OK",
+      "duration_seconds": 12.7,
+      "pre": {
+        "version": "21.2.0-1ubuntu1",
+        "services": {}
+      },
+      "post": {
+        "version": "21.2.0-1ubuntu1",
+        "services": {}
+      },
+      "stdout_tail": "python3-attr is already the newest version (21.2.0-1ubuntu1).\nThe following packages were automatically installed and are no longer required:\n  libfwupd2 libfwupdplugin5 libgcab-1.0-0 libgusb2 libsmbios-c2\nUse 'sudo apt autoremove' to remove them.\n0 upgraded, 0 newly installed, 0 to remove and 8 not upgraded.",
+      "stderr_tail": ""
+    },
+    {
+      "package": "python3-distupgrade",
+      "status": "OK",
+      "duration_seconds": 13.1,
+      "pre": {
+        "version": "1:22.04.21",
+        "services": {}
+      },
+      "post": {
+        "version": "1:22.04.21",
+        "services": {}
+      },
+      "stdout_tail": "python3-distupgrade is already the newest version (1:22.04.21).\nThe following packages were automatically installed and are no longer required:\n  libfwupd2 libfwupdplugin5 libgcab-1.0-0 libgusb2 libsmbios-c2\nUse 'sudo apt autoremove' to remove them.\n0 upgraded, 0 newly installed, 0 to remove and 8 not upgraded.",
+      "stderr_tail": ""
+    },
+    {
+      "package": "python3-update-manager",
+      "status": "OK",
+      "duration_seconds": 14.7,
+      "pre": {
+        "version": "1:22.04.22",
+        "services": {}
+      },
+      "post": {
+        "version": "1:22.04.22",
+        "services": {}
+      },
+      "stdout_tail": "python3-update-manager is already the newest version (1:22.04.22).\nThe following packages were automatically installed and are no longer required:\n  libfwupd2 libfwupdplugin5 libgcab-1.0-0 libgusb2 libsmbios-c2\nUse 'sudo apt autoremove' to remove them.\n0 upgraded, 0 newly installed, 0 to remove and 8 not upgraded.",
+      "stderr_tail": ""
+    },
+    {
+      "package": "sosreport",
+      "status": "OK",
+      "duration_seconds": 11.4,
+      "pre": {
+        "version": "4.10.2-0ubuntu0~22.04.1",
+        "services": {}
+      },
+      "post": {
+        "version": "4.10.2-0ubuntu0~22.04.1",
+        "services": {}
+      },
+      "stdout_tail": "sosreport is already the newest version (4.10.2-0ubuntu0~22.04.1).\nThe following packages were automatically installed and are no longer required:\n  libfwupd2 libfwupdplugin5 libgcab-1.0-0 libgusb2 libsmbios-c2\nUse 'sudo apt autoremove' to remove them.\n0 upgraded, 0 newly installed, 0 to remove and 8 not upgraded.",
+      "stderr_tail": ""
+    },
+    {
+      "package": "ubuntu-advantage-tools",
+      "status": "OK",
+      "duration_seconds": 13.6,
+      "pre": {
+        "version": "37.2ubuntu~22.04.1",
+        "services": {}
+      },
+      "post": {
+        "version": "37.2ubuntu~22.04.1",
+        "services": {}
+      },
+      "stdout_tail": "ubuntu-advantage-tools is already the newest version (37.2ubuntu~22.04.1).\nThe following packages were automatically installed and are no longer required:\n  libfwupd2 libfwupdplugin5 libgcab-1.0-0 libgusb2 libsmbios-c2\nUse 'sudo apt autoremove' to remove them.\n0 upgraded, 0 newly installed, 0 to remove and 8 not upgraded.",
+      "stderr_tail": ""
+    },
+    {
+      "package": "ubuntu-drivers-common",
+      "status": "OK",
+      "duration_seconds": 13.5,
+      "pre": {
+        "version": "1:0.9.6.2~0.22.04.11",
+        "services": {}
+      },
+      "post": {
+        "version": "1:0.9.6.2~0.22.04.11",
+        "services": {}
+      },
+      "stdout_tail": "ubuntu-drivers-common is already the newest version (1:0.9.6.2~0.22.04.11).\nThe following packages were automatically installed and are no longer required:\n  libfwupd2 libfwupdplugin5 libgcab-1.0-0 libgusb2 libsmbios-c2\nUse 'sudo apt autoremove' to remove them.\n0 upgraded, 0 newly installed, 0 to remove and 8 not upgraded.",
+      "stderr_tail": ""
+    },
+    {
+      "package": "ubuntu-minimal",
+      "status": "OK",
+      "duration_seconds": 12.2,
+      "pre": {
+        "version": "1.481.5",
+        "services": {}
+      },
+      "post": {
+        "version": "1.481.5",
+        "services": {}
+      },
+      "stdout_tail": "ubuntu-minimal is already the newest version (1.481.5).\nThe following packages were automatically installed and are no longer required:\n  libfwupd2 libfwupdplugin5 libgcab-1.0-0 libgusb2 libsmbios-c2\nUse 'sudo apt autoremove' to remove them.\n0 upgraded, 0 newly installed, 0 to remove and 8 not upgraded.",
+      "stderr_tail": ""
+    },
+    {
+      "package": "ubuntu-pro-client-l10n",
+      "status": "OK",
+      "duration_seconds": 12.3,
+      "pre": {
+        "version": "37.2ubuntu~22.04.1",
+        "services": {}
+      },
+      "post": {
+        "version": "37.2ubuntu~22.04.1",
+        "services": {}
+      },
+      "stdout_tail": "ubuntu-pro-client-l10n is already the newest version (37.2ubuntu~22.04.1).\nThe following packages were automatically installed and are no longer required:\n  libfwupd2 libfwupdplugin5 libgcab-1.0-0 libgusb2 libsmbios-c2\nUse 'sudo apt autoremove' to remove them.\n0 upgraded, 0 newly installed, 0 to remove and 8 not upgraded.",
+      "stderr_tail": ""
+    },
+    {
+      "package": "ubuntu-pro-client",
+      "status": "OK",
+      "duration_seconds": 11.6,
+      "pre": {
+        "version": "37.2ubuntu~22.04.1",
+        "services": {}
+      },
+      "post": {
+        "version": "37.2ubuntu~22.04.1",
+        "services": {}
+      },
+      "stdout_tail": "ubuntu-pro-client is already the newest version (37.2ubuntu~22.04.1).\nThe following packages were automatically installed and are no longer required:\n  libfwupd2 libfwupdplugin5 libgcab-1.0-0 libgusb2 libsmbios-c2\nUse 'sudo apt autoremove' to remove them.\n0 upgraded, 0 newly installed, 0 to remove and 8 not upgraded.",
+      "stderr_tail": ""
+    },
+    {
+      "package": "ubuntu-release-upgrader-core",
+      "status": "OK",
+      "duration_seconds": 13.4,
+      "pre": {
+        "version": "1:22.04.21",
+        "services": {}
+      },
+      "post": {
+        "version": "1:22.04.21",
+        "services": {}
+      },
+      "stdout_tail": "ubuntu-release-upgrader-core is already the newest version (1:22.04.21).\nThe following packages were automatically installed and are no longer required:\n  libfwupd2 libfwupdplugin5 libgcab-1.0-0 libgusb2 libsmbios-c2\nUse 'sudo apt autoremove' to remove them.\n0 upgraded, 0 newly installed, 0 to remove and 8 not upgraded.",
+      "stderr_tail": ""
+    },
+    {
+      "package": "ubuntu-server-minimal",
+      "status": "OK",
+      "duration_seconds": 12.1,
+      "pre": {
+        "version": "1.481.5",
+        "services": {}
+      },
+      "post": {
+        "version": "1.481.5",
+        "services": {}
+      },
+      "stdout_tail": "ubuntu-server-minimal is already the newest version (1.481.5).\nThe following packages were automatically installed and are no longer required:\n  libfwupd2 libfwupdplugin5 libgcab-1.0-0 libgusb2 libsmbios-c2\nUse 'sudo apt autoremove' to remove them.\n0 upgraded, 0 newly installed, 0 to remove and 8 not upgraded.",
+      "stderr_tail": ""
+    },
+    {
+      "package": "ubuntu-server",
+      "status": "OK",
+      "duration_seconds": 11.5,
+      "pre": {
+        "version": "1.481.5",
+        "services": {}
+      },
+      "post": {
+        "version": "1.481.5",
+        "services": {}
+      },
+      "stdout_tail": "ubuntu-server is already the newest version (1.481.5).\nThe following packages were automatically installed and are no longer required:\n  libfwupd2 libfwupdplugin5 libgcab-1.0-0 libgusb2 libsmbios-c2\nUse 'sudo apt autoremove' to remove them.\n0 upgraded, 0 newly installed, 0 to remove and 8 not upgraded.",
+      "stderr_tail": ""
+    },
+    {
+      "package": "ubuntu-standard",
+      "status": "OK",
+      "duration_seconds": 12.4,
+      "pre": {
+        "version": "1.481.5",
+        "services": {}
+      },
+      "post": {
+        "version": "1.481.5",
+        "services": {}
+      },
+      "stdout_tail": "ubuntu-standard is already the newest version (1.481.5).\nThe following packages were automatically installed and are no longer required:\n  libfwupd2 libfwupdplugin5 libgcab-1.0-0 libgusb2 libsmbios-c2\nUse 'sudo apt autoremove' to remove them.\n0 upgraded, 0 newly installed, 0 to remove and 8 not upgraded.",
+      "stderr_tail": ""
+    },
+    {
+      "package": "update-manager-core",
+      "status": "OK",
+      "duration_seconds": 13.2,
+      "pre": {
+        "version": "1:22.04.22",
+        "services": {}
+      },
+      "post": {
+        "version": "1:22.04.22",
+        "services": {}
+      },
+      "stdout_tail": "update-manager-core is already the newest version (1:22.04.22).\nThe following packages were automatically installed and are no longer required:\n  libfwupd2 libfwupdplugin5 libgcab-1.0-0 libgusb2 libsmbios-c2\nUse 'sudo apt autoremove' to remove them.\n0 upgraded, 0 newly installed, 0 to remove and 8 not upgraded.",
+      "stderr_tail": ""
+    },
+    {
+      "package": "xfsprogs",
+      "status": "OK",
+      "duration_seconds": 12.8,
+      "pre": {
+        "version": "5.13.0-1ubuntu2.1",
+        "services": {}
+      },
+      "post": {
+        "version": "5.13.0-1ubuntu2.1",
+        "services": {}
+      },
+      "stdout_tail": "xfsprogs is already the newest version (5.13.0-1ubuntu2.1).\nThe following packages were automatically installed and are no longer required:\n  libfwupd2 libfwupdplugin5 libgcab-1.0-0 libgusb2 libsmbios-c2\nUse 'sudo apt autoremove' to remove them.\n0 upgraded, 0 newly installed, 0 to remove and 8 not upgraded.",
+      "stderr_tail": ""
+    }
+  ]
+}
