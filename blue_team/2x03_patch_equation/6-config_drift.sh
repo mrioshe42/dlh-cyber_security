@@ -1,6 +1,7 @@
 #!/bin/bash
 # name: 6-config_drift.sh
-# purpose: Fast detection of configuration drift post-patching.
+# purpose: Fast detection of configuration new drift post-patching.
+# old
 
 set -uo pipefail
 
