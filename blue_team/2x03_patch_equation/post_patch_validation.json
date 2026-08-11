@@ -1,0 +1,420 @@
+{
+  "total_checks": 61,
+  "passed": 61,
+  "failed": 0,
+  "details": [
+    {
+      "category": "service_state",
+      "target": "ModemManager.service",
+      "pre_state": "active",
+      "post_state": "active",
+      "status": "pass"
+    },
+    {
+      "category": "service_state",
+      "target": "apache2.service",
+      "pre_state": "active",
+      "post_state": "active",
+      "status": "pass"
+    },
+    {
+      "category": "service_state",
+      "target": "apparmor.service",
+      "pre_state": "active",
+      "post_state": "active",
+      "status": "pass"
+    },
+    {
+      "category": "service_state",
+      "target": "apport.service",
+      "pre_state": "active",
+      "post_state": "active",
+      "status": "pass"
+    },
+    {
+      "category": "service_state",
+      "target": "auditd.service",
+      "pre_state": "active",
+      "post_state": "active",
+      "status": "pass"
+    },
+    {
+      "category": "service_state",
+      "target": "cloud-config.service",
+      "pre_state": "active",
+      "post_state": "active",
+      "status": "pass"
+    },
+    {
+      "category": "service_state",
+      "target": "cloud-final.service",
+      "pre_state": "active",
+      "post_state": "active",
+      "status": "pass"
+    },
+    {
+      "category": "service_state",
+      "target": "cloud-init.service",
+      "pre_state": "active",
+      "post_state": "active",
+      "status": "pass"
+    },
+    {
+      "category": "service_state",
+      "target": "console-setup.service",
+      "pre_state": "active",
+      "post_state": "active",
+      "status": "pass"
+    },
+    {
+      "category": "service_state",
+      "target": "cron.service",
+      "pre_state": "active",
+      "post_state": "active",
+      "status": "pass"
+    },
+    {
+      "category": "service_state",
+      "target": "dbus.service",
+      "pre_state": "active",
+      "post_state": "active",
+      "status": "pass"
+    },
+    {
+      "category": "service_state",
+      "target": "finalrd.service",
+      "pre_state": "active",
+      "post_state": "active",
+      "status": "pass"
+    },
+    {
+      "category": "service_state",
+      "target": "getty@tty1.service",
+      "pre_state": "active",
+      "post_state": "active",
+      "status": "pass"
+    },
+    {
+      "category": "service_state",
+      "target": "irqbalance.service",
+      "pre_state": "active",
+      "post_state": "active",
+      "status": "pass"
+    },
+    {
+      "category": "service_state",
+      "target": "keyboard-setup.service",
+      "pre_state": "active",
+      "post_state": "active",
+      "status": "pass"
+    },
+    {
+      "category": "service_state",
+      "target": "kmod-static-nodes.service",
+      "pre_state": "active",
+      "post_state": "active",
+      "status": "pass"
+    },
+    {
+      "category": "service_state",
+      "target": "lvm2-monitor.service",
+      "pre_state": "active",
+      "post_state": "active",
+      "status": "pass"
+    },
+    {
+      "category": "service_state",
+      "target": "lvm2-pvscan@8:3.service",
+      "pre_state": "active",
+      "post_state": "active",
+      "status": "pass"
+    },
+    {
+      "category": "service_state",
+      "target": "multipathd.service",
+      "pre_state": "active",
+      "post_state": "active",
+      "status": "pass"
+    },
+    {
+      "category": "service_state",
+      "target": "mysql.service",
+      "pre_state": "active",
+      "post_state": "active",
+      "status": "pass"
+    },
+    {
+      "category": "service_state",
+      "target": "netfilter-persistent.service",
+      "pre_state": "active",
+      "post_state": "active",
+      "status": "pass"
+    },
+    {
+      "category": "service_state",
+      "target": "networkd-dispatcher.service",
+      "pre_state": "active",
+      "post_state": "active",
+      "status": "pass"
+    },
+    {
+      "category": "service_state",
+      "target": "packagekit.service",
+      "pre_state": "active",
+      "post_state": "active",
+      "status": "pass"
+    },
+    {
+      "category": "service_state",
+      "target": "plymouth-quit-wait.service",
+      "pre_state": "active",
+      "post_state": "active",
+      "status": "pass"
+    },
+    {
+      "category": "service_state",
+      "target": "plymouth-quit.service",
+      "pre_state": "active",
+      "post_state": "active",
+      "status": "pass"
+    },
+    {
+      "category": "service_state",
+      "target": "plymouth-read-write.service",
+      "pre_state": "active",
+      "post_state": "active",
+      "status": "pass"
+    },
+    {
+      "category": "service_state",
+      "target": "polkit.service",
+      "pre_state": "active",
+      "post_state": "active",
+      "status": "pass"
+    },
+    {
+      "category": "service_state",
+      "target": "rsyslog.service",
+      "pre_state": "active",
+      "post_state": "active",
+      "status": "pass"
+    },
+    {
+      "category": "service_state",
+      "target": "setvtrgb.service",
+      "pre_state": "active",
+      "post_state": "active",
+      "status": "pass"
+    },
+    {
+      "category": "service_state",
+      "target": "snapd.apparmor.service",
+      "pre_state": "active",
+      "post_state": "active",
+      "status": "pass"
+    },
+    {
+      "category": "service_state",
+      "target": "snapd.seeded.service",
+      "pre_state": "active",
+      "post_state": "active",
+      "status": "pass"
+    },
+    {
+      "category": "service_state",
+      "target": "snapd.service",
+      "pre_state": "active",
+      "post_state": "active",
+      "status": "pass"
+    },
+    {
+      "category": "service_state",
+      "target": "snmpd.service",
+      "pre_state": "active",
+      "post_state": "active",
+      "status": "pass"
+    },
+    {
+      "category": "service_state",
+      "target": "ssh.service",
+      "pre_state": "active",
+      "post_state": "active",
+      "status": "pass"
+    },
+    {
+      "category": "service_state",
+      "target": "systemd-binfmt.service",
+      "pre_state": "active",
+      "post_state": "active",
+      "status": "pass"
+    },
+    {
+      "category": "service_state",
+      "target": "systemd-fsck@dev-disk-by\\x2duuid-907d4524\\x2dc1c7\\x2d4387\\x2da530\\x2d8bfda4b27e0d.service",
+      "pre_state": "active",
+      "post_state": "active",
+      "status": "pass"
+    },
+    {
+      "category": "service_state",
+      "target": "systemd-journald.service",
+      "pre_state": "active",
+      "post_state": "active",
+      "status": "pass"
+    },
+    {
+      "category": "service_state",
+      "target": "systemd-logind.service",
+      "pre_state": "active",
+      "post_state": "active",
+      "status": "pass"
+    },
+    {
+      "category": "service_state",
+      "target": "systemd-modules-load.service",
+      "pre_state": "active",
+      "post_state": "active",
+      "status": "pass"
+    },
+    {
+      "category": "service_state",
+      "target": "systemd-networkd-wait-online.service",
+      "pre_state": "active",
+      "post_state": "active",
+      "status": "pass"
+    },
+    {
+      "category": "service_state",
+      "target": "systemd-networkd.service",
+      "pre_state": "active",
+      "post_state": "active",
+      "status": "pass"
+    },
+    {
+      "category": "service_state",
+      "target": "systemd-random-seed.service",
+      "pre_state": "active",
+      "post_state": "active",
+      "status": "pass"
+    },
+    {
+      "category": "service_state",
+      "target": "systemd-remount-fs.service",
+      "pre_state": "active",
+      "post_state": "active",
+      "status": "pass"
+    },
+    {
+      "category": "service_state",
+      "target": "systemd-resolved.service",
+      "pre_state": "active",
+      "post_state": "active",
+      "status": "pass"
+    },
+    {
+      "category": "service_state",
+      "target": "systemd-sysctl.service",
+      "pre_state": "active",
+      "post_state": "active",
+      "status": "pass"
+    },
+    {
+      "category": "service_state",
+      "target": "systemd-timesyncd.service",
+      "pre_state": "active",
+      "post_state": "active",
+      "status": "pass"
+    },
+    {
+      "category": "service_state",
+      "target": "systemd-udevd.service",
+      "pre_state": "active",
+      "post_state": "active",
+      "status": "pass"
+    },
+    {
+      "category": "service_state",
+      "target": "systemd-update-utmp.service",
+      "pre_state": "active",
+      "post_state": "active",
+      "status": "pass"
+    },
+    {
+      "category": "service_state",
+      "target": "systemd-user-sessions.service",
+      "pre_state": "active",
+      "post_state": "active",
+      "status": "pass"
+    },
+    {
+      "category": "service_state",
+      "target": "udisks2.service",
+      "pre_state": "active",
+      "post_state": "active",
+      "status": "pass"
+    },
+    {
+      "category": "service_state",
+      "target": "unattended-upgrades.service",
+      "pre_state": "active",
+      "post_state": "active",
+      "status": "pass"
+    },
+    {
+      "category": "service_state",
+      "target": "upower.service",
+      "pre_state": "active",
+      "post_state": "active",
+      "status": "pass"
+    },
+    {
+      "category": "service_state",
+      "target": "user-runtime-dir@1000.service",
+      "pre_state": "active",
+      "post_state": "active",
+      "status": "pass"
+    },
+    {
+      "category": "service_state",
+      "target": "user@1000.service",
+      "pre_state": "active",
+      "post_state": "active",
+      "status": "pass"
+    },
+    {
+      "category": "listening_socket",
+      "target": "port 22",
+      "status": "pass"
+    },
+    {
+      "category": "listening_socket",
+      "target": "port 53",
+      "status": "pass"
+    },
+    {
+      "category": "listening_socket",
+      "target": "port 68",
+      "status": "pass"
+    },
+    {
+      "category": "listening_socket",
+      "target": "port 80",
+      "status": "pass"
+    },
+    {
+      "category": "listening_socket",
+      "target": "port 161",
+      "status": "pass"
+    },
+    {
+      "category": "listening_socket",
+      "target": "port 3306",
+      "status": "pass"
+    },
+    {
+      "category": "listening_socket",
+      "target": "port 33060",
+      "status": "pass"
+    }
+  ]
+}
