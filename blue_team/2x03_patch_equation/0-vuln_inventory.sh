@@ -1,6 +1,6 @@
 #!/bin/bash
 # name: 0-vuln_inventory.sh
-# purpose: Generates a structured vulnerability inventory JSON instantly using local feed data, CVE-related information is extracted from a local feed file (cve_feed.json) and combined with the system's package information to produce a comprehensive vulnerability inventory.
+# purpose: Generates a structured vulnerability inventory JSON instantly using local feed data, CVE-related information is extracted from a local feed file, USN advisories are not fetched from the internet, and the script is designed to run without internet access.
 # author: Massimo Rios
 
 set -euo pipefail
