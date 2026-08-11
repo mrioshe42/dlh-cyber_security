@@ -1,6 +1,6 @@
 #!/bin/bash
 # name: 5-post_patch_validate.sh
-# purpose: Universally robust post-patch validation script in pure Bash verifying TCP/UDP sockets and service states.
+# purpose: Universally robust post-patch validation script in pure Bash verifying TCP/UDP sockets and service states, ActiveState, SubState, and MainPID are checked for each service, and critical liveness probes are executed with adaptive fallback parsing.
 # author: Massimo Rios
 
 set -uo pipefail
