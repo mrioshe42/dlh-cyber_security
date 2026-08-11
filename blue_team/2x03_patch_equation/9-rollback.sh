@@ -1,6 +1,6 @@
 #!/bin/bash
 # name: 9-rollback.sh
-# purpose: Downgrade a package to a pre-patch snapshot version, hold it, probe dependent services, and generate a summary, packages, and services report.
+# purpose: Downgrade a package to a pre-patch snapshot version, hold it, probe dependent services, and generate a summary, packages, and linked_packages.
 
 set -uo pipefail
 
