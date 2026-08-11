@@ -1,6 +1,7 @@
 #!/bin/bash
 # name: 4-patch_execute.sh
 # purpose: Safely execute patches from patch_plan.json with robust JSON parsing, advisory locking, dpkg lock backoff, per-patch checks, and JSON logging.
+# service states
 
 set -uo pipefail
 
