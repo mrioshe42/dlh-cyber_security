@@ -1,0 +1,11 @@
+{
+  "now": "2026-08-12T07:45:37Z",
+  "timezone": "Europe/Paris",
+  "active_window": null,
+  "next_window": {
+    "name": "standard",
+    "at": "2026-08-15 02:00:00"
+  },
+  "seconds_until_next": 231269,
+  "decision": "emergency_requires_override"
+}
