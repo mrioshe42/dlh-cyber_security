@@ -25,7 +25,7 @@ to_mins() {
     echo $(( 10#$h * 60 + 10#$m ))
 }
 
-# Parse all apt history logs (including rotated and gzipped) /var/log/apt/history.log Upgrade:
+# Parse all apt history logs (including rotated and gzipped) /var/log/apt/history.log Upgrade: Install: Remove:
 for log in "$LOG_DIR"/history.log*; do
     [ -e "$log" ] || continue
     if [[ "$log" == *.gz ]]; then
