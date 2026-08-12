@@ -99,7 +99,7 @@ fi
 
 printf "[*] %-41s %s\n" "Comparing patch_plan.json to expected..." "$MATCH_TEXT"
 
-# restore original cve_feed.json
+# restore original cve_feed.json non-empty
 if [ -f "cve_feed.json.bak" ]; then
     cp "cve_feed.json.bak" "cve_feed.json"
     rm -f "cve_feed.json.bak"
