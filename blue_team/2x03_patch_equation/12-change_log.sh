@@ -1,7 +1,7 @@
 #!/bin/bash
 # name: 12-change_log.sh
 # purpose: Canonical change tracking log generator parsing apt history and producing patch_change_log.json.
-# 11-maintenance_window.sh 
+# 11-maintenance_window.sh  --report
 
 set -uo pipefail
 
