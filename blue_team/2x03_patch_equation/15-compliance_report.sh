@@ -54,7 +54,7 @@ TMP_DATA=$(mktemp)
     get_json "pipeline_run.json"
     echo '}'
 } > "$TMP_DATA"
-
+# current state
 jq -r --arg now "$NOW_UTC" --argjson now_sec "$NOW_EPOCH" --arg host "$HOSTNAME" --arg kern "$KERNEL" '
   
   def parse_sev:
