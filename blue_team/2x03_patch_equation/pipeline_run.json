@@ -1,0 +1,101 @@
+{
+  "started_at": "2026-08-12T10:07:38Z",
+  "finished_at": "2026-08-12T10:11:47Z",
+  "hostname": "billing-srv-01",
+  "pipeline_status": "ok",
+  "total_duration_sec": 249.1,
+  "stages": [
+    {
+      "stage": "0-vuln_inventory",
+      "command": "0-vuln_inventory.sh",
+      "status": "ok",
+      "exit_code": 0,
+      "duration_sec": 1.9,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "stage": "1-service_deps",
+      "command": "1-service_deps.sh",
+      "status": "ok",
+      "exit_code": 0,
+      "duration_sec": 1.7,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "stage": "2-pre_patch_snapshot",
+      "command": "2-pre_patch_snapshot.sh",
+      "status": "ok",
+      "exit_code": 0,
+      "duration_sec": 1.6,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "stage": "3-patch_plan",
+      "command": "3-patch_plan.sh",
+      "status": "ok",
+      "exit_code": 0,
+      "duration_sec": 1.8,
+      "stdout": "Emergency: 1   Urgent: 9   Scheduled: 0\nReboot required by plan: no\nReport saved to: patch_plan.json",
+      "stderr": "[DEBUG 12:07:51] Dependency 'jq' verified successfully.\n[DEBUG 12:07:51] Processing adaptive schema normalization and priority scoring...\n[DEBUG 12:07:51] Patch plan successfully compiled into patch_plan.json."
+    },
+    {
+      "stage": "11-maintenance_window",
+      "command": "11-maintenance_window.sh --check",
+      "status": "ok",
+      "exit_code": 0,
+      "duration_sec": 8.1,
+      "stdout": "now:            2026-08-12 12:07 CEST (Wed)\nactive window:  emergency\ndecision:       proceed\nReport saved to: maintenance_window.json",
+      "stderr": ""
+    },
+    {
+      "stage": "4-patch_execute",
+      "command": "4-patch_execute.sh",
+      "status": "ok",
+      "exit_code": 0,
+      "duration_sec": 148.1,
+      "stdout": "[*] Acquiring lock /var/lock/meddefense-patch.lock...  OK\n[*] Loading plan: patch_plan.json (10 entries)\n[1/10] apache2                scheduled  apt-get ... OK (11.5s)\n[2/10] acl                    scheduled  apt-get ... OK (11.3s)\n[3/10] adduser                scheduled  apt-get ... OK (10.9s)\n[4/10] amd64-microcode        scheduled  apt-get ... OK (12.7s)\n[5/10] apache2-bin            scheduled  apt-get ... OK (8.2s)\n[6/10] apache2-data           scheduled  apt-get ... OK (6.9s)\n[7/10] apache2-utils          scheduled  apt-get ... OK (10.7s)\n[8/10] apparmor               scheduled  apt-get ... OK (10.6s)\n[9/10] apparmor-utils         scheduled  apt-get ... OK (10.9s)\n[10/10] apport                 scheduled  apt-get ... OK (12.4s)\nSucceeded: 10  Failed: 0\nLog saved to: patch_execution_log.json",
+      "stderr": ""
+    },
+    {
+      "stage": "5-post_patch_validate",
+      "command": "5-post_patch_validate.sh",
+      "status": "ok",
+      "exit_code": 0,
+      "duration_sec": 50.5,
+      "stdout": "[*] Extracting clean target lists from raw baselines...\n[*] Running service state validations...\n[*] Running listening socket validations...\n[*] Running critical service liveness probes...\nService state checks:     55/55   PASS\nListening socket checks:  7/7   PASS\nCritical liveness probes: 0/0   PASS\nVERDICT: PASS (62/62)\nReport saved to: post_patch_validation.json",
+      "stderr": ""
+    },
+    {
+      "stage": "6-config_drift",
+      "command": "6-config_drift.sh",
+      "status": "ok",
+      "exit_code": 0,
+      "duration_sec": 5.2,
+      "stdout": "[*] Loading baseline configuration file hashes...\n[*] Bulk verifying 990 files (this takes milliseconds)...\n[*] Configuration drift check complete.\n    Total Tracked:    990\n    Unchanged:        990\n    Modified/Missing: 0\n    Unexpected Drift: 0\nVERDICT: PASS (No unexpected configuration drift)",
+      "stderr": ""
+    },
+    {
+      "stage": "12-change_log",
+      "command": "12-change_log.sh",
+      "status": "ok",
+      "exit_code": 0,
+      "duration_sec": 1.5,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "artifacts": {
+    "0-vuln_inventory": "vuln_inventory.json",
+    "1-service_deps": "service_deps.json",
+    "2-pre_patch_snapshot": "pre_patch_snapshot.json",
+    "3-patch_plan": "patch_plan.json",
+    "11-maintenance_window": "maintenance_window.json",
+    "4-patch_execute": "patch_execution_log.json",
+    "5-post_patch_validate": "post_patch_validation.json",
+    "6-config_drift": "config_drift.json",
+    "12-change_log": "change_log.json"
+  }
+}
