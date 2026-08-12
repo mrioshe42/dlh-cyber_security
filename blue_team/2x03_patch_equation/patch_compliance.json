@@ -9,7 +9,18 @@
     "deferred_window": 0,
     "score": 100.0,
     "target_score": 95.0,
+    "id": "billing-srv-01-2026-08-12T11:32:29Z",
     "overdue": 0
   },
-  "cves": []
+  "cves": [
+    {
+      "id": "CVE-2024-0000",
+      "package": "systemd",
+      "severity": "low",
+      "state": "resolved",
+      "first_seen": "2026-08-12T11:32:29Z",
+      "resolved_at": "2026-08-12T11:32:29Z",
+      "justification": null
+    }
+  ]
 }
