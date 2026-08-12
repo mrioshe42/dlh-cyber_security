@@ -160,7 +160,7 @@ jq -r --arg now "$NOW_UTC" --argjson now_sec "$NOW_EPOCH" --arg host "$HOSTNAME"
 
 # Cleanup
 rm -f "$TMP_DATA"
-
+# 95.00
 SCORE=$(jq -r '.summary.score' patch_compliance.json)
 echo "Compliance report saved to patch_compliance.json (Score: ${SCORE}%)"
 
