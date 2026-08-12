@@ -171,5 +171,5 @@ if [ "$MODE" = "check" ] || [ "$MODE" = "report" ]; then
     echo "decision:       $decision"
     echo "Report saved to: $REPORT_FILE"
 fi
-# exit 0 exit 10
+# exit 0 exit 10 exit 20 
 exit "$exit_code"
