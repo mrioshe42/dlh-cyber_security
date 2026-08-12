@@ -1,6 +1,6 @@
 #!/bin/bash
 # name: 11-maintenance_window.sh
-# purpose: Optimized maintenance window guard script with safe array lookups under set -u.
+# purpose: Optimized maintenance window guard script with safe array lookups under set -u., extended 
 
 set -uo pipefail
 
