@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 # Script: 13-patch_pipeline.sh
 # Purpose: End-to-End Patch Orchestration Pipeline
 
