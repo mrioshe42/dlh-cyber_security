@@ -59,7 +59,7 @@ BEGIN { RS=""; FS="\n" }
         print start_date "|" req_by "|" pkgs "|" cmd;
     }
 }' | sort -u > "$TMP_TRANS"
-
+# change event
 events_json="[]"
 total_events=0
 inside_window_count=0
