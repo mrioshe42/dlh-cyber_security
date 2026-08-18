@@ -1,7 +1,7 @@
 #!/bin/bash
 # Script Name: 1-attack_surface.sh
 # Description: Classify listening sockets from network_baseline.json using
-#              service_catalog.json and service_criticality.json jq systemctl show
+#              service_catalog.json and service_criticality.json jq systemctl show database_exposed
 # Author: Massimo
 
 set -euo pipefail
