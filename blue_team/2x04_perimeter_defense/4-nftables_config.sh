@@ -22,7 +22,7 @@ fi
 
 sudo mkdir -p "${BACKUP_DIR}"
 
-# Save rollback of current ruleset
+# Save rollback of current ruleset /var/backups/nftables-rollback
 echo "[+] Saving current nftables ruleset to ${ROLLBACK_FILE}..."
 sudo nft list ruleset > "${ROLLBACK_FILE}" || sudo touch "${ROLLBACK_FILE}"
 
