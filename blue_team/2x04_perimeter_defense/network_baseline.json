@@ -1,0 +1,164 @@
+{
+  "timestamp": "2026-08-18T18:32:06Z",
+  "hostname": "billing-srv-01",
+  "interfaces": [
+    {
+      "ifindex": 1,
+      "ifname": "lo",
+      "flags": [
+        "LOOPBACK",
+        "UP",
+        "LOWER_UP"
+      ],
+      "mtu": 65536,
+      "qdisc": "noqueue",
+      "operstate": "UNKNOWN",
+      "group": "default",
+      "txqlen": 1000,
+      "link_type": "loopback",
+      "address": "00:00:00:00:00:00",
+      "broadcast": "00:00:00:00:00:00",
+      "addr_info": [
+        {
+          "family": "inet",
+          "local": "127.0.0.1",
+          "prefixlen": 8,
+          "scope": "host",
+          "label": "lo",
+          "valid_life_time": 4294967295,
+          "preferred_life_time": 4294967295
+        },
+        {
+          "family": "inet6",
+          "local": "::1",
+          "prefixlen": 128,
+          "scope": "host",
+          "valid_life_time": 4294967295,
+          "preferred_life_time": 4294967295
+        }
+      ]
+    },
+    {
+      "ifindex": 2,
+      "ifname": "enp0s3",
+      "flags": [
+        "BROADCAST",
+        "MULTICAST",
+        "UP",
+        "LOWER_UP"
+      ],
+      "mtu": 1500,
+      "qdisc": "fq_codel",
+      "operstate": "UP",
+      "group": "default",
+      "txqlen": 1000,
+      "link_type": "ether",
+      "address": "52:54:00:12:34:56",
+      "broadcast": "ff:ff:ff:ff:ff:ff",
+      "addr_info": [
+        {
+          "family": "inet",
+          "local": "10.0.2.15",
+          "prefixlen": 24,
+          "metric": 100,
+          "broadcast": "10.0.2.255",
+          "scope": "global",
+          "dynamic": true,
+          "label": "enp0s3",
+          "valid_life_time": 84324,
+          "preferred_life_time": 84324
+        },
+        {
+          "family": "inet6",
+          "local": "fec0::5054:ff:fe12:3456",
+          "prefixlen": 64,
+          "scope": "site",
+          "dynamic": true,
+          "mngtmpaddr": true,
+          "noprefixroute": true,
+          "valid_life_time": 86374,
+          "preferred_life_time": 14374
+        },
+        {
+          "family": "inet6",
+          "local": "fe80::5054:ff:fe12:3456",
+          "prefixlen": 64,
+          "scope": "link",
+          "valid_life_time": 4294967295,
+          "preferred_life_time": 4294967295
+        }
+      ]
+    }
+  ],
+  "routes": [
+    {
+      "dst": "default",
+      "gateway": "10.0.2.2",
+      "dev": "enp0s3",
+      "protocol": "dhcp",
+      "prefsrc": "10.0.2.15",
+      "metric": 100,
+      "flags": []
+    },
+    {
+      "dst": "10.0.2.0/24",
+      "dev": "enp0s3",
+      "protocol": "kernel",
+      "scope": "link",
+      "prefsrc": "10.0.2.15",
+      "metric": 100,
+      "flags": []
+    },
+    {
+      "dst": "10.0.2.2",
+      "dev": "enp0s3",
+      "protocol": "dhcp",
+      "scope": "link",
+      "prefsrc": "10.0.2.15",
+      "metric": 100,
+      "flags": []
+    },
+    {
+      "dst": "10.0.2.3",
+      "dev": "enp0s3",
+      "protocol": "dhcp",
+      "scope": "link",
+      "prefsrc": "10.0.2.15",
+      "metric": 100,
+      "flags": []
+    }
+  ],
+  "neighbors": [
+    {
+      "dst": "10.0.2.3",
+      "dev": "enp0s3",
+      "lladdr": "52:55:0a:00:02:03",
+      "state": [
+        "STALE"
+      ]
+    },
+    {
+      "dst": "10.0.2.2",
+      "dev": "enp0s3",
+      "lladdr": "52:55:0a:00:02:02",
+      "state": [
+        "REACHABLE"
+      ]
+    },
+    {
+      "dst": "fe80::2",
+      "dev": "enp0s3",
+      "lladdr": "52:56:00:00:00:02",
+      "router": null,
+      "state": [
+        "STALE"
+      ]
+    }
+  ],
+  "listening_sockets": [],
+  "established_connections": [],
+  "dns_resolvers": {
+    "resolv_conf": "# This is /run/systemd/resolve/stub-resolv.conf managed by man:systemd-resolved(8).\n# Do not edit.\n#\n# This file might be symlinked as /etc/resolv.conf. If you're looking at\n# /etc/resolv.conf and seeing this text, you have followed the symlink.\n#\n# This is a dynamic resolv.conf file for connecting local clients to the\n# internal DNS stub resolver of systemd-resolved. This file lists all\n# configured search domains.\n#\n# Run \"resolvectl status\" to see details about the uplink DNS servers\n# currently in use.\n#\n# Third party programs should typically not access this file directly, but only\n# through the symlink at /etc/resolv.conf. To manage man:resolv.conf(5) in a\n# different way, replace this symlink by a static file or a different symlink.\n#\n# See man:systemd-resolved.service(8) for details about the supported modes of\n# operation for /etc/resolv.conf.\n\nnameserver 127.0.0.53\noptions edns0 trust-ad\nsearch .\n",
+    "systemd_resolved": "Global\n       Protocols: -LLMNR -mDNS -DNSOverTLS DNSSEC=no/unsupported\nresolv.conf mode: stub\n\nLink 2 (enp0s3)\n    Current Scopes: DNS\n         Protocols: +DefaultRoute +LLMNR -mDNS -DNSOverTLS DNSSEC=no/unsupported\nCurrent DNS Server: 10.0.2.3\n       DNS Servers: 10.0.2.3 fec0::3\n"
+  }
+}
