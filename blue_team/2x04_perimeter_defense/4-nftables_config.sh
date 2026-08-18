@@ -2,7 +2,7 @@
 # Script Name: 4-nftables_config.sh
 # Description: Compiles segmentation_rules.json into a working nftables configuration,
 #              saves a rollback snapshot, applies it atomically with check-only validation,
-#              and verifies rule counts, jq DMZ 
+#              and verifies rule counts, jq DMZ INTERNAL 
 # Author: Massimo
 
 set -euo pipefail
