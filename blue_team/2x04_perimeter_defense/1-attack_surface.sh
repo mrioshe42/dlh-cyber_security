@@ -2,7 +2,7 @@
 # Script Name: 1-attack_surface.sh
 # Description: Pure Bash & awk implementation to classify listening sockets
 #              from network_baseline.json against service catalogs and rules.
-#              jq 
+#              jq systemctl show
 # Author: Massimo
 
 set -euo pipefail
