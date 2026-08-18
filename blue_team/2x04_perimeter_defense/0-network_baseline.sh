@@ -2,7 +2,7 @@
 # Script Name: 0-network_baseline.sh
 # Description: Discovers local network topology from the hardened endpoint's 
 #              perspective and outputs a structured JSON baseline artifact, MAC addresses, IP addresses, routing tables, listening sockets, and DNS resolver configuration.
-#              link state default 
+#              link state default , PID 
 # Author: Massimo
 
 set -euo pipefail
