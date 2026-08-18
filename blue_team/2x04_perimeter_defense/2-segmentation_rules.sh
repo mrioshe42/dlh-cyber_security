@@ -1,7 +1,7 @@
 #!/bin/bash
 # Script Name: 2-segmentation_rules.sh
 # Description: Generates the structured segmentation rule set and zone definitions
-#              for firewall consumption jq tcp/53 udp/53
+#              for firewall consumption jq tcp/53 udp/53 No flows
 # Author: Massimo
 
 set -euo pipefail
