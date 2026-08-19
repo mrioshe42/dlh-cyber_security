@@ -1,7 +1,7 @@
 #!/bin/bash
 # Script Name: 11-pcap_investigation.sh
 # Description: Investigates a suspicious session PCAP via tshark and jq entirely
-#              in Bash, generating a structured finding report at pcap_findings.json. $1 top 10
+#              in Bash, generating a structured finding report at pcap_findings.json. $1 top 10 protocol distribution
 # Author: Massimo
 
 set -euo pipefail
