@@ -2,7 +2,7 @@
 # Script Name: 8-suricata_setup.sh
 # Description: Prepares Suricata for offline PCAP replay, synchronizes rules,
 #              renders a fully compliant suricata.yaml, validates configuration safely,
-#              runs an end-to-end smoke test, and emits setup_verification.json.
+#              runs an end-to-end smoke test, and emits setup_verification.json, fileinfo 
 # Author: Massimo
 
 set -euo pipefail
