@@ -2,7 +2,7 @@
 # Script Name: 9-suricata_analysis.sh
 # Description: Replays a PCAP through Suricata, parses eve.json alerts, maps
 #              them using signature_categories.json, aggregates statistics, 
-#              and generates suricata_alerts.json.
+#              and generates suricata_alerts.json, $1 
 # Author: Massimo
 
 set -euo pipefail
