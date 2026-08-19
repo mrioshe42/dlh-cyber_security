@@ -5,7 +5,7 @@
     6-windows_firewall.ps1
 .DESCRIPTION
     Reads segmentation_rules.json, configures firewall profile defaults and block logging,
-    cleans up prior MedDefense rules for idempotency, and creates inbound rules based on the flow matrix, jq
+    cleans up prior MedDefense rules for idempotency, and creates inbound rules based on the flow matrix, jq ConvertTo-Json
 .AUTHOR
     Massimo
 #>
