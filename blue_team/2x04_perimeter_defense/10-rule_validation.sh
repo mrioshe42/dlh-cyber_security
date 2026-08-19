@@ -1,6 +1,6 @@
 #!/bin/bash
 # Script Name: 10-rule_validation.sh
-# Description: High-speed validation of custom MedDefense rules against PCAPs.
+# Description: High-speed validation of custom MedDefense rules against PCAPs. rule_validation.json
 # Author: Massimo
 
 set -uo pipefail
