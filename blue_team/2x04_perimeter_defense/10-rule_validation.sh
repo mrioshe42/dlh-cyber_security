@@ -4,7 +4,7 @@
 # Author: Massimo
 
 set -uo pipefail
-
+# /home/analyst/MedDefense_Lab/PCAPs/labels
 RULES_FILE="meddefense.rules"
 DEST_RULES_DIR="/var/lib/suricata/rules"
 LAB_DIR="/home/analyst/MedDefense_Lab/PCAPs"
