@@ -1,7 +1,7 @@
 #!/bin/bash
 # Script Name: 13-dns_filtering.sh
 # Description: Configures local DNS filtering via dnsmasq (sinkholing blocklists,
-#              forwarding valid queries, logging queries) and validates resolution paths. jq .json
+#              forwarding valid queries, logging queries) and validates resolution paths. jq .json idempotent
 # Author: Massimo
 
 set -uo pipefail
