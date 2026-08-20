@@ -2,7 +2,7 @@
 # Script Name: 3-protocol_audit.sh
 # Description: Probes high-risk listeners identified by network baseline & attack 
 #              surface maps, auditing protocols for cleartext exposure, SNMP 
-#              community strings, unsecured LDAP, TLS status, and admin surfaces.
+#              community strings, unsecured LDAP, TLS status, and admin surfaces. 21
 # Author: Massimo
 
 set -uo pipefail
