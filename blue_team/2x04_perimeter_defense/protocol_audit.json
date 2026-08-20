@@ -1,0 +1,59 @@
+{
+  "generated_at": "2026-08-20T08:00:37Z",
+  "hostname": "billing-srv-01",
+  "findings": [
+    {
+      "protocol": "telnet",
+      "port": 23,
+      "target": "127.0.0.1",
+      "status": "insecure",
+      "severity": "HIGH",
+      "evidence": "cleartext banner observed",
+      "secure_alternative": "SSH",
+      "remediation_command": "systemctl disable --now telnet",
+      "exception_accepted": false,
+      "source_task": "attack_surface_map"
+    },
+    {
+      "protocol": "snmpv2c",
+      "port": 161,
+      "target": "127.0.0.1",
+      "status": "insecure",
+      "severity": "HIGH",
+      "evidence": "public community returned sysDescr",
+      "secure_alternative": "SNMPv3",
+      "remediation_command": "apt-get purge snmpd",
+      "exception_accepted": false,
+      "source_task": "attack_surface_map"
+    },
+    {
+      "protocol": "http-admin",
+      "port": 80,
+      "target": "127.0.0.1",
+      "status": "insecure",
+      "severity": "MEDIUM",
+      "evidence": "/admin returned 200 without TLS",
+      "secure_alternative": "HTTPS",
+      "remediation_command": "configure TLS",
+      "exception_accepted": false,
+      "source_task": "attack_surface_map"
+    },
+    {
+      "protocol": "ldaps",
+      "port": 636,
+      "target": "127.0.0.1",
+      "status": "secure",
+      "severity": "INFO",
+      "evidence": "TLS handshake OK",
+      "secure_alternative": "LDAPS",
+      "remediation_command": "none",
+      "exception_accepted": true,
+      "source_task": "attack_surface_map"
+    }
+  ],
+  "summary": {
+    "candidate_listeners": 4,
+    "high_unaccepted": 2
+  },
+  "high_unaccepted_count": 2
+}
