@@ -2,7 +2,7 @@
 # Script Name: 5-firewall_test.sh
 # Description: Advanced firewall validation suite. Reads segmentation_rules.json 
 #              and probes.json, tests allowed and denied flows via nc/ping, 
-#              records outcomes, and validates nftables behavior, dst_zone expected=allow nc -z -w 3 expected=deny
+#              records outcomes, and validates nftables behavior, dst_zone expected=allow nc -z -w 3 expected=deny refused
 # Author: Massimo
 
 set -uo pipefail
