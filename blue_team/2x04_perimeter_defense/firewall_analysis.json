@@ -1,0 +1,201 @@
+{
+  "source_file": "/home/analyst/MedDefense_Lab/firewall_samples/ufw.log",
+  "line_count": 125,
+  "parsed_count": 125,
+  "top_denied_sources": [
+    {
+      "ip": "198.51.100.23",
+      "count": 25
+    },
+    {
+      "ip": "185.156.73.54",
+      "count": 15
+    },
+    {
+      "ip": "198.51.100.9",
+      "count": 14
+    },
+    {
+      "ip": "45.148.10.7",
+      "count": 13
+    },
+    {
+      "ip": "141.98.11.20",
+      "count": 12
+    },
+    {
+      "ip": "192.0.2.44",
+      "count": 11
+    },
+    {
+      "ip": "23.94.16.8",
+      "count": 10
+    },
+    {
+      "ip": "172.16.20.10",
+      "count": 8
+    },
+    {
+      "ip": "89.248.165.191",
+      "count": 8
+    },
+    {
+      "ip": "203.0.113.77",
+      "count": 6
+    }
+  ],
+  "top_denied_ports": [
+    {
+      "port": "443",
+      "count": 21
+    },
+    {
+      "port": "80",
+      "count": 12
+    },
+    {
+      "port": "1433",
+      "count": 10
+    },
+    {
+      "port": "22",
+      "count": 10
+    },
+    {
+      "port": "25",
+      "count": 9
+    },
+    {
+      "port": "5900",
+      "count": 9
+    },
+    {
+      "port": "8080",
+      "count": 9
+    },
+    {
+      "port": "23",
+      "count": 8
+    },
+    {
+      "port": "445",
+      "count": 8
+    },
+    {
+      "port": "3306",
+      "count": 5
+    }
+  ],
+  "scan_candidates": [
+    {
+      "src_ip": "198.51.100.23",
+      "window_start": "2026-04-08T03:14:00Z",
+      "window_end": "2026-04-08T03:14:48Z",
+      "ports_touched": 25,
+      "dst_count": 1
+    }
+  ],
+  "outbound_anomalies": [
+    {
+      "src_ip": "172.16.20.10"
+    }
+  ],
+  "hourly_histogram": [
+    {
+      "hour": "00:00",
+      "count": 2
+    },
+    {
+      "hour": "01:00",
+      "count": 6
+    },
+    {
+      "hour": "02:00",
+      "count": 4
+    },
+    {
+      "hour": "03:00",
+      "count": 27
+    },
+    {
+      "hour": "04:00",
+      "count": 5
+    },
+    {
+      "hour": "05:00",
+      "count": 10
+    },
+    {
+      "hour": "06:00",
+      "count": 4
+    },
+    {
+      "hour": "07:00",
+      "count": 3
+    },
+    {
+      "hour": "08:00",
+      "count": 6
+    },
+    {
+      "hour": "09:00",
+      "count": 7
+    },
+    {
+      "hour": "10:00",
+      "count": 3
+    },
+    {
+      "hour": "11:00",
+      "count": 5
+    },
+    {
+      "hour": "12:00",
+      "count": 2
+    },
+    {
+      "hour": "13:00",
+      "count": 4
+    },
+    {
+      "hour": "14:00",
+      "count": 5
+    },
+    {
+      "hour": "15:00",
+      "count": 2
+    },
+    {
+      "hour": "16:00",
+      "count": 3
+    },
+    {
+      "hour": "17:00",
+      "count": 5
+    },
+    {
+      "hour": "18:00",
+      "count": 2
+    },
+    {
+      "hour": "19:00",
+      "count": 2
+    },
+    {
+      "hour": "20:00",
+      "count": 4
+    },
+    {
+      "hour": "21:00",
+      "count": 3
+    },
+    {
+      "hour": "22:00",
+      "count": 6
+    },
+    {
+      "hour": "23:00",
+      "count": 5
+    }
+  ]
+}
