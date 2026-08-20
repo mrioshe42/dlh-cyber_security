@@ -78,7 +78,7 @@ if nc -z -w 2 "${TARGET_IP}" 23 2>/dev/null; then
     add_finding "telnet" 23 "${TARGET_IP}" "insecure" "HIGH" "$BANNER" "SSH (tcp/22)" "systemctl disable --now telnet" "false" "attack_surface_map"
 fi
 
-# Probe SNMP (udp/161) Do not modify
+# Probe SNMP (udp/161) Do not modify reports only
 if command -v snmpget >/dev/null 2>&1; then
     SNMP_RES=$(snmpget -v2c -c public -t 2 -r 1 "${TARGET_IP}" 1.3.6.1.2.1.1.1.0 2>/dev/null || true)
     if [[ "$SNMP_RES" == *"SNMPv2-MIB"* ]] || [[ "$SNMP_RES" == *"Descr"* ]]; then
