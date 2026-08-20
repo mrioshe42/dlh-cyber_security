@@ -2,7 +2,7 @@
 # Script Name: 7-firewall_log_analysis.sh
 # Description: Parses firewall (UFW/nftables) logs using pure Bash and coreutils,
 #              computing top denied sources, ports, scan signatures, outbound 
-#              anomalies, and hourly histograms into firewall_analysis.json, iface_in=eth0 iface_out=eth1 
+#              anomalies, and hourly histograms into firewall_analysis.json, iface_in=eth0 iface_out=eth1 proto 
 # Author: Massimo
 
 set -uo pipefail
