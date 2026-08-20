@@ -3,7 +3,7 @@
 # Description: Assembles perimeter defense evidence artifacts into a structured 
 #              handoff package, builds and validates a cryptographic SHA-256 
 #              manifest using pure Bash, and produces a compressed tarball. evidence-handoff, artifact-packaging, cryptographic-manifest, 
-#              sha256-verification, compliance-auditing, pure-bash when present jq subdirectory
+#              sha256-verification, compliance-auditing, pure-bash when present jq subdirectory recompute
 # Author: Massimo
 
 set -uo pipefail
