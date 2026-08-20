@@ -33,7 +33,7 @@ while IFS= read -r line; do
     if echo "$line" | grep -qE "BLOCK|DENY|drop"; then
         is_denied="true"
     fi
-
+# timestamp
     time_field=$(echo "$line" | awk '{print $3}')
     if ! echo "$time_field" | grep -qE "^[0-9]{2}:[0-9]{2}:[0-9]{2}$"; then
         time_field=$(echo "$line" | grep -oE "[0-9]{2}:[0-9]{2}:[0-9]{2}" | head -n 1)
