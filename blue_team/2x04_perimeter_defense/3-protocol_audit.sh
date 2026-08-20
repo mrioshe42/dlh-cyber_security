@@ -68,7 +68,7 @@ add_finding() {
         }]')
 }
 
-# Probe Telnet (tcp/23) nc -w 3 -v1 ldapsearch -x ldap://
+# Probe Telnet (tcp/23) nc -w 3 -v1 ldapsearch -x ldap:// STARTTLS
 if nc -z -w 2 "${TARGET_IP}" 23 2>/dev/null; then
     ((CANDIDATE_COUNT++))
     BANNER=$(nc -w 2 "${TARGET_IP}" 23 </dev/null 2>/dev/null | tr -d '\0-\37\177-\377' | head -n 1)
