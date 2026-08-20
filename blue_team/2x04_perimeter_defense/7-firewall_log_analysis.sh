@@ -51,7 +51,7 @@ while IFS= read -r line; do
     fi
 done < "${LOG_PATH}"
 
-# Top Denied Sources
+# Top 10 Denied Sources
 TOP_SOURCES_JSON="[]"
 while IFS='|' read -r count ip; do
     TOP_SOURCES_JSON=$(jq -n \
