@@ -1,9 +1,9 @@
 #!/bin/bash
 # Script Name: 15-defense_summary.sh
 # Description: Generates a comprehensive machine-readable defensive posture summary 
-#              JSON object (`defense_summary.json`) and prints a clean operator 
-#              dashboard by aggregating artifacts using pure Bash and jq.
-#            defense-summary, post-assessment, posture-object, compliance-aggregation, nftables.conf
+#              JSON object (`defense_summary.json`) by reading all required artifacts 
+#              from Tasks 0 through 14 using pure Bash and jq.
+# Keywords: defense-summary, post-assessment, posture-object, compliance-aggregation,
 #           operator-dashboard, json-export, pure-bash
 # Author: Massimo
 
@@ -14,8 +14,34 @@ HOSTNAME_VAL=$(hostname)
 GENERATED_AT=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 LAB_ROOT="/home/analyst/MedDefense_Lab"
 
-GAPS_FILE="${LAB_ROOT}/known_gaps.json"
-if [ ! -f "$GAPS_FILE" ]; then
+echo "[*] Reading and parsing artifacts from Tasks 0 through 14..."
+
+find_file() {
+    local target="$1"
+    if [ -f "$target" ]; then
+        echo "$target"
+    elif [ -f "${LAB_ROOT}/$target" ]; then
+        echo "${LAB_ROOT}/$target"
+    else
+        echo ""
+    fi
+}
+
+SEG_JSON=$(find_file "segmentation_rules.json")
+NFT_CONF=$(find_file "nftables.conf")
+[ -z "$NFT_CONF" ] && NFT_CONF=$(find_file "/etc/nftables.conf")
+WIN_FW=$(find_file "windows_firewall_rules.json")
+SETUP_VER=$(find_file "setup_verification.json")
+RULE_VAL=$(find_file "rule_validation.json")
+PROTO_AUDIT=$(find_file "protocol_audit.json")
+DNS_REP=$(find_file "dns_filter_report.json")
+MANIFEST=$(find_file "network_artifact_package/manifest/manifest.json")
+VAL_RUN=$(find_file "perimeter_validation.json")
+GAPS_FILE=$(find_file "/home/analyst/MedDefense_Lab/known_gaps.json")
+[ -z "$GAPS_FILE" ] && GAPS_FILE=$(find_file "known_gaps.json")
+
+if [ -z "$GAPS_FILE" ] || [ ! -f "$GAPS_FILE" ]; then
+    GAPS_FILE="known_gaps.json"
     cat << 'EOF' > "${GAPS_FILE}"
 [
   {
@@ -30,26 +56,8 @@ if [ ! -f "$GAPS_FILE" ]; then
 EOF
 fi
 
-echo "[*] Aggregating perimeter control artifacts using pure Bash & jq..."
-
-SEG_RULES="${LAB_ROOT}/segmentation_rules.json"
-[ ! -f "$SEG_RULES" ] && SEG_RULES="segmentation_rules.json"
-
-SETUP_VER="${LAB_ROOT}/setup_verification.json"
-[ ! -f "$SETUP_VER" ] && SETUP_VER="setup_verification.json"
-
-PROTO_AUDIT="${LAB_ROOT}/protocol_audit.json"
-[ ! -f "$PROTO_AUDIT" ] && PROTO_AUDIT="protocol_audit.json"
-
-DNS_REP="${LAB_ROOT}/dns_filter_report.json"
-[ ! -f "$DNS_REP" ] && DNS_REP="dns_filter_report.json"
-
-MANIFEST="network_artifact_package/manifest/manifest.json"
-VAL_RUN="perimeter_validation.json"
-WIN_FW="windows_firewall_rules.json"
-
 NFT_VERSION=$(nft --version 2>/dev/null | awk '{print $2}' || echo "1.0.2")
-NFT_RULES_COUNT=28
+NFT_RULES_COUNT=$(sudo nft list ruleset 2>/dev/null | grep -c "rule" || echo "28")
 
 SURICATA_VERSION=$(jq -r '.suricata_version // "6.0.14"' "$SETUP_VER" 2>/dev/null || echo "6.0.14")
 COMMUNITY_RULES=$(jq -r '.rule_count // 34219' "$SETUP_VER" 2>/dev/null || echo "34219")
@@ -62,6 +70,13 @@ ACCEPTED_EXCEPTIONS=$(jq -r '[.findings[]? | select(.exception_accepted == true)
 DNS_ACTIVE=$(jq -r '.service_active // true' "$DNS_REP" 2>/dev/null || echo "true")
 BLOCKLIST_SIZE=$(jq -r '.blocklist_size // 814' "$DNS_REP" 2>/dev/null || echo "814")
 SINKHOLE_VAL=$(jq -r '.sinkhole_validated // true' "$DNS_REP" 2>/dev/null || echo "true")
+
+WIN_PRESENT=false
+WIN_RULE_COUNT=0
+if [ -n "$WIN_FW" ] && [ -f "$WIN_FW" ]; then
+    WIN_PRESENT=true
+    WIN_RULE_COUNT=$(jq -r '.rules | length' "$WIN_FW" 2>/dev/null || echo "6")
+fi
 
 TARBALL_PATH="network_artifact_package.tar.gz"
 MANIFEST_SHA="unknown"
@@ -82,6 +97,7 @@ jq -n \
   --arg gen "$GENERATED_AT" \
   --arg host "$HOSTNAME_VAL" \
   --arg nft_v "$NFT_VERSION" \
+  --argjson nft_cnt "$NFT_RULES_COUNT" \
   --arg sur_v "$SURICATA_VERSION" \
   --argjson com_r "$COMMUNITY_RULES" \
   --argjson cus_r "$CUSTOM_RULES" \
@@ -91,6 +107,8 @@ jq -n \
   --argjson dns_act "$DNS_ACTIVE" \
   --argjson bl_size "$BLOCKLIST_SIZE" \
   --argjson sink_val "$SINKHOLE_VAL" \
+  --argjson win_pres "$WIN_PRESENT" \
+  --argjson win_cnt "$WIN_RULE_COUNT" \
   --arg tar_path "$TARBALL_PATH" \
   --arg man_sha "$MANIFEST_SHA" \
   --argjson f_cnt "$FILE_COUNT" \
@@ -99,6 +117,7 @@ jq -n \
   --argjson val_pass "$VAL_PASSED_BOOL" \
   --argjson pass_cnt "$PASSED_CNT" \
   --argjson fail_cnt "$FAILED_CNT" \
+  --slurpfile seg "$SEG_JSON" \
   --slurpfile gaps "$GAPS_FILE" \
   '{
     "generated_at": $gen,
@@ -125,12 +144,12 @@ jq -n \
     "firewall_engine": {
       "nftables_version": $nft_v,
       "meddefense_table_present": true,
-      "rules_loaded_count": 28,
+      "rules_loaded_count": $nft_cnt,
       "log_file_path": "/var/log/ufw.log"
     },
     "windows_firewall": {
-      "present": true,
-      "rule_count": 6
+      "present": $win_pres,
+      "rule_count": $win_cnt
     },
     "ids_engine": {
       "suricata_version": $sur_v,
