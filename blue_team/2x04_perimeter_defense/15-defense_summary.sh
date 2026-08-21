@@ -3,8 +3,8 @@
 # Description: Generates a comprehensive machine-readable defensive posture summary 
 #              JSON object (`defense_summary.json`) by reading all required artifacts 
 #              from Tasks 0 through 14 using pure Bash and jq.
-# Keywords: defense-summary, post-assessment, posture-object, compliance-aggregation,
-#           operator-dashboard, json-export, pure-bash
+#            defense-summary, post-assessment, posture-object, compliance-aggregation,
+#           operator-dashboard, json-export, pure-bash,  cidr
 # Author: Massimo
 
 set -uo pipefail
