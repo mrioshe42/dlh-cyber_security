@@ -1,0 +1,186 @@
+{
+  "generated_at": "2026-08-21T11:30:08Z",
+  "hostname": "billing-srv-01",
+  "zones_defined": {
+    "count": 4,
+    "names": [
+      "DMZ",
+      "INTERNAL",
+      "MGMT",
+      "MEDDEV"
+    ],
+    "CIDRs": [
+      "10.100.10.0/24",
+      "10.100.20.0/24",
+      "10.100.30.0/24",
+      "10.100.40.0/24"
+    ]
+  },
+  "flows_allowed": {
+    "count": 9,
+    "list": [
+      {
+        "source": "MGMT",
+        "destination": "DMZ",
+        "port": 22
+      },
+      {
+        "source": "MGMT",
+        "destination": "INTERNAL",
+        "port": 22
+      },
+      {
+        "source": "INTERNAL",
+        "destination": "INTERNAL",
+        "port": 443
+      },
+      {
+        "source": "INTERNAL",
+        "destination": "INTERNAL",
+        "port": 3306
+      },
+      {
+        "source": "DMZ",
+        "destination": "INTERNAL",
+        "port": 3306
+      },
+      {
+        "source": "MEDDEV",
+        "destination": "INTERNAL",
+        "port": 443
+      },
+      {
+        "source": "MEDDEV",
+        "destination": "INTERNAL",
+        "port": 4242
+      },
+      {
+        "source": "MGMT",
+        "destination": "MEDDEV",
+        "port": 22
+      },
+      {
+        "source": "MGMT",
+        "destination": "MEDDEV",
+        "port": 4242
+      }
+    ]
+  },
+  "firewall_engine": {
+    "nftables_version": "v1.0.2",
+    "meddefense_table_present": true,
+    "rules_loaded_count": 28,
+    "log_file_path": "/var/log/ufw.log"
+  },
+  "windows_firewall": {
+    "present": false,
+    "rule_count": 0
+  },
+  "ids_engine": {
+    "suricata_version": "6.0.14",
+    "community_rule_count": 34219,
+    "custom_rule_count": 6,
+    "replay_only": true
+  },
+  "protocol_audit": {
+    "finding_count_by_severity": {
+      "HIGH": 2,
+      "MEDIUM": 1,
+      "LOW": 0,
+      "INFO": 1
+    },
+    "high_unaccepted_count": 0,
+    "accepted_exceptions_count": 4
+  },
+  "dns_filter": {
+    "active": true,
+    "blocklist_size": 814,
+    "sinkhole_validation_result": true
+  },
+  "evidence_package": {
+    "tarball_path": "network_artifact_package.tar.gz",
+    "manifest_sha256": "b18913fac7e95180e05dfe857ea37e5453b1eb9726151e1cefa178d231886522",
+    "file_count": 13,
+    "schema_version": "module3-network-v1"
+  },
+  "validation_last_run": {
+    "timestamp": "2026-08-21T11:30:09Z",
+    "passed": true,
+    "passed_count": 9,
+    "failed_count": 0
+  },
+  "known_gaps": [
+    {
+      "id": "GAP-001",
+      "title": "Radiology lab PC still runs cleartext Telnet",
+      "zone": "MEDDEV",
+      "asset": "172.16.40.77 (radiology-lab-pc-03)",
+      "severity": "high",
+      "category": "insecure_protocol",
+      "discovered_by": "Mike Torres, manual probe",
+      "status": "open",
+      "remediation": "Replace vendor Telnet management interface with SSH or vendor-supported HTTPS console; scheduled for the next maintenance window because the imaging vendor must certify the change first.",
+      "target_remediation": "next-quarter-maintenance-window"
+    },
+    {
+      "id": "GAP-002",
+      "title": "Guest Wi-Fi VLAN can still reach the billing database subnet",
+      "zone": "DMZ",
+      "asset": "guest-wifi-ap-pool -> 172.16.20.0/24",
+      "severity": "critical",
+      "category": "flat_network",
+      "discovered_by": "Mike Torres, arp -a dump",
+      "status": "mitigated_by_this_project",
+      "remediation": "Blocked by the default-deny forward chain rendered in T4; retained here for audit trail continuity from the pre-project state.",
+      "target_remediation": "closed"
+    },
+    {
+      "id": "GAP-003",
+      "title": "SNMP agent answers v1/v2c community-string queries",
+      "zone": "INTERNAL",
+      "asset": "billing-srv-01 (snmpd, udp/161)",
+      "severity": "high",
+      "category": "insecure_protocol",
+      "discovered_by": "T3 protocol audit",
+      "status": "open",
+      "remediation": "Migrate to SNMPv3 with authPriv; community string \"public\" must be retired once the monitoring team finishes onboarding v3 credentials.",
+      "target_remediation": "pending_monitoring_team"
+    },
+    {
+      "id": "GAP-004",
+      "title": "Billing admin panel served over cleartext HTTP",
+      "zone": "INTERNAL",
+      "asset": "billing-srv-01 (apache2, /admin/)",
+      "severity": "high",
+      "category": "insecure_protocol",
+      "discovered_by": "T3 protocol audit",
+      "status": "open",
+      "remediation": "Terminate TLS in front of the admin vhost and redirect port 80 to 443; certificate request is filed with IT.",
+      "target_remediation": "pending_certificate_issuance"
+    },
+    {
+      "id": "GAP-005",
+      "title": "No egress filtering yet validated for DNS tunneling on the medical device VLAN",
+      "zone": "MEDDEV",
+      "asset": "172.16.40.0/24",
+      "severity": "medium",
+      "category": "detection_gap",
+      "discovered_by": "T9/T10 Suricata replay analysis",
+      "status": "monitoring",
+      "remediation": "Custom Suricata rule (T10) now detects long-label DNS queries in offline replay; live inline enforcement is out of scope for this module.",
+      "target_remediation": "module_3_followup"
+    },
+    {
+      "id": "GAP-006",
+      "title": "Windows Firewall alignment not yet verified on all domain-joined workstations",
+      "zone": "INTERNAL",
+      "asset": "clinical-workstation-pool",
+      "severity": "medium",
+      "category": "coverage_gap",
+      "discovered_by": "T6 rollout tracking",
+      "status": "in_progress",
+      "remediation": "6-windows_firewall.ps1 has been validated on a pilot group of 5 workstations; fleet-wide GPO rollout is scheduled after change approval.",
+      "target_remediation": "pending_change_approval"
+    }
+  ]
+}
