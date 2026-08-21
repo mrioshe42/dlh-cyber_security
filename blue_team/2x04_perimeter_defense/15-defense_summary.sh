@@ -4,7 +4,7 @@
 #              JSON object (`defense_summary.json`) by reading all required artifacts 
 #              from Tasks 0 through 14 using pure Bash and jq.
 #            defense-summary, post-assessment, posture-object, compliance-aggregation,
-#           operator-dashboard, json-export, pure-bash,  cidr log file rule count custom rule accepted exceptions 
+#           operator-dashboard, json-export, pure-bash,  cidr log file rule count custom rule accepted exceptions manifest SHA 
 # Author: Massimo
 
 set -uo pipefail
