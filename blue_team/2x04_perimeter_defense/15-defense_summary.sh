@@ -3,7 +3,7 @@
 # Description: Generates a comprehensive machine-readable defensive posture summary 
 #              JSON object (`defense_summary.json`) and prints a clean operator 
 #              dashboard by aggregating artifacts using pure Bash and jq.
-#            defense-summary, post-assessment, posture-object, compliance-aggregation,
+#            defense-summary, post-assessment, posture-object, compliance-aggregation, nftables.conf
 #           operator-dashboard, json-export, pure-bash
 # Author: Massimo
 
