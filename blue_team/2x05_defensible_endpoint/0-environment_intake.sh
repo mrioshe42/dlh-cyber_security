@@ -29,7 +29,7 @@ PKG_COUNT=$(dpkg-query -W -f='${Package}\n' 2>/dev/null | wc -l)
 LISTENING_SOCKETS=$(ss -tulnpH 2>/dev/null | wc -l)
 ACTIVE_SERVICES=$(systemctl list-units --type=service --state=running --no-legend 2>/dev/null | wc -l)
 
-# Parse sshd_config safely into JSON-friendly format
+# Parse sshd_config safely into JSON-friendly format net.ipv4.ip_forward
 if [ -f /etc/ssh/sshd_config ]; then
     SSHD_CONF=$(grep -E '^[A-Za-z]' /etc/ssh/sshd_config | awk '{print "\"" $1 "\": \"" $2 "\""}' | paste -sd, -)
     SSHD_JSON="{${SSHD_CONF}}"
