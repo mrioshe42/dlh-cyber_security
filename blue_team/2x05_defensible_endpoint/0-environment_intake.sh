@@ -1,7 +1,7 @@
 #!/bin/bash
 # Script Name: 0-environment_intake.sh
 # Description: Captures the unhardened raw baseline state of hawthorne-app-01
-#              into a structured JSON artifact for delta comparison.
+#              into a structured JSON artifact for delta comparison. Sysmon 
 
 set -uo pipefail
 
