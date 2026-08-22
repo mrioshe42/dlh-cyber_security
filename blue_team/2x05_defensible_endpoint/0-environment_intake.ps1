@@ -47,7 +47,7 @@ if (Test-Path $psLoggingPath) {
     $scriptBlockLogging = 0
 }
 
-# Account Lockout & Password Policy via net accounts auditpol
+# Account Lockout & Password Policy via net accounts auditpol capstone
 $netAccountsRaw = net accounts 2>&1
 $netAccountsObj = @{}
 foreach ($line in $netAccountsRaw) {
