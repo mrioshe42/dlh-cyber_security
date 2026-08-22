@@ -4,7 +4,7 @@
 #              into a structured JSON artifact for delta comparison. Sysmon 
 
 set -uo pipefail
-
+# capstone
 OUTPUT_DIR="./evidence"
 OUTPUT_FILE="${OUTPUT_DIR}/linux_intake_baseline.json"
 
