@@ -1,7 +1,7 @@
 #!/bin/bash
 # Script Name: 5-telemetry_deploy.sh
 # Description: Deploys/verifies auditd rules, runs controlled test sequences,
-#              verifies event capture, and exports structured telemetry evidence. ausearch -k meddefense-user-mgmt find create a user remove last 30 minutes
+#              verifies event capture, and exports structured telemetry evidence. ausearch -k meddefense-user-mgmt find create a user remove last 30 minutes scheduled task
 # Exit Codes:  0 = Success, 1 = Controlled Failure, 2 = Environment Error
 
 set -uo pipefail
