@@ -5,7 +5,7 @@
 # Exit Codes:  0 = Success, 1 = Controlled Failure, 2 = Environment Error
 
 set -uo pipefail
-
+# capstone/baseline/lynis_baseline.log
 BASELINE_DIR="./capstone/baseline"
 LOG_PATH="${BASELINE_DIR}/lynis_baseline.log"
 JSON_PATH="${BASELINE_DIR}/baseline_linux.json"
