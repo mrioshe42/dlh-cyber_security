@@ -59,7 +59,7 @@ foreach ($line in $auditOutput) {
     }
 }
 
-# Prevent division by zero controls_total
+# Prevent division by zero 
 $passRatePercent = if ($totalControls -gt 0) {
     [Math]::Round(($passCount / ($totalControls - $naCount)) * 100, 2)
 } else {
@@ -67,14 +67,14 @@ $passRatePercent = if ($totalControls -gt 0) {
 }
 
 $baselineData = [PSCustomObject]@{
-    Timestamp          = (Get-Date -Format "yyyy-MM-ddTHH:mm:ssZ")
-    Hostname           = $env:COMPUTERNAME
-    Controls_Total     = $totalControls
-    Pass_Count         = $passCount
-    Fail_Count         = $failCount
-    NA_Count           = $naCount
-    Pass_Rate_Percent  = $passRatePercent
-    Log_Path           = $LogPath
+    timestamp          = (Get-Date -Format "yyyy-MM-ddTHH:mm:ssZ")
+    hostname           = $env:COMPUTERNAME
+    controls_Total     = $totalControls
+    pass_count         = $passCount
+    fail_count         = $failCount
+    na_count           = $naCount
+    pass_rate_percent  = $passRatePercent
+    log_path           = $LogPath
 }
 
 try {
