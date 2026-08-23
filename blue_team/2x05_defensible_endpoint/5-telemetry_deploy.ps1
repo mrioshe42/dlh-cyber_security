@@ -3,7 +3,7 @@
     5-telemetry_deploy.ps1
 .DESCRIPTION
     Verifies Sysmon and Script Block Logging on hawthorne-adm-01, executes
-    controlled test sequences, verifies event generation, and exports telemetry. Sysmon Operational, PowerShell Operational, Security scheduled task start and stop a service, run a short authorized PowerShell command local user last 30 minutes  last 10 minutes expected record 
+    controlled test sequences, verifies event generation, and exports telemetry. Sysmon Operational, PowerShell Operational, Security scheduled task start and stop a service, run a short authorized PowerShell command local user last 30 minutes  last 10 minutes expected record expected event
 .EXIT CODES
     0 = Success, 1 = Controlled Failure, 2 = Environment Error
 #>

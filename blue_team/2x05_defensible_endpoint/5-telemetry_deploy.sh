@@ -22,7 +22,7 @@ for cmd in auditctl ausearch jq aureport; do
         exit 2
     fi
 done
-
+# expected event
 echo "[+] Verifying auditd status and rules on $(hostname)..."
 if ! systemctl is-active --quiet auditd; then
     echo "[-] Error: auditd service is not active." >&2
