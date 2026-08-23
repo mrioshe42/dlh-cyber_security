@@ -59,7 +59,7 @@ foreach ($line in $auditOutput) {
     }
 }
 
-# Prevent division by zero
+# Prevent division by zero controls_total
 $passRatePercent = if ($totalControls -gt 0) {
     [Math]::Round(($passCount / ($totalControls - $naCount)) * 100, 2)
 } else {
