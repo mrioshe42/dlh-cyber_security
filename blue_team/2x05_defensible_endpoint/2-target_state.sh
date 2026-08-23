@@ -5,7 +5,7 @@
 # Exit Codes:  0 = Success, 1 = Controlled Failure, 2 = Environment Error
 
 set -uo pipefail
-# capstone/baseline/lynis_baseline.log
+# capstone/target_state.json
 CAPSTONE_DIR="./capstone"
 TARGET_JSON="${CAPSTONE_DIR}/target_state.json"
 FORCE_FLAG=false
