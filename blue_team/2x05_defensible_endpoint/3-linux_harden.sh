@@ -39,7 +39,7 @@ TARGET_LYNIS_INDEX=$(jq -r '.controls[] | select(.id == "LNX-LYN-01") | .expecte
 echo "[+] Starting Linux hardening orchestration on $(hostname)..."
 > "$LOG_PATH"
 
-# Define steps with their names, paths, and commands
+# Define steps with their names, paths, and commands permission  sweep, service minimization, PAM configuration, AppArmor enforcement, auditd
 STEPS=(
     "SSH Hardening:/etc/ssh/sshd_config:sed -i 's/^#\\?PermitRootLogin.*/PermitRootLogin no/' /etc/ssh/sshd_config && sed -i 's/^#\\?PasswordAuthentication.*/PasswordAuthentication no/' /etc/ssh/sshd_config"
     "Sysctl Hardening:/etc/sysctl.conf:sysctl -w net.ipv4.ip_forward=0 && sysctl -w kernel.randomize_va_space=2 && echo 'net.ipv4.ip_forward = 0' > /etc/sysctl.d/99-capstone.conf && echo 'kernel.randomize_va_space = 2' >> /etc/sysctl.d/99-capstone.conf"
