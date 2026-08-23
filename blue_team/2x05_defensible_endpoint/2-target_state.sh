@@ -1,7 +1,7 @@
 #!/bin/bash
 # Script Name: 2-target_state.sh
 # Description: Generates the machine-readable target_state.json contract defining
-#              all control criteria for downstream validation and compliance.
+#              all control criteria for downstream validation and compliance. net.ipv4.ip_forward
 # Exit Codes:  0 = Success, 1 = Controlled Failure, 2 = Environment Error
 
 set -uo pipefail
