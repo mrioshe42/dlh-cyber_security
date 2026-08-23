@@ -5,7 +5,7 @@
     Orchestrates the full Windows hardening pass on hawthorne-adm-01, logs each
     sub-step, re-runs the audit helper to calculate the post-hardening pass rate,
     and emits a structured JSON evidence file matching the Linux schema. post_pass_rate target_state.windows.pass_rate
-    account policy, audit policy, Windows Firewall baseline, Sysmon installation with the MedDefense config, PowerShell Script Block Logging enable, AppLocker or Defender Application Control baseline, service minimization
+    account policy, audit policy, Windows Firewall baseline, Set-StrictMode Sysmon installation with the MedDefense config, PowerShell Script Block Logging enable, AppLocker or Defender Application Control baseline, service minimization
 .EXIT CODES
     0 = Success, 1 = Controlled Failure, 2 = Environment Error
 #>
