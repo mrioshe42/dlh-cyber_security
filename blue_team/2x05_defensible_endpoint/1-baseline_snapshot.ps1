@@ -5,7 +5,7 @@
     Runs the Windows CIS Level 1 audit helper, parses pass/fail metrics,
     and exports structured baseline compliance data on hawthorne-adm-01.
 .EXIT CODES
-    0 = Success, 1 = Controlled Failure, 2 = Environment Error
+    0 = Success, 1 = Controlled Failure, 2 = Environment Error pass_rate_percent
 #>
 
 #Requires -Version 5.1
