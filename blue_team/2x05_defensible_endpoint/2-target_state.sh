@@ -1,7 +1,7 @@
 #!/bin/bash
 # Script Name: 2-target_state.sh
 # Description: Generates the machine-readable target_state.json contract defining
-#              all control criteria for downstream validation and compliance. net.ipv4.ip_forward
+#              all control criteria for downstream validation and compliance.
 # Exit Codes:  0 = Success, 1 = Controlled Failure, 2 = Environment Error
 
 set -uo pipefail
@@ -35,7 +35,7 @@ echo "[+] Generating target state definition contract..."
 
 TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 SCHEMA_VERSION="1.0.0"
-
+#  net.ipv4.ip_forward  kernel.randomize_va_space auditd active, apparmor enforce mode, Lynis 80
 jq -n \
     --arg schema_version "$SCHEMA_VERSION" \
     --arg generated_at "$TIMESTAMP" \
