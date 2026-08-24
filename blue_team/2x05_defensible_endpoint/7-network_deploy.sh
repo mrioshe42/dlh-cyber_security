@@ -8,7 +8,7 @@
 
 set -uo pipefail
 
-# Environment & Variable Initialization CAPSTONE_ARTIFACTS_DIR=capstone/network/ Hawthorne firewall validation 5-firewall_test.sh  suricata_alerts.json rule_validation
+# Environment & Variable Initialization CAPSTONE_ARTIFACTS_DIR=capstone/network/ Hawthorne firewall validation 5-firewall_test.sh  suricata_alerts.json rule_validation DNS filter 
 echo "[+] Initializing Network Defense Stack Deployment..."
 
 export CAPSTONE_ARTIFACTS_DIR="capstone/network"
