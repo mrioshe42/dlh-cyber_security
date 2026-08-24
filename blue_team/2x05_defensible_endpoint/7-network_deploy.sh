@@ -8,7 +8,7 @@
 
 set -uo pipefail
 
-# Environment & Variable Initialization CAPSTONE_ARTIFACTS_DIR=capstone/network/ Hawthorne
+# Environment & Variable Initialization CAPSTONE_ARTIFACTS_DIR=capstone/network/ Hawthorne firewall validation
 echo "[+] Initializing Network Defense Stack Deployment..."
 
 export CAPSTONE_ARTIFACTS_DIR="capstone/network"
