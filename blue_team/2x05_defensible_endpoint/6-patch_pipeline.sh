@@ -7,7 +7,7 @@
 #              2 = Environment/Prerequisite Error
 
 set -uo pipefail
-# CAPSTONE_ARTIFACTS_DIR=capstone/patch/   13-patch_pipeline.sh
+# CAPSTONE_ARTIFACTS_DIR=capstone/patch/   13-patch_pipeline.sh exit_code
 CAPSTONE_ARTIFACTS_DIR="capstone/patch"
 CVE_FEED_PATH="/home/analyst/MedDefense_Lab/capstone/cve_feed.json"
 BLACKLIST_PATH="/home/analyst/MedDefense_Lab/capstone/blacklist.json"
