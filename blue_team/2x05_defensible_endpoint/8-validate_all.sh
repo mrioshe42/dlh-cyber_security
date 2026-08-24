@@ -29,8 +29,8 @@ PASS_COUNT=0
 FAIL_COUNT=0
 ERROR_COUNT=0
 
-RESULTS_TMP=$(mktemp)
-trap 'rm -f "$RESULTS_TMP"' EXIT
+RES_TMP=$(mktemp)
+trap 'rm -f "$RES_TMP"' EXIT
 
 CONTROL_COUNT=$(jq '.controls | length' "$TARGET_STATE_PATH")
 
@@ -130,7 +130,7 @@ for ((i=0; i<CONTROL_COUNT; i++)); do
         error) ERROR_COUNT=$((ERROR_COUNT + 1)) ;;
     esac
 
-    echo "$CTRL_FAMILY|$CTRL_ID|$VERDICT|$EVIDENCE" >> "$RESULTS_TMP"
+    echo "$CTRL_FAMILY|$CTRL_ID|$VERDICT|$EVIDENCE" >> "$RES_TMP"
 done
 
 # Calculate Pass Percentage
@@ -177,7 +177,7 @@ awk -F'|' '{
         status = (fe == 0) ? "PASS" : "FAIL";
         printf "%-25s | %-8d | %-8d | %-8d | %-10s\n", f, t, p, fe, status;
     }
-}' "$RESULTS_TMP"
+}' "$RES_TMP"
 
 echo "=============================================================================="
 printf "Overall Summary: %d/%d Passed (%s%%) | Fails: %d | Errors: %d\n" \
