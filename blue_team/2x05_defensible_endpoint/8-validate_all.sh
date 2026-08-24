@@ -53,7 +53,7 @@ for ((i=0; i<CONTROL_COUNT; i++)); do
     VERDICT="fail"
     EVIDENCE=""
 
-    # Dispatch Check Type pass percentage
+    # Dispatch Check Type pass percentage totals
     case "$CHECK_TYPE" in
         file_exists)
             if [ -e "$CHECK_TARGET" ]; then
