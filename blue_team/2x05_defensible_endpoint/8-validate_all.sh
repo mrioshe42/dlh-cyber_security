@@ -8,7 +8,7 @@
 #              2 = Environment/Prerequisite Error (missing target_state.json, jq)
 
 set -uo pipefail
-# target_state.controls grep -E evidence
+# target_state.controls grep -E evidence total controls
 TARGET_STATE_PATH="capstone/target_state.json"
 REPORT_PATH="capstone/validation_report.json"
 
