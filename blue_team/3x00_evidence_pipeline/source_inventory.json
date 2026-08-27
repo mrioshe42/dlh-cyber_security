@@ -68,8 +68,8 @@
     "size_bytes": 1209651,
     "sha256": "2043573fea208637502bf90f352539974e2424d4501585e3ed3cf0bc530ade20",
     "record_count": 4096,
-    "first_event_time": "03/20/2026 11:16:56 PM",
-    "last_event_time": "03/21/2026 03:11:30 AM"
+    "first_event_time": "03/17/2026 06:02:45 PM",
+    "last_event_time": "03/25/2026 12:53:42 PM"
   },
   {
     "path": "network/suricata_eve.json",
