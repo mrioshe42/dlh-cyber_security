@@ -1,7 +1,5 @@
 #!/bin/bash
 # Task 0: Evidence Pack Inventory Script
-# Walks the primary evidence pack, safely handles empty files, mixed encodings,
-# missing timestamps, permission restrictions, and validates final JSON output.
 
 set -euo pipefail
 
@@ -15,12 +13,9 @@ fi
 
 echo "Scanning evidence pack at: $PACK_ROOT"
 
-win_count=0
-win_bytes=0
-linux_count=0
-linux_bytes=0
-net_count=0
-net_bytes=0
+win_count=0; win_bytes=0
+linux_count=0; linux_bytes=0
+net_count=0; net_bytes=0
 
 TEMP_MANIFEST=$(mktemp)
 trap 'rm -f "$TEMP_MANIFEST"' EXIT
@@ -37,29 +32,32 @@ extract_timestamps() {
     fi
 
     case "$ftype" in
-        "windows_json"|"network_json")
-            first_ts=$(jq -r '(.["@timestamp"] // .TimeCreated // .system.timestamp // .timestamp // empty) | strings' "$filepath" 2>/dev/null | head -n 1 || echo "")
-            last_ts=$(jq -r '(.["@timestamp"] // .TimeCreated // .system.timestamp // .timestamp // empty) | strings' "$filepath" 2>/dev/null | tail -n 1 || echo "")
+        "windows_json")
+            first_ts=$(jq -r '(.["timestamp_raw"]? // .["@timestamp"]? // .TimeCreated? // .system?.timestamp? // .timestamp?) | select(type == "string")' "$filepath" 2>/dev/null | head -n 1 || true)
+            last_ts=$(jq -r '(.["timestamp_raw"]? // .["@timestamp"]? // .TimeCreated? // .system?.timestamp? // .timestamp?) | select(type == "string")' "$filepath" 2>/dev/null | tail -n 1 || true)
+            ;;
+        "network_json")
+            first_ts=$(jq -r '(.["start_time"]? // .["timestamp"]? // .["@timestamp"]?) | select(type == "string")' "$filepath" 2>/dev/null | head -n 1 || true)
+            last_ts=$(jq -r '(.["end_time"]? // .["timestamp"]? // .["@timestamp"]?) | select(type == "string")' "$filepath" 2>/dev/null | tail -n 1 || true)
             ;;
         "linux_text")
-            local first_line last_line
-            first_line=$(iconv -f utf-8 -t utf-8//IGNORE "$filepath" 2>/dev/null | grep -m 1 '^[A-Z][a-z][a-z] [ 0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9]' || true)
-            last_line=$(iconv -f utf-8 -t utf-8//IGNORE "$filepath" 2>/dev/null | grep '^[A-Z][a-z][a-z] [ 0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9]' | tail -n 1 || true)
-            if [ -n "$first_line" ]; then 
-                first_ts=$(echo "$first_line" | awk '{print $1, $2, $3}')
-            fi
-            if [ -n "$last_line" ]; then 
-                last_ts=$(echo "$last_line" | awk '{print $1, $2, $3}')
+            if grep -q "audit(" "$filepath" 2>/dev/null; then
+                first_ts=$(grep -oE 'audit\([0-9]+\.[0-9]+' "$filepath" 2>/dev/null | head -n 1 | tr -d 'audit(' || true)
+                last_ts=$(grep -oE 'audit\([0-9]+\.[0-9]+' "$filepath" 2>/dev/null | tail -n 1 | tr -d 'audit(' || true)
+            else
+                local regex='^[A-Z][a-z]{2} [ 0-9][0-9] [0-9]{2}:[0-9]{2}:[0-9]{2}'
+                first_ts=$(grep -E -m 1 "$regex" "$filepath" 2>/dev/null | awk '{print $1, $2, $3}' || true)
+                last_ts=$(grep -E "$regex" "$filepath" 2>/dev/null | tail -n 1 | awk '{print $1, $2, $3}' || true)
             fi
             ;;
         "network_csv")
-            first_ts=$(awk -F',' 'NR==2 {print $1; exit}' "$filepath" 2>/dev/null || echo "")
-            last_ts=$(awk -F',' 'END {print $1}' "$filepath" 2>/dev/null || echo "")
+            first_ts=$(awk -F',' 'NR==2 {print $1; exit}' "$filepath" 2>/dev/null || true)
+            last_ts=$(awk -F',' 'END {if (NR>1) print $1}' "$filepath" 2>/dev/null || true)
             ;;
     esac
 
-    [ -z "$first_ts" ] || [ "$first_ts" = "null" ] && first_ts="null"
-    [ -z "$last_ts" ] || [ "$last_ts" = "null" ] && last_ts="null"
+    [ -z "$first_ts" ] && first_ts="null"
+    [ -z "$last_ts" ] && last_ts="null"
 
     echo "$first_ts|$last_ts"
 }
@@ -67,6 +65,7 @@ extract_timestamps() {
 get_record_count() {
     local filepath="$1"
     local ftype="$2"
+    local count=0
     
     if [ ! -s "$filepath" ]; then
         echo 0
@@ -74,15 +73,25 @@ get_record_count() {
     fi
 
     case "$ftype" in
-        "windows_json"|"network_json"|"linux_text")
-            wc -l < "$filepath" 2>/dev/null || echo 0
+        "windows_json"|"network_json")
+            count=$(jq -r 'select(type == "object") | 1' "$filepath" 2>/dev/null | grep -c '^' || true)
             ;;
         "network_csv")
-            local total
-            total=$(wc -l < "$filepath" 2>/dev/null || echo 0)
-            echo $((total > 0 ? total - 1 : 0))
+            local lines
+            lines=$(grep -v '^[[:space:]]*$' "$filepath" 2>/dev/null | grep -c '^' || true)
+            count=$((lines > 0 ? lines - 1 : 0))
+            ;;
+        "linux_text")
+            if grep -q "audit(" "$filepath" 2>/dev/null; then
+                count=$(grep -c "audit(" "$filepath" 2>/dev/null || true)
+            else
+                count=$(grep -E -c '^[A-Z][a-z]{2} [ 0-9][0-9] [0-9]{2}:[0-9]{2}:[0-9]{2}' "$filepath" 2>/dev/null || true)
+            fi
             ;;
     esac
+    
+    count="${count//[!0-9]/}"
+    echo "${count:-0}"
 }
 
 for category in windows linux network; do
@@ -92,13 +101,15 @@ for category in windows linux network; do
     fi
 
     while IFS= read -r -d '' file; do
-        if [ ! -r "$file" ]; then
-            echo "Warning: File $file is not readable. Skipping." >&2
-            continue
-        fi
+        [ -f "$file" ] || continue
+        [ -r "$file" ] || continue
 
         rel_path="${file#$PACK_ROOT/}"
-        size_bytes=$(stat -f%z "$file" 2>/dev/null || stat -c%s "$file" 2>/dev/null || echo 0)
+        
+        size_bytes=$(wc -c < "$file" 2>/dev/null || true)
+        size_bytes="${size_bytes//[!0-9]/}"
+        size_bytes="${size_bytes:-0}"
+        
         sha256=$(sha256sum "$file" 2>/dev/null | awk '{print $1}' || echo "UNREADABLE")
         
         case "$category" in
@@ -136,15 +147,40 @@ for category in windows linux network; do
             --argjson count "$record_count" \
             --arg first "$first_time" \
             --arg last "$last_time" \
-            '{path: $path, source_type: $type, size_bytes: $size, sha256: $sha, record_count: $count, first_event_time: $first, last_event_time: $last}' >> "$TEMP_MANIFEST"
+            '{
+                path: $path, 
+                source_type: $type, 
+                size_bytes: $size, 
+                sha256: $sha, 
+                record_count: $count, 
+                first_event_time: (if $first == "null" then null else $first end), 
+                last_event_time: (if $last == "null" then null else $last end)
+            }' >> "$TEMP_MANIFEST"
 
-    done < <(find "$target_dir" -maxdepth 1 -type f -print0 | sort -z)
+    done < <(find "$target_dir" -type f -print0 | sort -z)
 done
+
+if [ ! -s "$TEMP_MANIFEST" ]; then
+    echo "Error: Evidence pack is empty or missing required source paths." >&2
+    exit 1
+fi
 
 jq -s '.' "$TEMP_MANIFEST" > "$MANIFEST_FILE"
 
 if ! jq empty "$MANIFEST_FILE" 2>/dev/null; then
-    echo "Error: Generated manifest is not valid JSON." >&2
+    echo "Error: Manifest contains invalid JSON syntax." >&2
+    exit 1
+fi
+
+manifest_length=$(jq length "$MANIFEST_FILE")
+if [ "$manifest_length" -eq 0 ]; then
+    echo "Error: Manifest array is empty. Required inventory content missing." >&2
+    exit 1
+fi
+
+invalid_count=$(jq '[.[] | select(.record_count <= 0 or .first_event_time == null or .last_event_time == null)] | length' "$MANIFEST_FILE")
+if [ "$invalid_count" -gt 0 ]; then
+    echo "Error: Integrity check failed. Found $invalid_count manifest entries with zero records or null timestamps." >&2
     exit 1
 fi
 
@@ -156,8 +192,8 @@ linux_mb=$(awk "BEGIN {print $linux_bytes / 1024 / 1024}")
 net_mb=$(awk "BEGIN {print $net_bytes / 1024 / 1024}")
 total_mb=$(awk "BEGIN {print $total_bytes / 1024 / 1024}")
 
-printf "windows : %d files  |  %.1f MB\n" "$win_count" "$win_mb"
-printf "linux   : %d files  |  %.1f MB\n" "$linux_count" "$linux_mb"
-printf "network : %d files  |   %.1f MB\n" "$net_count" "$net_mb"
-printf "total   : %d files  |  %.1f MB\n" "$total_files" "$total_mb"
+printf "windows : %d files  | %5.1f MB\n" "$win_count" "$win_mb"
+printf "linux   : %d files  | %5.1f MB\n" "$linux_count" "$linux_mb"
+printf "network : %d files  | %5.1f MB\n" "$net_count" "$net_mb"
+printf "total   : %d files  | %5.1f MB\n" "$total_files" "$total_mb"
 echo "manifest written to $MANIFEST_FILE"
