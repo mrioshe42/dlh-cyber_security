@@ -1,209 +1,198 @@
 #!/bin/bash
-# Task 0: Evidence Pack Inventory Script 
-
 set -euo pipefail
 
 PACK_ROOT="${1:-$HOME/evidence_pack_primary}"
-MANIFEST_FILE="source_inventory.json"
+OUT="source_inventory.json"
 
-if [ ! -d "$PACK_ROOT" ]; then
-    echo "Error: Evidence pack root directory '$PACK_ROOT' does not exist." >&2
-    exit 1
-fi
+python3 - "$PACK_ROOT" "$OUT" <<'PY'
+import csv, hashlib, json, re, sys
+from datetime import datetime, timezone
+from pathlib import Path
 
-echo "Scanning evidence pack at: $PACK_ROOT"
+def sha256_file(p):
+    h = hashlib.sha256()
+    with p.open("rb") as f:
+        for chunk in iter(lambda: f.read(1<<20), b""): h.update(chunk)
+    return h.hexdigest()
 
-win_count=0; win_bytes=0
-linux_count=0; linux_bytes=0
-net_count=0; net_bytes=0
-
-TEMP_MANIFEST=$(mktemp)
-trap 'rm -f "$TEMP_MANIFEST"' EXIT
-
-extract_timestamps() {
-    local filepath="$1"
-    local ftype="$2"
-    local result="null|null"
-    local file_size
-    file_size=$(wc -c < "$filepath" 2>/dev/null || echo 0)
-
-    if [ ! -s "$filepath" ]; then
-        echo "$result"
-        return
-    fi
-
-    case "$ftype" in
-        "windows_json"|"network_json")
-            result=$(jq -r --unbuffered '
-                (.["timestamp_raw"]? // .["timestamp"]? // .["@timestamp"]? // .TimeCreated? // .system?.timestamp? // .start_time? // .datetime? // .date?) 
-                | select(type == "string" and length > 0)
-            ' "$filepath" 2>/dev/null | awk '
-                NR==1 {min=$0; max=$0}
-                {if ($0 < min) min=$0; if ($0 > max) max=$0}
-                END {if (NR>0) print min "|" max; else print "null|null"}
-            ' || echo "null|null")
-            ;;
-        "linux_text")
-            if grep -q "audit(" "$filepath" 2>/dev/null; then
-                local first_epoch last_epoch
-                first_epoch=$(grep -oE 'audit\([0-9]+\.[0-9]+(\.[0-9]+)?' "$filepath" 2>/dev/null | head -n 1 | tr -d 'audit(' || true)
-                last_epoch=$(grep -oE 'audit\([0-9]+\.[0-9]+(\.[0-9]+)?' "$filepath" 2>/dev/null | tail -n 1 | tr -d 'audit(' || true)
-                [ -n "$first_epoch" ] && [ -n "$last_epoch" ] && result="$first_epoch|$last_epoch"
-            else
-                local regex='([0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2})|([A-Z][a-z]{2} [ 0-9][0-9] [0-9]{2}:[0-9]{2}:[0-9]{2})'
-                local first_line last_line
-                first_line=$(grep -E -m 1 "$regex" "$filepath" 2>/dev/null | grep -oE "$regex" | head -n 1 || true)
-                last_line=$(grep -E "$regex" "$filepath" 2>/dev/null | tail -n 1 | grep -oE "$regex" | tail -n 1 || true)
-                [ -n "$first_line" ] && [ -n "$last_line" ] && result="$first_line|$last_line"
-            fi
-            ;;
-        "network_csv")
-            result=$(awk -F',' '
-                NR==2 {
-                    for (i=1; i<=NF; i++) {
-                        gsub(/"/, "", $i)
-                        if ($i ~ /^[0-9]{2}\/[0-9]{2}\/[0-9]{4}|[0-9]{4}-[0-9]{2}-[0-9]{2}/) {
-                            col=i; break
-                        }
-                    }
-                    if (!col) col=1;
-                    first=$col
-                }
-                END {
-                    if (NR > 1) {
-                        gsub(/"/, "", $NF); # fallback or use discovered col
-                        print first "|" $1
-                    } else {
-                        print "null|null"
-                    }
-                }
-            ' "$filepath" 2>/dev/null || echo "null|null")
-            ;;
-    esac
-
-    [[ "$result" != *"|"* ]] && result="null|null"
-    echo "$result"
-}
-
-get_record_count() {
-    local filepath="$1"
-    local ftype="$2"
-    local count=0
+def norm_time(v):
+    if not v: return None
+    v = str(v).strip()
+    if not v: return None
     
-    if [ ! -s "$filepath" ]; then
-        echo 0
-        return
-    fi
-
-    case "$ftype" in
-        "windows_json"|"network_json")
-            count=$(jq -r --unbuffered 'select(type == "object") | 1' "$filepath" 2>/dev/null | grep -c '^' || echo 0)
-            ;;
-        "network_csv")
-            local lines
-            lines=$(grep -v '^[[:space:]]*$' "$filepath" 2>/dev/null | grep -c '^' || true)
-            count=$((lines > 0 ? lines - 1 : 0))
-            ;;
-        "linux_text")
-            if grep -q "audit(" "$filepath" 2>/dev/null; then
-                count=$(grep -c "audit(" "$filepath" 2>/dev/null || true)
-            else
-                count=$(grep -E -c '([0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2})|([A-Z][a-z]{2} [ 0-9][0-9] [0-9]{2}:[0-9]{2}:[0-9]{2})' "$filepath" 2>/dev/null || true)
-            fi
-            ;;
-    esac
+    try:
+        if re.fullmatch(r"\d+(?:\.\d+)?", v):
+            return datetime.fromtimestamp(float(v), timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+        
+        iso = re.sub(r"([+-]\d{2})(\d{2})$", r"\1:\2", v.replace("Z", "+00:00"))
+        dt = datetime.fromisoformat(iso)
+        if dt.tzinfo is None: dt = dt.replace(tzinfo=timezone.utc)
+        return dt.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    except: pass
     
-    count="${count//[!0-9]/}"
-    echo "${count:-0}"
-}
+    try:
+        return datetime.strptime(v, "%m/%d/%Y %I:%M:%S %p").replace(tzinfo=timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    except: return None
 
-for category in windows linux network; do
-    target_dir="$PACK_ROOT/$category"
-    if [ ! -d "$target_dir" ]; then
-        continue
-    fi
-
-    while IFS= read -r -d '' file; do
-        [ -f "$file" ] || continue
-        [ -r "$file" ] || continue
-
-        rel_path="${file#$PACK_ROOT/}"
+def read_json(p):
+    if p.stat().st_size == 0: return [], "empty"
+    recs, bad = [], 0
+    with p.open("r", encoding="utf-8", errors="replace") as f:
+        fc = next((c for c in f.read() if not c.isspace()), "")
+        f.seek(0)
+        if fc == "[":
+            try:
+                data = json.load(f)
+                if not isinstance(data, list): return [], "parse_error"
+                for item in data:
+                    if isinstance(item, dict): recs.append(item)
+                    else: bad += 1
+                return recs, ("partial" if bad else "ok")
+            except: return [], "parse_error"
         
-        size_bytes=$(wc -c < "$file" 2>/dev/null || true)
-        size_bytes="${size_bytes//[!0-9]/}"
-        size_bytes="${size_bytes:-0}"
+        for line in f:
+            line = line.strip()
+            if line:
+                try:
+                    item = json.loads(line)
+                    if isinstance(item, dict): recs.append(item)
+                    else: bad += 1
+                except: bad += 1
+    
+    return recs, ("partial" if bad else "ok")
+
+def add_entry(m, p, root, src_type, cnt_key, cnt, t1, t2, status):
+    m.append({
+        "path": str(p.relative_to(root)),
+        "source_type": src_type,
+        "size_bytes": p.stat().st_size,
+        "sha256": sha256_file(p),
+        cnt_key: cnt,
+        "first_event_time": t1,
+        "last_event_time": t2,
+        "parse_status": status
+    })
+
+def times_range(ts):
+    return (min(ts), max(ts)) if ts else (None, None)
+
+root = Path(sys.argv[1] if len(sys.argv) > 1 else Path.home() / "evidence_pack_primary")
+out = sys.argv[2] if len(sys.argv) > 2 else "source_inventory.json"
+m = []
+
+year = None
+ap = root / "linux" / "audit.log"
+if ap.is_file():
+    try:
+        with ap.open("r", encoding="utf-8", errors="replace") as f:
+            for line in f:
+                if match := re.search(r"audit\((\d+)", line):
+                    epoch = int(match.group(1))
+                    year = datetime.fromtimestamp(epoch, timezone.utc).year
+                    break
+    except: pass
+
+for p in sorted((root / "windows").glob("*.json") if (root / "windows").is_dir() else []):
+    recs, status = read_json(p)
+    ts = []
+    for r in recs:
+        t = norm_time(r.get("timestamp_raw")) or norm_time(r.get("timestamp"))
+        if t: ts.append(t)
+    t1, t2 = times_range(ts)
+    add_entry(m, p, root, "windows_json", "record_count", len(recs), t1, t2, status)
+
+if (root / "linux").is_dir():
+    fallback_year = datetime.now(timezone.utc).year
+    effective_year = year if year else fallback_year
+    
+    for p in sorted((root / "linux").iterdir()):
+        if not p.is_file(): continue
+        cnt, bad_ts, ts = 0, 0, []
+        try:
+            with p.open("r", encoding="utf-8", errors="replace") as f:
+                for line in f:
+                    cnt += 1
+                    if p.name == "audit.log":
+                        if match := re.search(r"audit\((\d+)(?:\.\d+)?:", line):
+                            t = norm_time(match.group(1))
+                            if t:
+                                ts.append(t)
+                            else:
+                                bad_ts += 1
+                    else:
+                        if match := re.match(r"^([A-Z][a-z]{2}\s+\d{1,2}\s+\d{2}:\d{2}:\d{2})", line):
+                            try:
+                                dt = datetime.strptime(f"{match.group(1)} {effective_year}", "%b %d %H:%M:%S %Y").replace(tzinfo=timezone.utc)
+                                ts.append(dt.strftime("%Y-%m-%dT%H:%M:%SZ"))
+                            except: bad_ts += 1
+        except: cnt, bad_ts = 0, 0
         
-        sha256=$(sha256sum "$file" 2>/dev/null | awk '{print $1}' || echo "UNREADABLE")
+        status = "empty" if cnt == 0 else ("partial" if bad_ts else "ok")
+        t1, t2 = times_range(ts)
+        add_entry(m, p, root, "linux_text", "line_count", cnt, t1, t2, status)
+
+if (root / "network").is_dir():
+    for p in sorted((root / "network").iterdir()):
+        if not p.is_file(): continue
         
-        case "$category" in
-            windows)
-                source_type="windows_json"
-                win_count=$((win_count + 1))
-                win_bytes=$((win_bytes + size_bytes))
-                ;;
-            linux)
-                source_type="linux_text"
-                linux_count=$((linux_count + 1))
-                linux_bytes=$((linux_bytes + size_bytes))
-                ;;
-            network)
-                if [[ "$file" == *.csv ]]; then
-                    source_type="network_csv"
-                else
-                    source_type="network_json"
-                fi
-                net_count=$((net_count + 1))
-                net_bytes=$((net_bytes + size_bytes))
-                ;;
-        esac
+        if p.suffix.lower() == ".csv":
+            cnt, bad, ts = 0, 0, []
+            status = "ok"
+            try:
+                with p.open("r", encoding="utf-8", errors="replace", newline="") as f:
+                    for row in csv.DictReader(f):
+                        cnt += 1
+                        t = norm_time(row.get("timestamp"))
+                        if t:
+                            ts.append(t)
+                        else:
+                            bad += 1
+                status = "empty" if cnt == 0 else ("partial" if bad else "ok")
+            except:
+                cnt, ts, status = 0, [], "parse_error"
+            t1, t2 = times_range(ts)
+            add_entry(m, p, root, "network_csv", "record_count", cnt, t1, t2, status)
+        
+        elif p.suffix.lower() == ".json":
+            recs, status = read_json(p)
+            if p.name == "pcap_summary.json":
+                starts = [norm_time(r.get("start_time")) for r in recs]
+                ends = [norm_time(r.get("end_time")) for r in recs]
+                ts = [t for t in starts + ends if t]
+                t1, t2 = times_range(ts)
+            else:
+                ts = [norm_time(r.get("timestamp")) for r in recs]
+                ts = [t for t in ts if t]
+                t1, t2 = times_range(ts)
+            add_entry(m, p, root, "network_json", "record_count", len(recs), t1, t2, status)
 
-        record_count=$(get_record_count "$file" "$source_type")
-        ts_pipe=$(extract_timestamps "$file" "$source_type")
-        first_time="${ts_pipe%%|*}"
-        last_time="${ts_pipe##*|}"
+m.sort(key=lambda x: x["path"])
+Path(out).write_text(json.dumps(m, indent=2) + "\n")
+print(f"manifest written to {out}")
+PY
 
-        jq -n \
-            --arg path "$rel_path" \
-            --arg type "$source_type" \
-            --argjson size "$size_bytes" \
-            --arg sha "$sha256" \
-            --argjson count "$record_count" \
-            --arg first "$first_time" \
-            --arg last "$last_time" \
-            '{
-                path: $path, 
-                source_type: $type, 
-                size_bytes: $size, 
-                sha256: $sha, 
-                record_count: $count, 
-                first_event_time: (if $first == "null" or $first == "" then null else $first end), 
-                last_event_time: (if $last == "null" or $last == "" then null else $last end)
-            }' >> "$TEMP_MANIFEST"
+python3 - "$OUT" <<'SUMMARY'
+import json, sys
+from pathlib import Path
 
-    done < <(find "$target_dir" -type f -print0 | sort -z)
-done
+data = json.loads(Path(sys.argv[1]).read_text())
+cats = {"windows": {"files": 0, "bytes": 0}, "linux": {"files": 0, "bytes": 0}, "network": {"files": 0, "bytes": 0}}
 
-if [ ! -s "$TEMP_MANIFEST" ]; then
-    echo "[]" > "$MANIFEST_FILE"
-else
-    jq -s '.' "$TEMP_MANIFEST" > "$MANIFEST_FILE"
-fi
+for entry in data:
+    cat = entry["source_type"].split("_")[0]
+    cats[cat]["files"] += 1
+    cats[cat]["bytes"] += entry["size_bytes"]
 
-if ! jq empty "$MANIFEST_FILE" 2>/dev/null; then
-    echo "Error: Manifest contains invalid JSON syntax." >&2
-    exit 1
-fi
+def fmt_bytes(b):
+    for unit, div in [("GB", 1<<30), ("MB", 1<<20), ("KB", 1<<10)]:
+        if b >= div: return f"{b/div:.1f} {unit}"
+    return f"{b} B"
 
-total_files=$((win_count + linux_count + net_count))
-total_bytes=$((win_bytes + linux_bytes + net_bytes))
+total_files = total_bytes = 0
+for cat in ["windows", "linux", "network"]:
+    f, b = cats[cat]["files"], cats[cat]["bytes"]
+    total_files += f; total_bytes += b
+    print(f"{cat:8} : {f} files  |  {fmt_bytes(b)}")
 
-win_mb=$(awk "BEGIN {print $win_bytes / 1024 / 1024}")
-linux_mb=$(awk "BEGIN {print $linux_bytes / 1024 / 1024}")
-net_mb=$(awk "BEGIN {print $net_bytes / 1024 / 1024}")
-total_mb=$(awk "BEGIN {print $total_bytes / 1024 / 1024}")
-
-printf "windows : %d files  | %5.1f MB\n" "$win_count" "$win_mb"
-printf "linux   : %d files  | %5.1f MB\n" "$linux_count" "$linux_mb"
-printf "network : %d files  | %5.1f MB\n" "$net_count" "$net_mb"
-printf "total   : %d files  | %5.1f MB\n" "$total_files" "$total_mb"
-echo "manifest written to $MANIFEST_FILE"
+print(f"{'total':8} : {total_files} files  |  {fmt_bytes(total_bytes)}")
+SUMMARY
