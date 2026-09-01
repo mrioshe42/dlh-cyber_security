@@ -1,0 +1,204 @@
+{
+  "version": "1.0",
+  "description": "MedDefense SOC Canonical Event Taxonomy",
+  "rules": [
+    {
+      "source_type": "windows_security",
+      "match": {
+        "EventID": 4624
+      },
+      "label": "login_success"
+    },
+    {
+      "source_type": "linux_auth",
+      "match": {
+        "action": "accepted_password"
+      },
+      "label": "login_success"
+    },
+    {
+      "source_type": "windows_security",
+      "match": {
+        "EventID": 4625
+      },
+      "label": "login_failure"
+    },
+    {
+      "source_type": "linux_auth",
+      "match": {
+        "action": "failed_password"
+      },
+      "label": "login_failure"
+    },
+    {
+      "source_type": "windows_security",
+      "match": {
+        "EventID": 4634
+      },
+      "label": "logout"
+    },
+    {
+      "source_type": "linux_auth",
+      "match": {
+        "action": "session_close"
+      },
+      "label": "logout"
+    },
+    {
+      "source_type": "windows_security",
+      "match": {
+        "EventID": 4740
+      },
+      "label": "account_lockout"
+    },
+    {
+      "source_type": "windows_security",
+      "match": {
+        "EventID": 4672
+      },
+      "label": "privilege_escalation"
+    },
+    {
+      "source_type": "linux_audit",
+      "match": {
+        "syscall": "setuid"
+      },
+      "label": "privilege_escalation"
+    },
+    {
+      "source_type": "windows_security",
+      "match": {
+        "EventID": 4688
+      },
+      "label": "process_start"
+    },
+    {
+      "source_type": "linux_audit",
+      "match": {
+        "type": "EXECVE"
+      },
+      "label": "process_start"
+    },
+    {
+      "source_type": "windows_security",
+      "match": {
+        "EventID": 4689
+      },
+      "label": "process_stop"
+    },
+    {
+      "source_type": "linux_audit",
+      "match": {
+        "type": "PROCTITLE"
+      },
+      "label": "process_stop"
+    },
+    {
+      "source_type": "windows_security",
+      "match": {
+        "EventID": 4688,
+        "ParentProcessName": "*"
+      },
+      "label": "child_process_spawn"
+    },
+    {
+      "source_type": "linux_audit",
+      "match": {
+        "type": "PATH",
+        "permission": "read"
+      },
+      "label": "file_read_sensitive"
+    },
+    {
+      "source_type": "windows_security",
+      "match": {
+        "EventID": 4663,
+        "AccessMask": "Read"
+      },
+      "label": "file_read_sensitive"
+    },
+    {
+      "source_type": "linux_audit",
+      "match": {
+        "type": "PATH",
+        "permission": "write"
+      },
+      "label": "file_write_sensitive"
+    },
+    {
+      "source_type": "windows_security",
+      "match": {
+        "EventID": 4663,
+        "AccessMask": "Write"
+      },
+      "label": "file_write_sensitive"
+    },
+    {
+      "source_type": "windows_security",
+      "match": {
+        "EventID": 4670
+      },
+      "label": "file_permission_change"
+    },
+    {
+      "source_type": "linux_audit",
+      "match": {
+        "type": "CWD"
+      },
+      "label": "file_permission_change"
+    },
+    {
+      "source_type": "suricata",
+      "match": {
+        "event_type": "flow",
+        "direction": "outbound"
+      },
+      "label": "network_connection_outbound"
+    },
+    {
+      "source_type": "firewall",
+      "match": {
+        "action": "allow",
+        "direction": "outbound"
+      },
+      "label": "network_connection_outbound"
+    },
+    {
+      "source_type": "suricata",
+      "match": {
+        "event_type": "flow",
+        "direction": "inbound"
+      },
+      "label": "network_connection_inbound"
+    },
+    {
+      "source_type": "firewall",
+      "match": {
+        "action": "allow",
+        "direction": "inbound"
+      },
+      "label": "network_connection_inbound"
+    },
+    {
+      "source_type": "suricata",
+      "match": {
+        "event_type": "alert"
+      },
+      "label": "network_alert"
+    },
+    {
+      "source_type": "suricata",
+      "match": {
+        "event_type": "drop"
+      },
+      "label": "network_blocked"
+    },
+    {
+      "source_type": "firewall",
+      "match": {
+        "action": "block"
+      },
+      "label": "network_blocked"
+    }
+  ]
+}
