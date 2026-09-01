@@ -1,0 +1,88 @@
+{
+  "version": "1.0",
+  "generated_at": "2026-09-01T16:17:44.766915",
+  "baseline_window": {
+    "start": "2026-03-17T18:02:45+00:00",
+    "end": "2026-03-24T18:02:45+00:00",
+    "duration_days": 7
+  },
+  "evaluation_window": {
+    "start": "2026-03-24T18:02:45+00:00",
+    "end": "2026-03-25T18:02:45+00:00",
+    "duration_hours": 24
+  },
+  "host_inventory": [
+    "pcap-analyzer",
+    "suricata-sensor"
+  ],
+  "auth": {
+    "window": {
+      "start": "2026-03-17T18:02:45+00:00",
+      "end": "2026-03-24T18:02:45+00:00"
+    },
+    "per_host": {
+      "suricata-sensor": {
+        "login_success": 8419,
+        "login_failure": 0,
+        "logout": 0,
+        "account_lockout": 0,
+        "privilege_escalation": 0
+      },
+      "pcap-analyzer": {
+        "login_success": 3598,
+        "login_failure": 0,
+        "logout": 0,
+        "account_lockout": 0,
+        "privilege_escalation": 0
+      }
+    },
+    "per_user": [
+      {
+        "user": "unknown",
+        "login_success": 12017,
+        "login_failure": 0
+      }
+    ],
+    "known_accounts": [],
+    "business_hours_avg": {
+      "success_per_hour": 72.63,
+      "failure_per_hour": 0.0
+    },
+    "offhours_avg": {
+      "success_per_hour": 69.6,
+      "failure_per_hour": 0.0
+    },
+    "max_failures_1h_window": 0
+  },
+  "process": {
+    "window": {
+      "start": "2026-09-01T13:20:41.201674",
+      "end": "2026-09-08T13:20:41.201674"
+    },
+    "per_host": {},
+    "global_top": [],
+    "rare_processes": [],
+    "parent_child_pairs": {}
+  },
+  "network": {},
+  "file": {},
+  "temporal": {},
+  "thresholds": {
+    "failure_rate_multiplier": {
+      "value": 3,
+      "comment": "An evaluation window authentication failure rate exceeding 3x the baseline average triggers an anomaly flag."
+    },
+    "unknown_process_penalty": {
+      "value": 5,
+      "comment": "Any process execution not registered in the per-host baseline incurs a high severity score penalty."
+    },
+    "unknown_port_penalty": {
+      "value": 4,
+      "comment": "Outbound network traffic connecting to an unobserved destination port incurs a medium-high severity penalty."
+    },
+    "offhours_activity_weight": {
+      "value": 2,
+      "comment": "Multiplier applied to deviations occurring during off-hours (18:00 to 05:59)."
+    }
+  }
+}
