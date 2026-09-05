@@ -1,0 +1,110 @@
+[
+  {
+    "rule_id": "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+    "rule_title": "SSH Repeated Authentication Failures from Single Source",
+    "short_name": "001_ssh_brute_force",
+    "risk_score": 30.0,
+    "f1": 0.8,
+    "priority_score": 24.0,
+    "covering_scenarios": [
+      "RS-01"
+    ],
+    "level": "high"
+  },
+  {
+    "rule_id": "c9d0e1f2-3456-0123-456-7890abcdef3",
+    "rule_title": "Lateral Movement via SMB or RPC",
+    "short_name": "009_lateral_movement_smb",
+    "risk_score": 30.0,
+    "f1": 0.8,
+    "priority_score": 24.0,
+    "covering_scenarios": [
+      "RS-01"
+    ],
+    "level": "high"
+  },
+  {
+    "rule_id": "e5f6a7b8-9012-cdef-0123-456789abcdef",
+    "rule_title": "Suspicious Scheduled Task Creation",
+    "short_name": "005_scheduled_task_creation",
+    "risk_score": 28.0,
+    "f1": 0.75,
+    "priority_score": 21.0,
+    "covering_scenarios": [
+      "RS-02"
+    ],
+    "level": "medium"
+  },
+  {
+    "rule_id": "d4e5f6a7-8901-bcde-f012-34567890abcd",
+    "rule_title": "Unseen Discovery and Reconnaissance Tool Execution",
+    "short_name": "004_recon_tool_execution",
+    "risk_score": 24.0,
+    "f1": 0.36,
+    "priority_score": 8.6,
+    "covering_scenarios": [
+      "RS-03"
+    ],
+    "level": "medium"
+  },
+  {
+    "rule_id": "b7c12345-89ab-cdef-0123-456789abcdef",
+    "rule_title": "Off-Hours Privileged Windows Logon",
+    "short_name": "002_windows_offhours_privileged_logon",
+    "risk_score": 30.0,
+    "f1": 0.25,
+    "priority_score": 7.5,
+    "covering_scenarios": [
+      "RS-01"
+    ],
+    "level": "medium"
+  },
+  {
+    "rule_id": "a7b8c9d0-1234-ef01-234-567890abcdef1",
+    "rule_title": "Unknown Outbound Network Destination",
+    "short_name": "007_unknown_outbound_destination",
+    "risk_score": 24.0,
+    "f1": 0.22,
+    "priority_score": 5.3,
+    "covering_scenarios": [
+      "RS-03"
+    ],
+    "level": "medium"
+  },
+  {
+    "rule_id": "c3d4e5f6-7890-abcd-ef01-234567890abc",
+    "rule_title": "Suspicious Script Interpreter Execution with Non-Standard Parent",
+    "short_name": "003_interpreter_abuse",
+    "risk_score": 28.0,
+    "f1": 0.0,
+    "priority_score": 2.8,
+    "covering_scenarios": [
+      "RS-02"
+    ],
+    "level": "high"
+  },
+  {
+    "rule_id": "f6a7b8c9-0123-def0-1234-567890abcdef",
+    "rule_title": "Registry Run Key Autorun Modification",
+    "short_name": "006_registry_autorun_modify",
+    "risk_score": 28.0,
+    "f1": 0.0,
+    "priority_score": 2.8,
+    "covering_scenarios": [
+      "RS-02"
+    ],
+    "level": "high"
+  },
+  {
+    "rule_id": "b8c9d0e1-2345-f012-345-67890abcdef2",
+    "rule_title": "Uncommon Outbound Port Traffic",
+    "short_name": "008_uncommon_port_outbound",
+    "risk_score": 24.0,
+    "f1": 0.0,
+    "priority_score": 2.4,
+    "covering_scenarios": [
+      "RS-03"
+    ],
+    "level": "high"
+  }
+]
