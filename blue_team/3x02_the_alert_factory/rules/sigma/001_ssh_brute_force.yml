@@ -1,0 +1,20 @@
+title: SSH Repeated Authentication Failures from Single Source
+id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+status: experimental
+description: Detects repeated SSH authentication failures from a single source IP indicating brute-force activity against Linux hosts based on auth logs. Expected operational response is queuing the alert for SOC Tier 1 triage and potential IP blocking.
+logsource:
+    product: linux
+    service: auth
+detection:
+    selection:
+        canonical_label: login_failure
+        event_category: authentication
+    condition: selection | count(src_ip) > 5 by src_ip
+    timeframe: 120s
+falsepositives:
+    - Automated administrative deployment scripts or backup jobs using misconfigured credentials against Linux endpoints.
+    - System administrators or developers repeatedly mistyping passwords during interactive SSH sessions.
+level: high
+tags:
+    - attack.credential_access
+    - attack.t1110.001
