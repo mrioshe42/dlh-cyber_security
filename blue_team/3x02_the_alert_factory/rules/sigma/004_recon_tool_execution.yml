@@ -1,0 +1,35 @@
+title: Unseen Discovery and Reconnaissance Tool Execution
+id: d4e5f6a7-8901-bcde-f012-34567890abcd
+status: experimental
+description: Detects execution of common reconnaissance binaries (whoami.exe, net.exe, systeminfo.exe, tasklist.exe, netstat.exe, or nmap) that were not observed during the MedDefense 3x01 process baseline. Cites the 3x01 anomaly report as the analytical source for unexpected enterprise system profiling.
+logsource:
+    product: windows
+detection:
+    selection_windows:
+        Image|endswith:
+            - \whoami.exe
+            - \net.exe
+            - \systeminfo.exe
+            - \tasklist.exe
+            - \netstat.exe
+            - \nmap.exe
+        baseline_seen: false
+    selection_linux:
+        Image|endswith:
+            - /whoami
+            - /net
+            - /systeminfo
+            - /tasklist
+            - /netstat
+            - /nmap
+        baseline_seen: false
+    condition: selection_windows or selection_linux
+falsepositives:
+    - System administrators performing manual, unbaselined diagnostic profiling or network auditing.
+    - Newly onboarded monitoring agents executing routine health checks.
+level: medium
+tags:
+    - attack.discovery
+    - attack.t1087
+    - attack.t1082
+    

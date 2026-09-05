@@ -1,0 +1,31 @@
+title: Suspicious Script Interpreter Execution with Non-Standard Parent
+id: c3d4e5f6-7890-abcd-ef01-234567890abc
+status: experimental
+description: Detects execution of command-line interpreters (powershell.exe, cmd.exe, wscript.exe, cscript.exe, mshta.exe) spawned by non-standard parent processes, which frequently indicates exploitation or malicious payload execution within the MedDefense enterprise environment.
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection_interpreter:
+        Image|endswith:
+            - \powershell.exe
+            - \cmd.exe
+            - \wscript.exe
+            - \cscript.exe
+            - \mshta.exe
+    filter_parent:
+        ParentImage|endswith:
+            - \explorer.exe
+            - \cmd.exe
+            - \powershell.exe
+            - \services.exe
+    condition: selection_interpreter and not filter_parent
+falsepositives:
+    - Legitimate MedDefense automated maintenance scripts invoked by third-party enterprise management tools or custom deployment wrappers.
+    - Software installation wizards or administrative packaging scripts running during scheduled maintenance windows.
+level: high
+tags:
+    - attack.execution
+    - attack.t1059.001
+    - attack.t1059.003
+    
