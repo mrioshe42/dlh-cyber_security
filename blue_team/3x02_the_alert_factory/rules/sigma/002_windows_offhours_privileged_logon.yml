@@ -1,0 +1,38 @@
+title: Off-Hours Privileged Windows Logon
+id: b7c12345-89ab-cdef-0123-456789abcdef
+status: experimental
+description: Detects privileged Windows logons (Event IDs 4624 and 4672) with LogonType 3 or 10 during off-hours (18:00 to 05:59). In a healthcare environment like MedDefense, privileged access outside normal working hours significantly increases risk as core administrative and clinical management systems should be quiescent. Relies on the execution runner pre-computing the custom 'hour_of_day' field.
+logsource:
+    product: windows
+    service: security
+detection:
+    selection_events:
+        EventID:
+            - 4624
+            - 4672
+        LogonType:
+            - '3'
+            - '10'
+    selection_time:
+        hour_of_day:
+            - 18
+            - 19
+            - 20
+            - 21
+            - 22
+            - 23
+            - 0
+            - 1
+            - 2
+            - 3
+            - 4
+            - 5
+    condition: selection_events and selection_time
+falsepositives:
+    - After-hours technical support shifts performing urgent maintenance.
+    - Scheduled administrative backup jobs or automated enterprise system tasks.
+level: medium
+tags:
+    - attack.initial_access
+    - attack.t1078
+    
