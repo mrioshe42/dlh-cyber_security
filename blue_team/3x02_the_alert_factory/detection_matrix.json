@@ -1,0 +1,174 @@
+[
+  {
+    "source_type": "suricata",
+    "record_count": 9971,
+    "stable_fields": [
+      "asset",
+      "dst_ip",
+      "dst_port",
+      "dst_zone",
+      "event_category",
+      "event_data",
+      "event_id",
+      "hostname",
+      "process_id",
+      "process_name",
+      "protocol",
+      "provider",
+      "raw_message",
+      "severity",
+      "source_origin",
+      "source_type",
+      "src_ip",
+      "src_port",
+      "src_zone",
+      "timestamp",
+      "user"
+    ],
+    "high_cardinality_fields": [
+      "source_origin",
+      "src_port",
+      "timestamp"
+    ],
+    "supported_detection_types": [
+      "signature",
+      "correlation"
+    ],
+    "rationale": "Default capability mapping based on generic log structure.",
+    "recommended_attack_tactics": [
+      "TA0001"
+    ]
+  },
+  {
+    "source_type": "pcap",
+    "record_count": 4096,
+    "stable_fields": [
+      "asset",
+      "dst_ip",
+      "dst_port",
+      "dst_zone",
+      "event_category",
+      "event_data",
+      "event_id",
+      "hostname",
+      "process_id",
+      "process_name",
+      "protocol",
+      "provider",
+      "raw_message",
+      "severity",
+      "source_origin",
+      "source_type",
+      "src_ip",
+      "src_port",
+      "src_zone",
+      "timestamp",
+      "user"
+    ],
+    "high_cardinality_fields": [
+      "event_data",
+      "source_origin",
+      "src_port",
+      "timestamp"
+    ],
+    "supported_detection_types": [
+      "signature",
+      "correlation"
+    ],
+    "rationale": "Default capability mapping based on generic log structure.",
+    "recommended_attack_tactics": [
+      "TA0001"
+    ]
+  },
+  {
+    "source_type": "windows_json",
+    "record_count": 0,
+    "stable_fields": [],
+    "high_cardinality_fields": [],
+    "supported_detection_types": [
+      "signature",
+      "anomaly",
+      "behavioral",
+      "correlation"
+    ],
+    "rationale": "High structural fidelity, rich field presence, and historical baseline support all detecti
+on paradigms.",
+    "recommended_attack_tactics": [
+      "TA0001",
+      "TA0002",
+      "TA0003",
+      "TA0004",
+      "TA0005",
+      "TA0006"
+    ]
+  },
+  {
+    "source_type": "linux_text",
+    "record_count": 0,
+    "stable_fields": [],
+    "high_cardinality_fields": [],
+    "supported_detection_types": [
+      "signature",
+      "anomaly",
+      "behavioral",
+      "correlation"
+    ],
+    "rationale": "Consistent log format with stable execution and auth fields enabling multi-paradigm covera
+ge.",
+    "recommended_attack_tactics": [
+      "TA0001",
+      "TA0002",
+      "TA0003",
+      "TA0004",
+      "TA0005"
+    ]
+  },
+  {
+    "source_type": "suricata_alert",
+    "record_count": 0,
+    "stable_fields": [],
+    "high_cardinality_fields": [],
+    "supported_detection_types": [
+      "signature",
+      "correlation"
+    ],
+    "rationale": "Pre-matched network signatures provide high-fidelity indicators suitable for signature mat
+ching and cross-source correlation.",
+    "recommended_attack_tactics": [
+      "TA0001",
+      "TA0011"
+    ]
+  },
+  {
+    "source_type": "firewall",
+    "record_count": 0,
+    "stable_fields": [],
+    "high_cardinality_fields": [],
+    "supported_detection_types": [
+      "anomaly",
+      "correlation"
+    ],
+    "rationale": "Volume and connection metrics support statistical anomaly detection and multi-source pivot
+ing.",
+    "recommended_attack_tactics": [
+      "TA0001",
+      "TA0010"
+    ]
+  },
+  {
+    "source_type": "pcap_flow",
+    "record_count": 0,
+    "stable_fields": [],
+    "high_cardinality_fields": [],
+    "supported_detection_types": [
+      "anomaly",
+      "behavioral"
+    ],
+    "rationale": "Flow metadata lacks discrete command signatures but exhibits volumetric and behavioral bas
+elines.",
+    "recommended_attack_tactics": [
+      "TA0009",
+      "TA0010"
+    ]
+  }
+]
