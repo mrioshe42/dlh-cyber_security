@@ -1,0 +1,1602 @@
+[
+  {
+    "ticket_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "classification": "true_positive",
+    "justification": "Critical priority alert triggered with malicious IOC category credential_access, command_and_control and verified baseline deviation.",
+    "evidence_refs": [
+      "ref"
+    ],
+    "ioc_hits": [
+      {
+        "indicator": "simulated_malicious_indicator",
+        "reputation": "malicious",
+        "categories": [
+          "credential_access",
+          "command_and_control"
+        ]
+      }
+    ],
+    "attack_techniques": [
+      "t1021.002"
+    ],
+    "recommended_action": "escalate_tier2",
+    "analyst_time_seconds": 45,
+    "created_at": "2026-09-05T23:02:54Z",
+    "_display": {
+      "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+      "rule_id": "c9d0e1f2-3456-0123-456-7890abcdef3",
+      "target_host": "unknown",
+      "reputation": "malicious",
+      "action": "ESCALATE"
+    }
+  },
+  {
+    "ticket_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "classification": "true_positive",
+    "justification": "Critical priority alert triggered with malicious IOC category credential_access, command_and_control and verified baseline deviation.",
+    "evidence_refs": [
+      "ref"
+    ],
+    "ioc_hits": [
+      {
+        "indicator": "simulated_malicious_indicator",
+        "reputation": "malicious",
+        "categories": [
+          "credential_access",
+          "command_and_control"
+        ]
+      }
+    ],
+    "attack_techniques": [
+      "t1021.002"
+    ],
+    "recommended_action": "escalate_tier2",
+    "analyst_time_seconds": 45,
+    "created_at": "2026-09-05T23:02:54Z",
+    "_display": {
+      "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+      "rule_id": "c9d0e1f2-3456-0123-456-7890abcdef3",
+      "target_host": "unknown",
+      "reputation": "malicious",
+      "action": "ESCALATE"
+    }
+  },
+  {
+    "ticket_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "classification": "true_positive",
+    "justification": "Critical priority alert triggered with malicious IOC category credential_access, command_and_control and verified baseline deviation.",
+    "evidence_refs": [
+      "ref"
+    ],
+    "ioc_hits": [
+      {
+        "indicator": "simulated_malicious_indicator",
+        "reputation": "malicious",
+        "categories": [
+          "credential_access",
+          "command_and_control"
+        ]
+      }
+    ],
+    "attack_techniques": [
+      "t1021.002"
+    ],
+    "recommended_action": "escalate_tier2",
+    "analyst_time_seconds": 45,
+    "created_at": "2026-09-05T23:02:54Z",
+    "_display": {
+      "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+      "rule_id": "c9d0e1f2-3456-0123-456-7890abcdef3",
+      "target_host": "unknown",
+      "reputation": "malicious",
+      "action": "ESCALATE"
+    }
+  },
+  {
+    "ticket_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "classification": "true_positive",
+    "justification": "Critical priority alert triggered with malicious IOC category credential_access, command_and_control and verified baseline deviation.",
+    "evidence_refs": [
+      "ref"
+    ],
+    "ioc_hits": [
+      {
+        "indicator": "simulated_malicious_indicator",
+        "reputation": "malicious",
+        "categories": [
+          "credential_access",
+          "command_and_control"
+        ]
+      }
+    ],
+    "attack_techniques": [
+      "t1021.002"
+    ],
+    "recommended_action": "escalate_tier2",
+    "analyst_time_seconds": 45,
+    "created_at": "2026-09-05T23:02:54Z",
+    "_display": {
+      "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+      "rule_id": "c9d0e1f2-3456-0123-456-7890abcdef3",
+      "target_host": "unknown",
+      "reputation": "malicious",
+      "action": "ESCALATE"
+    }
+  },
+  {
+    "ticket_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "classification": "true_positive",
+    "justification": "Critical priority alert triggered with malicious IOC category credential_access, command_and_control and verified baseline deviation.",
+    "evidence_refs": [
+      "ref"
+    ],
+    "ioc_hits": [
+      {
+        "indicator": "simulated_malicious_indicator",
+        "reputation": "malicious",
+        "categories": [
+          "credential_access",
+          "command_and_control"
+        ]
+      }
+    ],
+    "attack_techniques": [
+      "t1021.002"
+    ],
+    "recommended_action": "escalate_tier2",
+    "analyst_time_seconds": 45,
+    "created_at": "2026-09-05T23:02:54Z",
+    "_display": {
+      "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+      "rule_id": "c9d0e1f2-3456-0123-456-7890abcdef3",
+      "target_host": "unknown",
+      "reputation": "malicious",
+      "action": "ESCALATE"
+    }
+  },
+  {
+    "ticket_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "classification": "true_positive",
+    "justification": "Critical priority alert triggered with malicious IOC category credential_access, command_and_control and verified baseline deviation.",
+    "evidence_refs": [
+      "ref"
+    ],
+    "ioc_hits": [
+      {
+        "indicator": "simulated_malicious_indicator",
+        "reputation": "malicious",
+        "categories": [
+          "credential_access",
+          "command_and_control"
+        ]
+      }
+    ],
+    "attack_techniques": [
+      "t1021.002"
+    ],
+    "recommended_action": "escalate_tier2",
+    "analyst_time_seconds": 45,
+    "created_at": "2026-09-05T23:02:54Z",
+    "_display": {
+      "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+      "rule_id": "c9d0e1f2-3456-0123-456-7890abcdef3",
+      "target_host": "unknown",
+      "reputation": "malicious",
+      "action": "ESCALATE"
+    }
+  },
+  {
+    "ticket_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "classification": "true_positive",
+    "justification": "Critical priority alert triggered with malicious IOC category credential_access, command_and_control and verified baseline deviation.",
+    "evidence_refs": [
+      "ref"
+    ],
+    "ioc_hits": [
+      {
+        "indicator": "simulated_malicious_indicator",
+        "reputation": "malicious",
+        "categories": [
+          "credential_access",
+          "command_and_control"
+        ]
+      }
+    ],
+    "attack_techniques": [
+      "t1021.002"
+    ],
+    "recommended_action": "escalate_tier2",
+    "analyst_time_seconds": 45,
+    "created_at": "2026-09-05T23:02:54Z",
+    "_display": {
+      "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+      "rule_id": "c9d0e1f2-3456-0123-456-7890abcdef3",
+      "target_host": "unknown",
+      "reputation": "malicious",
+      "action": "ESCALATE"
+    }
+  },
+  {
+    "ticket_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "classification": "true_positive",
+    "justification": "Critical priority alert triggered with malicious IOC category credential_access, command_and_control and verified baseline deviation.",
+    "evidence_refs": [
+      "ref"
+    ],
+    "ioc_hits": [
+      {
+        "indicator": "simulated_malicious_indicator",
+        "reputation": "malicious",
+        "categories": [
+          "credential_access",
+          "command_and_control"
+        ]
+      }
+    ],
+    "attack_techniques": [
+      "t1021.002"
+    ],
+    "recommended_action": "escalate_tier2",
+    "analyst_time_seconds": 45,
+    "created_at": "2026-09-05T23:02:54Z",
+    "_display": {
+      "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+      "rule_id": "c9d0e1f2-3456-0123-456-7890abcdef3",
+      "target_host": "unknown",
+      "reputation": "malicious",
+      "action": "ESCALATE"
+    }
+  },
+  {
+    "ticket_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "classification": "true_positive",
+    "justification": "Critical priority alert triggered with malicious IOC category credential_access, command_and_control and verified baseline deviation.",
+    "evidence_refs": [
+      "ref"
+    ],
+    "ioc_hits": [
+      {
+        "indicator": "simulated_malicious_indicator",
+        "reputation": "malicious",
+        "categories": [
+          "credential_access",
+          "command_and_control"
+        ]
+      }
+    ],
+    "attack_techniques": [
+      "t1021.002"
+    ],
+    "recommended_action": "escalate_tier2",
+    "analyst_time_seconds": 45,
+    "created_at": "2026-09-05T23:02:54Z",
+    "_display": {
+      "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+      "rule_id": "c9d0e1f2-3456-0123-456-7890abcdef3",
+      "target_host": "unknown",
+      "reputation": "malicious",
+      "action": "ESCALATE"
+    }
+  },
+  {
+    "ticket_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "classification": "true_positive",
+    "justification": "Critical priority alert triggered with malicious IOC category credential_access, command_and_control and verified baseline deviation.",
+    "evidence_refs": [
+      "ref"
+    ],
+    "ioc_hits": [
+      {
+        "indicator": "simulated_malicious_indicator",
+        "reputation": "malicious",
+        "categories": [
+          "credential_access",
+          "command_and_control"
+        ]
+      }
+    ],
+    "attack_techniques": [
+      "t1021.002"
+    ],
+    "recommended_action": "escalate_tier2",
+    "analyst_time_seconds": 45,
+    "created_at": "2026-09-05T23:02:54Z",
+    "_display": {
+      "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+      "rule_id": "c9d0e1f2-3456-0123-456-7890abcdef3",
+      "target_host": "unknown",
+      "reputation": "malicious",
+      "action": "ESCALATE"
+    }
+  },
+  {
+    "ticket_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "classification": "true_positive",
+    "justification": "Critical priority alert triggered with malicious IOC category credential_access, command_and_control and verified baseline deviation.",
+    "evidence_refs": [
+      "ref"
+    ],
+    "ioc_hits": [
+      {
+        "indicator": "simulated_malicious_indicator",
+        "reputation": "malicious",
+        "categories": [
+          "credential_access",
+          "command_and_control"
+        ]
+      }
+    ],
+    "attack_techniques": [
+      "t1021.002"
+    ],
+    "recommended_action": "escalate_tier2",
+    "analyst_time_seconds": 45,
+    "created_at": "2026-09-05T23:02:54Z",
+    "_display": {
+      "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+      "rule_id": "c9d0e1f2-3456-0123-456-7890abcdef3",
+      "target_host": "unknown",
+      "reputation": "malicious",
+      "action": "ESCALATE"
+    }
+  },
+  {
+    "ticket_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "classification": "true_positive",
+    "justification": "Critical priority alert triggered with malicious IOC category credential_access, command_and_control and verified baseline deviation.",
+    "evidence_refs": [
+      "ref"
+    ],
+    "ioc_hits": [
+      {
+        "indicator": "simulated_malicious_indicator",
+        "reputation": "malicious",
+        "categories": [
+          "credential_access",
+          "command_and_control"
+        ]
+      }
+    ],
+    "attack_techniques": [
+      "t1021.002"
+    ],
+    "recommended_action": "escalate_tier2",
+    "analyst_time_seconds": 45,
+    "created_at": "2026-09-05T23:02:54Z",
+    "_display": {
+      "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+      "rule_id": "c9d0e1f2-3456-0123-456-7890abcdef3",
+      "target_host": "unknown",
+      "reputation": "malicious",
+      "action": "ESCALATE"
+    }
+  },
+  {
+    "ticket_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "classification": "true_positive",
+    "justification": "Critical priority alert triggered with malicious IOC category credential_access, command_and_control and verified baseline deviation.",
+    "evidence_refs": [
+      "ref"
+    ],
+    "ioc_hits": [
+      {
+        "indicator": "simulated_malicious_indicator",
+        "reputation": "malicious",
+        "categories": [
+          "credential_access",
+          "command_and_control"
+        ]
+      }
+    ],
+    "attack_techniques": [
+      "t1021.002"
+    ],
+    "recommended_action": "escalate_tier2",
+    "analyst_time_seconds": 45,
+    "created_at": "2026-09-05T23:02:54Z",
+    "_display": {
+      "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+      "rule_id": "c9d0e1f2-3456-0123-456-7890abcdef3",
+      "target_host": "unknown",
+      "reputation": "malicious",
+      "action": "ESCALATE"
+    }
+  },
+  {
+    "ticket_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "classification": "true_positive",
+    "justification": "Critical priority alert triggered with malicious IOC category credential_access, command_and_control and verified baseline deviation.",
+    "evidence_refs": [
+      "ref"
+    ],
+    "ioc_hits": [
+      {
+        "indicator": "simulated_malicious_indicator",
+        "reputation": "malicious",
+        "categories": [
+          "credential_access",
+          "command_and_control"
+        ]
+      }
+    ],
+    "attack_techniques": [
+      "t1021.002"
+    ],
+    "recommended_action": "escalate_tier2",
+    "analyst_time_seconds": 45,
+    "created_at": "2026-09-05T23:02:54Z",
+    "_display": {
+      "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+      "rule_id": "c9d0e1f2-3456-0123-456-7890abcdef3",
+      "target_host": "unknown",
+      "reputation": "malicious",
+      "action": "ESCALATE"
+    }
+  },
+  {
+    "ticket_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "classification": "true_positive",
+    "justification": "Critical priority alert triggered with malicious IOC category credential_access, command_and_control and verified baseline deviation.",
+    "evidence_refs": [
+      "ref"
+    ],
+    "ioc_hits": [
+      {
+        "indicator": "simulated_malicious_indicator",
+        "reputation": "malicious",
+        "categories": [
+          "credential_access",
+          "command_and_control"
+        ]
+      }
+    ],
+    "attack_techniques": [
+      "t1021.002"
+    ],
+    "recommended_action": "escalate_tier2",
+    "analyst_time_seconds": 45,
+    "created_at": "2026-09-05T23:02:54Z",
+    "_display": {
+      "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+      "rule_id": "c9d0e1f2-3456-0123-456-7890abcdef3",
+      "target_host": "unknown",
+      "reputation": "malicious",
+      "action": "ESCALATE"
+    }
+  },
+  {
+    "ticket_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "classification": "true_positive",
+    "justification": "Critical priority alert triggered with malicious IOC category credential_access, command_and_control and verified baseline deviation.",
+    "evidence_refs": [
+      "ref"
+    ],
+    "ioc_hits": [
+      {
+        "indicator": "simulated_malicious_indicator",
+        "reputation": "malicious",
+        "categories": [
+          "credential_access",
+          "command_and_control"
+        ]
+      }
+    ],
+    "attack_techniques": [
+      "t1021.002"
+    ],
+    "recommended_action": "escalate_tier2",
+    "analyst_time_seconds": 45,
+    "created_at": "2026-09-05T23:02:54Z",
+    "_display": {
+      "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+      "rule_id": "c9d0e1f2-3456-0123-456-7890abcdef3",
+      "target_host": "unknown",
+      "reputation": "malicious",
+      "action": "ESCALATE"
+    }
+  },
+  {
+    "ticket_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "classification": "true_positive",
+    "justification": "Critical priority alert triggered with malicious IOC category credential_access, command_and_control and verified baseline deviation.",
+    "evidence_refs": [
+      "ref"
+    ],
+    "ioc_hits": [
+      {
+        "indicator": "simulated_malicious_indicator",
+        "reputation": "malicious",
+        "categories": [
+          "credential_access",
+          "command_and_control"
+        ]
+      }
+    ],
+    "attack_techniques": [
+      "t1021.002"
+    ],
+    "recommended_action": "escalate_tier2",
+    "analyst_time_seconds": 45,
+    "created_at": "2026-09-05T23:02:54Z",
+    "_display": {
+      "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+      "rule_id": "c9d0e1f2-3456-0123-456-7890abcdef3",
+      "target_host": "unknown",
+      "reputation": "malicious",
+      "action": "ESCALATE"
+    }
+  },
+  {
+    "ticket_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "classification": "true_positive",
+    "justification": "Critical priority alert triggered with malicious IOC category credential_access, command_and_control and verified baseline deviation.",
+    "evidence_refs": [
+      "ref"
+    ],
+    "ioc_hits": [
+      {
+        "indicator": "simulated_malicious_indicator",
+        "reputation": "malicious",
+        "categories": [
+          "credential_access",
+          "command_and_control"
+        ]
+      }
+    ],
+    "attack_techniques": [
+      "t1021.002"
+    ],
+    "recommended_action": "escalate_tier2",
+    "analyst_time_seconds": 45,
+    "created_at": "2026-09-05T23:02:54Z",
+    "_display": {
+      "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+      "rule_id": "c9d0e1f2-3456-0123-456-7890abcdef3",
+      "target_host": "unknown",
+      "reputation": "malicious",
+      "action": "ESCALATE"
+    }
+  },
+  {
+    "ticket_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "classification": "true_positive",
+    "justification": "Critical priority alert triggered with malicious IOC category credential_access, command_and_control and verified baseline deviation.",
+    "evidence_refs": [
+      "ref"
+    ],
+    "ioc_hits": [
+      {
+        "indicator": "simulated_malicious_indicator",
+        "reputation": "malicious",
+        "categories": [
+          "credential_access",
+          "command_and_control"
+        ]
+      }
+    ],
+    "attack_techniques": [
+      "t1021.002"
+    ],
+    "recommended_action": "escalate_tier2",
+    "analyst_time_seconds": 45,
+    "created_at": "2026-09-05T23:02:54Z",
+    "_display": {
+      "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+      "rule_id": "c9d0e1f2-3456-0123-456-7890abcdef3",
+      "target_host": "unknown",
+      "reputation": "malicious",
+      "action": "ESCALATE"
+    }
+  },
+  {
+    "ticket_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "classification": "true_positive",
+    "justification": "Critical priority alert triggered with malicious IOC category credential_access, command_and_control and verified baseline deviation.",
+    "evidence_refs": [
+      "ref"
+    ],
+    "ioc_hits": [
+      {
+        "indicator": "simulated_malicious_indicator",
+        "reputation": "malicious",
+        "categories": [
+          "credential_access",
+          "command_and_control"
+        ]
+      }
+    ],
+    "attack_techniques": [
+      "t1021.002"
+    ],
+    "recommended_action": "escalate_tier2",
+    "analyst_time_seconds": 45,
+    "created_at": "2026-09-05T23:02:54Z",
+    "_display": {
+      "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+      "rule_id": "c9d0e1f2-3456-0123-456-7890abcdef3",
+      "target_host": "unknown",
+      "reputation": "malicious",
+      "action": "ESCALATE"
+    }
+  },
+  {
+    "ticket_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "classification": "true_positive",
+    "justification": "Critical priority alert triggered with malicious IOC category credential_access, command_and_control and verified baseline deviation.",
+    "evidence_refs": [
+      "ref"
+    ],
+    "ioc_hits": [
+      {
+        "indicator": "simulated_malicious_indicator",
+        "reputation": "malicious",
+        "categories": [
+          "credential_access",
+          "command_and_control"
+        ]
+      }
+    ],
+    "attack_techniques": [
+      "t1021.002"
+    ],
+    "recommended_action": "escalate_tier2",
+    "analyst_time_seconds": 45,
+    "created_at": "2026-09-05T23:02:54Z",
+    "_display": {
+      "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+      "rule_id": "c9d0e1f2-3456-0123-456-7890abcdef3",
+      "target_host": "unknown",
+      "reputation": "malicious",
+      "action": "ESCALATE"
+    }
+  },
+  {
+    "ticket_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "classification": "true_positive",
+    "justification": "Critical priority alert triggered with malicious IOC category credential_access, command_and_control and verified baseline deviation.",
+    "evidence_refs": [
+      "ref"
+    ],
+    "ioc_hits": [
+      {
+        "indicator": "simulated_malicious_indicator",
+        "reputation": "malicious",
+        "categories": [
+          "credential_access",
+          "command_and_control"
+        ]
+      }
+    ],
+    "attack_techniques": [
+      "t1021.002"
+    ],
+    "recommended_action": "escalate_tier2",
+    "analyst_time_seconds": 45,
+    "created_at": "2026-09-05T23:02:54Z",
+    "_display": {
+      "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+      "rule_id": "c9d0e1f2-3456-0123-456-7890abcdef3",
+      "target_host": "unknown",
+      "reputation": "malicious",
+      "action": "ESCALATE"
+    }
+  },
+  {
+    "ticket_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "classification": "true_positive",
+    "justification": "Critical priority alert triggered with malicious IOC category credential_access, command_and_control and verified baseline deviation.",
+    "evidence_refs": [
+      "ref"
+    ],
+    "ioc_hits": [
+      {
+        "indicator": "simulated_malicious_indicator",
+        "reputation": "malicious",
+        "categories": [
+          "credential_access",
+          "command_and_control"
+        ]
+      }
+    ],
+    "attack_techniques": [
+      "t1021.002"
+    ],
+    "recommended_action": "escalate_tier2",
+    "analyst_time_seconds": 45,
+    "created_at": "2026-09-05T23:02:54Z",
+    "_display": {
+      "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+      "rule_id": "c9d0e1f2-3456-0123-456-7890abcdef3",
+      "target_host": "unknown",
+      "reputation": "malicious",
+      "action": "ESCALATE"
+    }
+  },
+  {
+    "ticket_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "classification": "true_positive",
+    "justification": "Critical priority alert triggered with malicious IOC category credential_access, command_and_control and verified baseline deviation.",
+    "evidence_refs": [
+      "ref"
+    ],
+    "ioc_hits": [
+      {
+        "indicator": "simulated_malicious_indicator",
+        "reputation": "malicious",
+        "categories": [
+          "credential_access",
+          "command_and_control"
+        ]
+      }
+    ],
+    "attack_techniques": [
+      "t1021.002"
+    ],
+    "recommended_action": "escalate_tier2",
+    "analyst_time_seconds": 45,
+    "created_at": "2026-09-05T23:02:54Z",
+    "_display": {
+      "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+      "rule_id": "c9d0e1f2-3456-0123-456-7890abcdef3",
+      "target_host": "unknown",
+      "reputation": "malicious",
+      "action": "ESCALATE"
+    }
+  },
+  {
+    "ticket_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "classification": "true_positive",
+    "justification": "Critical priority alert triggered with malicious IOC category credential_access, command_and_control and verified baseline deviation.",
+    "evidence_refs": [
+      "ref"
+    ],
+    "ioc_hits": [
+      {
+        "indicator": "simulated_malicious_indicator",
+        "reputation": "malicious",
+        "categories": [
+          "credential_access",
+          "command_and_control"
+        ]
+      }
+    ],
+    "attack_techniques": [
+      "t1021.002"
+    ],
+    "recommended_action": "escalate_tier2",
+    "analyst_time_seconds": 45,
+    "created_at": "2026-09-05T23:02:54Z",
+    "_display": {
+      "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+      "rule_id": "c9d0e1f2-3456-0123-456-7890abcdef3",
+      "target_host": "unknown",
+      "reputation": "malicious",
+      "action": "ESCALATE"
+    }
+  },
+  {
+    "ticket_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "classification": "true_positive",
+    "justification": "Critical priority alert triggered with malicious IOC category credential_access, command_and_control and verified baseline deviation.",
+    "evidence_refs": [
+      "ref"
+    ],
+    "ioc_hits": [
+      {
+        "indicator": "simulated_malicious_indicator",
+        "reputation": "malicious",
+        "categories": [
+          "credential_access",
+          "command_and_control"
+        ]
+      }
+    ],
+    "attack_techniques": [
+      "t1021.002"
+    ],
+    "recommended_action": "escalate_tier2",
+    "analyst_time_seconds": 45,
+    "created_at": "2026-09-05T23:02:54Z",
+    "_display": {
+      "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+      "rule_id": "c9d0e1f2-3456-0123-456-7890abcdef3",
+      "target_host": "unknown",
+      "reputation": "malicious",
+      "action": "ESCALATE"
+    }
+  },
+  {
+    "ticket_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "classification": "true_positive",
+    "justification": "Critical priority alert triggered with malicious IOC category credential_access, command_and_control and verified baseline deviation.",
+    "evidence_refs": [
+      "ref"
+    ],
+    "ioc_hits": [
+      {
+        "indicator": "simulated_malicious_indicator",
+        "reputation": "malicious",
+        "categories": [
+          "credential_access",
+          "command_and_control"
+        ]
+      }
+    ],
+    "attack_techniques": [
+      "t1021.002"
+    ],
+    "recommended_action": "escalate_tier2",
+    "analyst_time_seconds": 45,
+    "created_at": "2026-09-05T23:02:54Z",
+    "_display": {
+      "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+      "rule_id": "c9d0e1f2-3456-0123-456-7890abcdef3",
+      "target_host": "unknown",
+      "reputation": "malicious",
+      "action": "ESCALATE"
+    }
+  },
+  {
+    "ticket_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "classification": "true_positive",
+    "justification": "Critical priority alert triggered with malicious IOC category credential_access, command_and_control and verified baseline deviation.",
+    "evidence_refs": [
+      "ref"
+    ],
+    "ioc_hits": [
+      {
+        "indicator": "simulated_malicious_indicator",
+        "reputation": "malicious",
+        "categories": [
+          "credential_access",
+          "command_and_control"
+        ]
+      }
+    ],
+    "attack_techniques": [
+      "t1021.002"
+    ],
+    "recommended_action": "escalate_tier2",
+    "analyst_time_seconds": 45,
+    "created_at": "2026-09-05T23:02:54Z",
+    "_display": {
+      "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+      "rule_id": "c9d0e1f2-3456-0123-456-7890abcdef3",
+      "target_host": "unknown",
+      "reputation": "malicious",
+      "action": "ESCALATE"
+    }
+  },
+  {
+    "ticket_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "classification": "true_positive",
+    "justification": "Critical priority alert triggered with malicious IOC category credential_access, command_and_control and verified baseline deviation.",
+    "evidence_refs": [
+      "ref"
+    ],
+    "ioc_hits": [
+      {
+        "indicator": "simulated_malicious_indicator",
+        "reputation": "malicious",
+        "categories": [
+          "credential_access",
+          "command_and_control"
+        ]
+      }
+    ],
+    "attack_techniques": [
+      "t1021.002"
+    ],
+    "recommended_action": "escalate_tier2",
+    "analyst_time_seconds": 45,
+    "created_at": "2026-09-05T23:02:54Z",
+    "_display": {
+      "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+      "rule_id": "c9d0e1f2-3456-0123-456-7890abcdef3",
+      "target_host": "unknown",
+      "reputation": "malicious",
+      "action": "ESCALATE"
+    }
+  },
+  {
+    "ticket_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "classification": "true_positive",
+    "justification": "Critical priority alert triggered with malicious IOC category credential_access, command_and_control and verified baseline deviation.",
+    "evidence_refs": [
+      "ref"
+    ],
+    "ioc_hits": [
+      {
+        "indicator": "simulated_malicious_indicator",
+        "reputation": "malicious",
+        "categories": [
+          "credential_access",
+          "command_and_control"
+        ]
+      }
+    ],
+    "attack_techniques": [
+      "t1021.002"
+    ],
+    "recommended_action": "escalate_tier2",
+    "analyst_time_seconds": 45,
+    "created_at": "2026-09-05T23:02:54Z",
+    "_display": {
+      "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+      "rule_id": "c9d0e1f2-3456-0123-456-7890abcdef3",
+      "target_host": "unknown",
+      "reputation": "malicious",
+      "action": "ESCALATE"
+    }
+  },
+  {
+    "ticket_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "classification": "true_positive",
+    "justification": "Critical priority alert triggered with malicious IOC category credential_access, command_and_control and verified baseline deviation.",
+    "evidence_refs": [
+      "ref"
+    ],
+    "ioc_hits": [
+      {
+        "indicator": "simulated_malicious_indicator",
+        "reputation": "malicious",
+        "categories": [
+          "credential_access",
+          "command_and_control"
+        ]
+      }
+    ],
+    "attack_techniques": [
+      "t1021.002"
+    ],
+    "recommended_action": "escalate_tier2",
+    "analyst_time_seconds": 45,
+    "created_at": "2026-09-05T23:02:54Z",
+    "_display": {
+      "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+      "rule_id": "c9d0e1f2-3456-0123-456-7890abcdef3",
+      "target_host": "unknown",
+      "reputation": "malicious",
+      "action": "ESCALATE"
+    }
+  },
+  {
+    "ticket_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "classification": "true_positive",
+    "justification": "Critical priority alert triggered with malicious IOC category credential_access, command_and_control and verified baseline deviation.",
+    "evidence_refs": [
+      "ref"
+    ],
+    "ioc_hits": [
+      {
+        "indicator": "simulated_malicious_indicator",
+        "reputation": "malicious",
+        "categories": [
+          "credential_access",
+          "command_and_control"
+        ]
+      }
+    ],
+    "attack_techniques": [
+      "t1021.002"
+    ],
+    "recommended_action": "escalate_tier2",
+    "analyst_time_seconds": 45,
+    "created_at": "2026-09-05T23:02:54Z",
+    "_display": {
+      "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+      "rule_id": "c9d0e1f2-3456-0123-456-7890abcdef3",
+      "target_host": "unknown",
+      "reputation": "malicious",
+      "action": "ESCALATE"
+    }
+  },
+  {
+    "ticket_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "classification": "true_positive",
+    "justification": "Critical priority alert triggered with malicious IOC category credential_access, command_and_control and verified baseline deviation.",
+    "evidence_refs": [
+      "ref"
+    ],
+    "ioc_hits": [
+      {
+        "indicator": "simulated_malicious_indicator",
+        "reputation": "malicious",
+        "categories": [
+          "credential_access",
+          "command_and_control"
+        ]
+      }
+    ],
+    "attack_techniques": [
+      "t1021.002"
+    ],
+    "recommended_action": "escalate_tier2",
+    "analyst_time_seconds": 45,
+    "created_at": "2026-09-05T23:02:54Z",
+    "_display": {
+      "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+      "rule_id": "c9d0e1f2-3456-0123-456-7890abcdef3",
+      "target_host": "unknown",
+      "reputation": "malicious",
+      "action": "ESCALATE"
+    }
+  },
+  {
+    "ticket_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "classification": "true_positive",
+    "justification": "Critical priority alert triggered with malicious IOC category credential_access, command_and_control and verified baseline deviation.",
+    "evidence_refs": [
+      "ref"
+    ],
+    "ioc_hits": [
+      {
+        "indicator": "simulated_malicious_indicator",
+        "reputation": "malicious",
+        "categories": [
+          "credential_access",
+          "command_and_control"
+        ]
+      }
+    ],
+    "attack_techniques": [
+      "t1021.002"
+    ],
+    "recommended_action": "escalate_tier2",
+    "analyst_time_seconds": 45,
+    "created_at": "2026-09-05T23:02:54Z",
+    "_display": {
+      "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+      "rule_id": "c9d0e1f2-3456-0123-456-7890abcdef3",
+      "target_host": "unknown",
+      "reputation": "malicious",
+      "action": "ESCALATE"
+    }
+  },
+  {
+    "ticket_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "classification": "true_positive",
+    "justification": "Critical priority alert triggered with malicious IOC category credential_access, command_and_control and verified baseline deviation.",
+    "evidence_refs": [
+      "ref"
+    ],
+    "ioc_hits": [
+      {
+        "indicator": "simulated_malicious_indicator",
+        "reputation": "malicious",
+        "categories": [
+          "credential_access",
+          "command_and_control"
+        ]
+      }
+    ],
+    "attack_techniques": [
+      "t1021.002"
+    ],
+    "recommended_action": "escalate_tier2",
+    "analyst_time_seconds": 45,
+    "created_at": "2026-09-05T23:02:54Z",
+    "_display": {
+      "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+      "rule_id": "c9d0e1f2-3456-0123-456-7890abcdef3",
+      "target_host": "unknown",
+      "reputation": "malicious",
+      "action": "ESCALATE"
+    }
+  },
+  {
+    "ticket_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "classification": "true_positive",
+    "justification": "Critical priority alert triggered with malicious IOC category credential_access, command_and_control and verified baseline deviation.",
+    "evidence_refs": [
+      "ref"
+    ],
+    "ioc_hits": [
+      {
+        "indicator": "simulated_malicious_indicator",
+        "reputation": "malicious",
+        "categories": [
+          "credential_access",
+          "command_and_control"
+        ]
+      }
+    ],
+    "attack_techniques": [
+      "t1021.002"
+    ],
+    "recommended_action": "escalate_tier2",
+    "analyst_time_seconds": 45,
+    "created_at": "2026-09-05T23:02:54Z",
+    "_display": {
+      "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+      "rule_id": "c9d0e1f2-3456-0123-456-7890abcdef3",
+      "target_host": "unknown",
+      "reputation": "malicious",
+      "action": "ESCALATE"
+    }
+  },
+  {
+    "ticket_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "classification": "true_positive",
+    "justification": "Critical priority alert triggered with malicious IOC category credential_access, command_and_control and verified baseline deviation.",
+    "evidence_refs": [
+      "ref"
+    ],
+    "ioc_hits": [
+      {
+        "indicator": "simulated_malicious_indicator",
+        "reputation": "malicious",
+        "categories": [
+          "credential_access",
+          "command_and_control"
+        ]
+      }
+    ],
+    "attack_techniques": [
+      "t1021.002"
+    ],
+    "recommended_action": "escalate_tier2",
+    "analyst_time_seconds": 45,
+    "created_at": "2026-09-05T23:02:54Z",
+    "_display": {
+      "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+      "rule_id": "c9d0e1f2-3456-0123-456-7890abcdef3",
+      "target_host": "unknown",
+      "reputation": "malicious",
+      "action": "ESCALATE"
+    }
+  },
+  {
+    "ticket_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "classification": "true_positive",
+    "justification": "Critical priority alert triggered with malicious IOC category credential_access, command_and_control and verified baseline deviation.",
+    "evidence_refs": [
+      "ref"
+    ],
+    "ioc_hits": [
+      {
+        "indicator": "simulated_malicious_indicator",
+        "reputation": "malicious",
+        "categories": [
+          "credential_access",
+          "command_and_control"
+        ]
+      }
+    ],
+    "attack_techniques": [
+      "t1021.002"
+    ],
+    "recommended_action": "escalate_tier2",
+    "analyst_time_seconds": 45,
+    "created_at": "2026-09-05T23:02:54Z",
+    "_display": {
+      "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+      "rule_id": "c9d0e1f2-3456-0123-456-7890abcdef3",
+      "target_host": "unknown",
+      "reputation": "malicious",
+      "action": "ESCALATE"
+    }
+  },
+  {
+    "ticket_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "classification": "true_positive",
+    "justification": "Critical priority alert triggered with malicious IOC category credential_access, command_and_control and verified baseline deviation.",
+    "evidence_refs": [
+      "ref"
+    ],
+    "ioc_hits": [
+      {
+        "indicator": "simulated_malicious_indicator",
+        "reputation": "malicious",
+        "categories": [
+          "credential_access",
+          "command_and_control"
+        ]
+      }
+    ],
+    "attack_techniques": [
+      "t1021.002"
+    ],
+    "recommended_action": "escalate_tier2",
+    "analyst_time_seconds": 45,
+    "created_at": "2026-09-05T23:02:54Z",
+    "_display": {
+      "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+      "rule_id": "c9d0e1f2-3456-0123-456-7890abcdef3",
+      "target_host": "unknown",
+      "reputation": "malicious",
+      "action": "ESCALATE"
+    }
+  },
+  {
+    "ticket_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "classification": "true_positive",
+    "justification": "Critical priority alert triggered with malicious IOC category credential_access, command_and_control and verified baseline deviation.",
+    "evidence_refs": [
+      "ref"
+    ],
+    "ioc_hits": [
+      {
+        "indicator": "simulated_malicious_indicator",
+        "reputation": "malicious",
+        "categories": [
+          "credential_access",
+          "command_and_control"
+        ]
+      }
+    ],
+    "attack_techniques": [
+      "t1021.002"
+    ],
+    "recommended_action": "escalate_tier2",
+    "analyst_time_seconds": 45,
+    "created_at": "2026-09-05T23:02:54Z",
+    "_display": {
+      "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+      "rule_id": "c9d0e1f2-3456-0123-456-7890abcdef3",
+      "target_host": "unknown",
+      "reputation": "malicious",
+      "action": "ESCALATE"
+    }
+  },
+  {
+    "ticket_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "classification": "true_positive",
+    "justification": "Critical priority alert triggered with malicious IOC category credential_access, command_and_control and verified baseline deviation.",
+    "evidence_refs": [
+      "ref"
+    ],
+    "ioc_hits": [
+      {
+        "indicator": "simulated_malicious_indicator",
+        "reputation": "malicious",
+        "categories": [
+          "credential_access",
+          "command_and_control"
+        ]
+      }
+    ],
+    "attack_techniques": [
+      "t1021.002"
+    ],
+    "recommended_action": "escalate_tier2",
+    "analyst_time_seconds": 45,
+    "created_at": "2026-09-05T23:02:54Z",
+    "_display": {
+      "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+      "rule_id": "c9d0e1f2-3456-0123-456-7890abcdef3",
+      "target_host": "unknown",
+      "reputation": "malicious",
+      "action": "ESCALATE"
+    }
+  },
+  {
+    "ticket_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "classification": "true_positive",
+    "justification": "Critical priority alert triggered with malicious IOC category credential_access, command_and_control and verified baseline deviation.",
+    "evidence_refs": [
+      "ref"
+    ],
+    "ioc_hits": [
+      {
+        "indicator": "simulated_malicious_indicator",
+        "reputation": "malicious",
+        "categories": [
+          "credential_access",
+          "command_and_control"
+        ]
+      }
+    ],
+    "attack_techniques": [
+      "t1021.002"
+    ],
+    "recommended_action": "escalate_tier2",
+    "analyst_time_seconds": 45,
+    "created_at": "2026-09-05T23:02:54Z",
+    "_display": {
+      "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+      "rule_id": "c9d0e1f2-3456-0123-456-7890abcdef3",
+      "target_host": "unknown",
+      "reputation": "malicious",
+      "action": "ESCALATE"
+    }
+  },
+  {
+    "ticket_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "classification": "true_positive",
+    "justification": "Critical priority alert triggered with malicious IOC category credential_access, command_and_control and verified baseline deviation.",
+    "evidence_refs": [
+      "ref"
+    ],
+    "ioc_hits": [
+      {
+        "indicator": "simulated_malicious_indicator",
+        "reputation": "malicious",
+        "categories": [
+          "credential_access",
+          "command_and_control"
+        ]
+      }
+    ],
+    "attack_techniques": [
+      "t1021.002"
+    ],
+    "recommended_action": "escalate_tier2",
+    "analyst_time_seconds": 45,
+    "created_at": "2026-09-05T23:02:54Z",
+    "_display": {
+      "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+      "rule_id": "c9d0e1f2-3456-0123-456-7890abcdef3",
+      "target_host": "unknown",
+      "reputation": "malicious",
+      "action": "ESCALATE"
+    }
+  },
+  {
+    "ticket_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "classification": "true_positive",
+    "justification": "Critical priority alert triggered with malicious IOC category credential_access, command_and_control and verified baseline deviation.",
+    "evidence_refs": [
+      "ref"
+    ],
+    "ioc_hits": [
+      {
+        "indicator": "simulated_malicious_indicator",
+        "reputation": "malicious",
+        "categories": [
+          "credential_access",
+          "command_and_control"
+        ]
+      }
+    ],
+    "attack_techniques": [
+      "t1021.002"
+    ],
+    "recommended_action": "escalate_tier2",
+    "analyst_time_seconds": 45,
+    "created_at": "2026-09-05T23:02:54Z",
+    "_display": {
+      "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+      "rule_id": "c9d0e1f2-3456-0123-456-7890abcdef3",
+      "target_host": "unknown",
+      "reputation": "malicious",
+      "action": "ESCALATE"
+    }
+  },
+  {
+    "ticket_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "classification": "true_positive",
+    "justification": "Critical priority alert triggered with malicious IOC category credential_access, command_and_control and verified baseline deviation.",
+    "evidence_refs": [
+      "ref"
+    ],
+    "ioc_hits": [
+      {
+        "indicator": "simulated_malicious_indicator",
+        "reputation": "malicious",
+        "categories": [
+          "credential_access",
+          "command_and_control"
+        ]
+      }
+    ],
+    "attack_techniques": [
+      "t1021.002"
+    ],
+    "recommended_action": "escalate_tier2",
+    "analyst_time_seconds": 45,
+    "created_at": "2026-09-05T23:02:54Z",
+    "_display": {
+      "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+      "rule_id": "c9d0e1f2-3456-0123-456-7890abcdef3",
+      "target_host": "unknown",
+      "reputation": "malicious",
+      "action": "ESCALATE"
+    }
+  },
+  {
+    "ticket_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "classification": "true_positive",
+    "justification": "Critical priority alert triggered with malicious IOC category credential_access, command_and_control and verified baseline deviation.",
+    "evidence_refs": [
+      "ref"
+    ],
+    "ioc_hits": [
+      {
+        "indicator": "simulated_malicious_indicator",
+        "reputation": "malicious",
+        "categories": [
+          "credential_access",
+          "command_and_control"
+        ]
+      }
+    ],
+    "attack_techniques": [
+      "t1021.002"
+    ],
+    "recommended_action": "escalate_tier2",
+    "analyst_time_seconds": 45,
+    "created_at": "2026-09-05T23:02:54Z",
+    "_display": {
+      "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+      "rule_id": "c9d0e1f2-3456-0123-456-7890abcdef3",
+      "target_host": "unknown",
+      "reputation": "malicious",
+      "action": "ESCALATE"
+    }
+  },
+  {
+    "ticket_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "classification": "true_positive",
+    "justification": "Critical priority alert triggered with malicious IOC category credential_access, command_and_control and verified baseline deviation.",
+    "evidence_refs": [
+      "ref"
+    ],
+    "ioc_hits": [
+      {
+        "indicator": "simulated_malicious_indicator",
+        "reputation": "malicious",
+        "categories": [
+          "credential_access",
+          "command_and_control"
+        ]
+      }
+    ],
+    "attack_techniques": [
+      "t1021.002"
+    ],
+    "recommended_action": "escalate_tier2",
+    "analyst_time_seconds": 45,
+    "created_at": "2026-09-05T23:02:54Z",
+    "_display": {
+      "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+      "rule_id": "c9d0e1f2-3456-0123-456-7890abcdef3",
+      "target_host": "unknown",
+      "reputation": "malicious",
+      "action": "ESCALATE"
+    }
+  },
+  {
+    "ticket_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "classification": "true_positive",
+    "justification": "Critical priority alert triggered with malicious IOC category credential_access, command_and_control and verified baseline deviation.",
+    "evidence_refs": [
+      "ref"
+    ],
+    "ioc_hits": [
+      {
+        "indicator": "simulated_malicious_indicator",
+        "reputation": "malicious",
+        "categories": [
+          "credential_access",
+          "command_and_control"
+        ]
+      }
+    ],
+    "attack_techniques": [
+      "t1021.002"
+    ],
+    "recommended_action": "escalate_tier2",
+    "analyst_time_seconds": 45,
+    "created_at": "2026-09-05T23:02:54Z",
+    "_display": {
+      "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+      "rule_id": "c9d0e1f2-3456-0123-456-7890abcdef3",
+      "target_host": "unknown",
+      "reputation": "malicious",
+      "action": "ESCALATE"
+    }
+  },
+  {
+    "ticket_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "classification": "true_positive",
+    "justification": "Critical priority alert triggered with malicious IOC category credential_access, command_and_control and verified baseline deviation.",
+    "evidence_refs": [
+      "ref"
+    ],
+    "ioc_hits": [
+      {
+        "indicator": "simulated_malicious_indicator",
+        "reputation": "malicious",
+        "categories": [
+          "credential_access",
+          "command_and_control"
+        ]
+      }
+    ],
+    "attack_techniques": [
+      "t1021.002"
+    ],
+    "recommended_action": "escalate_tier2",
+    "analyst_time_seconds": 45,
+    "created_at": "2026-09-05T23:02:54Z",
+    "_display": {
+      "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+      "rule_id": "c9d0e1f2-3456-0123-456-7890abcdef3",
+      "target_host": "unknown",
+      "reputation": "malicious",
+      "action": "ESCALATE"
+    }
+  },
+  {
+    "ticket_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+    "classification": "true_positive",
+    "justification": "Critical priority alert triggered with malicious IOC category credential_access, command_and_control and verified baseline deviation.",
+    "evidence_refs": [
+      "ref"
+    ],
+    "ioc_hits": [
+      {
+        "indicator": "simulated_malicious_indicator",
+        "reputation": "malicious",
+        "categories": [
+          "credential_access",
+          "command_and_control"
+        ]
+      }
+    ],
+    "attack_techniques": [
+      "t1021.002"
+    ],
+    "recommended_action": "escalate_tier2",
+    "analyst_time_seconds": 45,
+    "created_at": "2026-09-05T23:02:54Z",
+    "_display": {
+      "alert_id": "b9017af4-de12-5f21-a242-45bf054cd3c9",
+      "rule_id": "c9d0e1f2-3456-0123-456-7890abcdef3",
+      "target_host": "unknown",
+      "reputation": "malicious",
+      "action": "ESCALATE"
+    }
+  }
+]
