@@ -1,0 +1,74 @@
+[
+  {
+    "incident_id": "INC-20260326-0001",
+    "hostname": "db-patient-01",
+    "summary": "Credential theft chain detected targeting database patient storage server.",
+    "recommended_containment": "isolate_host",
+    "_display": {
+      "id": "INC-20260326-0001",
+      "host": "db-patient-01",
+      "summary": "credential_theft_chain",
+      "action": "isolate_host"
+    }
+  },
+  {
+    "incident_id": "INC-20260326-0002",
+    "hostname": "clin-ws-07",
+    "summary": "Interpreter abuse identified on clinical workstation executing unauthorized scripts.",
+    "recommended_containment": "isolate_host",
+    "_display": {
+      "id": "INC-20260326-0002",
+      "host": "clin-ws-07",
+      "summary": "interpreter_abuse",
+      "action": "isolate_host"
+    }
+  },
+  {
+    "incident_id": "INC-20260326-0003",
+    "hostname": "meddb-01",
+    "summary": "Unauthorized patient data access pattern flagged on primary medical database.",
+    "recommended_containment": "disable_account",
+    "_display": {
+      "id": "INC-20260326-0003",
+      "host": "meddb-01",
+      "summary": "patient_data_access",
+      "action": "disable_account"
+    }
+  },
+  {
+    "incident_id": "INC-20260326-0004",
+    "hostname": "med-img-02",
+    "summary": "Medical segment egress traffic detected targeting unknown external destination.",
+    "recommended_containment": "block_ip_at_egress",
+    "_display": {
+      "id": "INC-20260326-0004",
+      "host": "med-img-02",
+      "summary": "medical_segment_egress",
+      "action": "block_ip_at_egress"
+    }
+  },
+  {
+    "incident_id": "INC-20260326-0005",
+    "hostname": "db-patient-01",
+    "summary": "SSH brute force attack stream detected against core patient database host.",
+    "recommended_containment": "block_source_ip",
+    "_display": {
+      "id": "INC-20260326-0005",
+      "host": "db-patient-01",
+      "summary": "ssh_brute_force",
+      "action": "block_source_ip"
+    }
+  },
+  {
+    "incident_id": "INC-20260326-0006",
+    "hostname": "clin-ws-07",
+    "summary": "Privileged shift violation identified involving unauthorized off-hours access.",
+    "recommended_containment": "disable_account",
+    "_display": {
+      "id": "INC-20260326-0006",
+      "host": "clin-ws-07",
+      "summary": "privileged_shift_violation",
+      "action": "disable_account"
+    }
+  }
+]
