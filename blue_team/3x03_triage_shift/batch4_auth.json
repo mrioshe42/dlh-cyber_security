@@ -1,0 +1,59 @@
+[
+  {
+    "ticket_id": "tkt_00006",
+    "alert_id": "alert_00006",
+    "classification": "true_positive",
+    "justification": "Unknown source IP on critical asset with no prior host history indicates potential credential compromise.",
+    "recommended_action": "escalate_tier2",
+    "created_at": "2026-09-05T23:10:58Z",
+    "_display": {
+      "alert_id": "alert_00006",
+      "rule_info": "001 ssh_brute_force",
+      "classification": "true_positive",
+      "action": "escalate"
+    }
+  },
+  {
+    "ticket_id": "tkt_00012",
+    "alert_id": "alert_00012",
+    "classification": "false_positive",
+    "justification": "Known source IP with failure burst falling within baseline edge tolerance threshold.",
+    "recommended_action": "tune_rule",
+    "created_at": "2026-09-05T23:10:58Z",
+    "_display": {
+      "alert_id": "alert_00012",
+      "rule_info": "002 windows_offhours_priv_logon",
+      "classification": "false_positive",
+      "action": "tune_rule"
+    },
+    "fp_reason": "baseline_edge_burst"
+  },
+  {
+    "ticket_id": "tkt_00020",
+    "alert_id": "alert_00020",
+    "classification": "true_positive",
+    "justification": "Ambiguous state with mixed historical indicators; requires active monitoring and log correlation.",
+    "recommended_action": "monitor",
+    "created_at": "2026-09-05T23:10:58Z",
+    "_display": {
+      "alert_id": "alert_00020",
+      "rule_info": "001 ssh_brute_force",
+      "classification": "true_positive",
+      "action": "monitor"
+    }
+  },
+  {
+    "ticket_id": "tkt_00028",
+    "alert_id": "alert_00028",
+    "classification": "true_positive",
+    "justification": "Privileged shift violation from unrecognized external network context requiring tier 2 escalation.",
+    "recommended_action": "escalate_tier2",
+    "created_at": "2026-09-05T23:10:58Z",
+    "_display": {
+      "alert_id": "alert_00028",
+      "rule_info": "013 privileged_shift_violation",
+      "classification": "true_positive",
+      "action": "escalate"
+    }
+  }
+]
