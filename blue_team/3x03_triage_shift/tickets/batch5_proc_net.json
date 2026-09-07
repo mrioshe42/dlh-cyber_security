@@ -1,0 +1,58 @@
+[
+  {
+    "ticket_id": "tkt_00008",
+    "alert_id": "alert_00008",
+    "classification": "true_positive",
+    "justification": "Ambiguous process/network indicators checked against host profile and IOC context; requires monitoring.",
+    "recommended_action": "monitor",
+    "created_at": "2026-09-06T00:00:00Z",
+    "_display": {
+      "alert_id": "alert_00008",
+      "rule_info": "007 unknown_outbound_destination",
+      "classification": "true_positive",
+      "action": "monitor"
+    }
+  },
+  {
+    "ticket_id": "tkt_00011",
+    "alert_id": "alert_00011",
+    "classification": "true_positive",
+    "justification": "Ambiguous process/network indicators checked against host profile and IOC context; requires monitoring.",
+    "recommended_action": "monitor",
+    "created_at": "2026-09-06T00:00:00Z",
+    "_display": {
+      "alert_id": "alert_00011",
+      "rule_info": "003 interpreter_abuse",
+      "classification": "true_positive",
+      "action": "monitor"
+    }
+  },
+  {
+    "ticket_id": "tkt_00029",
+    "alert_id": "alert_00029",
+    "classification": "true_positive",
+    "justification": "Ambiguous process/network indicators checked against host profile and IOC context; requires monitoring.",
+    "recommended_action": "monitor",
+    "created_at": "2026-09-06T00:00:00Z",
+    "_display": {
+      "alert_id": "alert_00029",
+      "rule_info": "004 recon_tool_execution",
+      "classification": "true_positive",
+      "action": "monitor"
+    }
+  },
+  {
+    "ticket_id": "tkt_00034",
+    "alert_id": "alert_00034",
+    "classification": "true_positive",
+    "justification": "Ambiguous process/network indicators checked against host profile and IOC context; requires monitoring.",
+    "recommended_action": "monitor",
+    "created_at": "2026-09-06T00:00:00Z",
+    "_display": {
+      "alert_id": "alert_00034",
+      "rule_info": "007 unknown_outbound_destination",
+      "classification": "true_positive",
+      "action": "monitor"
+    }
+  }
+]
