@@ -1,0 +1,92 @@
+[
+  {
+    "ticket_id": "tkt_00003",
+    "alert_id": "alert_00003",
+    "classification": "false_positive",
+    "justification": "Alert triggered by authorized service account activity matching authentication or process baseline patterns.",
+    "recommended_action": "tune_rule",
+    "fp_reason": "service_account_activity",
+    "created_at": "2026-09-05T23:07:17Z",
+    "_display": {
+      "alert_id": "alert_00003",
+      "rule_info": "002 windows_offhours_priv_logon",
+      "action": "CLOSE",
+      "fp_reason": "service_account_activity"
+    }
+  },
+  {
+    "ticket_id": "tkt_00008",
+    "alert_id": "alert_00008",
+    "classification": "false_positive",
+    "justification": "Alert triggered from management subnet range during authorized administrative network traffic.",
+    "recommended_action": "tune_rule",
+    "fp_reason": "management_subnet",
+    "created_at": "2026-09-05T23:07:17Z",
+    "_display": {
+      "alert_id": "alert_00008",
+      "rule_info": "007 unknown_outbound_destination",
+      "action": "CLOSE",
+      "fp_reason": "management_subnet"
+    }
+  },
+  {
+    "ticket_id": "tkt_00011",
+    "alert_id": "alert_00011",
+    "classification": "false_positive",
+    "justification": "Alert matched a known process name present in the baseline host profile expected execution list.",
+    "recommended_action": "tune_rule",
+    "fp_reason": "baseline_match",
+    "created_at": "2026-09-05T23:07:17Z",
+    "_display": {
+      "alert_id": "alert_00011",
+      "rule_info": "003 interpreter_abuse",
+      "action": "CLOSE",
+      "fp_reason": "baseline_match"
+    }
+  },
+  {
+    "ticket_id": "tkt_00025",
+    "alert_id": "alert_00025",
+    "classification": "false_positive",
+    "justification": "Alert triggered by authorized service account activity matching authentication or process baseline patterns.",
+    "recommended_action": "tune_rule",
+    "fp_reason": "service_account_activity",
+    "created_at": "2026-09-05T23:07:17Z",
+    "_display": {
+      "alert_id": "alert_00025",
+      "rule_info": "002 windows_offhours_priv_logon",
+      "action": "CLOSE",
+      "fp_reason": "service_account_activity"
+    }
+  },
+  {
+    "ticket_id": "tkt_00029",
+    "alert_id": "alert_00029",
+    "classification": "false_positive",
+    "justification": "Alert matched a known process name present in the baseline host profile expected execution list.",
+    "recommended_action": "tune_rule",
+    "fp_reason": "baseline_match",
+    "created_at": "2026-09-05T23:07:17Z",
+    "_display": {
+      "alert_id": "alert_00029",
+      "rule_info": "004 recon_tool_execution",
+      "action": "CLOSE",
+      "fp_reason": "baseline_match"
+    }
+  },
+  {
+    "ticket_id": "tkt_00034",
+    "alert_id": "alert_00034",
+    "classification": "false_positive",
+    "justification": "Alert triggered from management subnet range during authorized administrative network traffic.",
+    "recommended_action": "tune_rule",
+    "fp_reason": "management_subnet",
+    "created_at": "2026-09-05T23:07:17Z",
+    "_display": {
+      "alert_id": "alert_00034",
+      "rule_info": "007 unknown_outbound_destination",
+      "action": "CLOSE",
+      "fp_reason": "management_subnet"
+    }
+  }
+]
