@@ -1,0 +1,39 @@
+{
+  "scenarios_analyzed": 4,
+  "export_advantages_count": 3,
+  "cli_advantages_count": 1,
+  "scenarios": [
+    {
+      "scenario_id": "anchor",
+      "cli_time_seconds": 28,
+      "export_time_seconds": 19,
+      "delta_seconds": -9,
+      "faster_interface": "wazuh_export",
+      "operational_cause": "text_speed_iteration"
+    },
+    {
+      "scenario_id": "scenario_a",
+      "cli_time_seconds": 52,
+      "export_time_seconds": 33,
+      "delta_seconds": -19,
+      "faster_interface": "wazuh_export",
+      "operational_cause": "native_field_surface"
+    },
+    {
+      "scenario_id": "scenario_b",
+      "cli_time_seconds": 48,
+      "export_time_seconds": 25,
+      "delta_seconds": -23,
+      "faster_interface": "wazuh_export",
+      "operational_cause": "context_join_ergonomics"
+    },
+    {
+      "scenario_id": "scenario_c",
+      "cli_time_seconds": 39,
+      "export_time_seconds": 21,
+      "delta_seconds": -18,
+      "faster_interface": "wazuh_export",
+      "operational_cause": "pipeline_expressiveness"
+    }
+  ]
+}
