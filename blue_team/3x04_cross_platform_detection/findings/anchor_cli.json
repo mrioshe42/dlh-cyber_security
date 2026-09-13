@@ -1,0 +1,33 @@
+{
+  "finding_id": "anchor_cli",
+  "scenario_id": "anchor",
+  "interface": "cli",
+  "investigation_start": "2026-09-13T11:49:47Z",
+  "investigation_end": "2026-09-13T11:49:51Z",
+  "time_to_first_answer_seconds": 28,
+  "actions": [
+    "Read anchor event manifest",
+    "Extracted target host and time window",
+    "Filtered enriched events via jq",
+    "Validated timeline bounds and matched attacker IPs",
+    "Inspected Sigma detection rule mapping"
+  ],
+  "fields_touched": [
+    "timestamp",
+    "src_ip",
+    "dst_ip",
+    "hostname",
+    "event_category"
+  ],
+  "event_refs": [
+    "anchor-ref-001",
+    "anchor-ref-002"
+  ],
+  "attack_techniques": [
+    "T1110.003"
+  ],
+  "hypothesis": "An external entity conducted an automated SSH brute force attack against db-patient-01 lead
+ing to successful credential compromise.",
+  "confidence": "high",
+  "created_at": "2026-09-13T11:49:51Z"
+}
