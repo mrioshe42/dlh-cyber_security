@@ -1,0 +1,77 @@
+{
+  "generated_at": "2026-09-13T16:02:48Z",
+  "files": [
+    {"path": "comparison/workflow_comparison.json", "size": 939, "sha256": "0780aa1b0810dffab15425cd5600ac74
+01d2ba95ece7501d419902300752cb43"},
+    {"path": "comparison/questions/q3.yml", "size": 17, "sha256": "e0003a75dfc76296dfee08d847e607d68a09b1b40
+12c29726f90714ba1ee16b9"},
+    {"path": "comparison/questions/q1.yml", "size": 17, "sha256": "a708245702e3f817e9108b9f68c67c862de2af5d5
+bb28367c4fa04acb668a004"},
+    {"path": "comparison/questions/q4.yml", "size": 17, "sha256": "e7e427a09bc559a374aa603d3e03a41f67d5480ef
+b0499aeb1b32340b0cf78a1"},
+    {"path": "comparison/questions/q2.yml", "size": 17, "sha256": "ca9c8a736485b8493eedea4e8c8f760afd552a1c0
+24be8a4bf0d14226d03a416"},
+    {"path": "comparison/tradeoff_table.md", "size": 1172, "sha256": "275ab965c1a87492ff4575953822f2b77b8e65
+0105a9d41c8047ef252dce27bb"},
+    {"path": "comparison/tradeoff_table.json", "size": 1037, "sha256": "752ca36570c4eb2acdda8634d7ada7977459
+fdcb34ea347426c053739b78772f"},
+    {"path": "workspace/workspace_init.json", "size": 304, "sha256": "fdb8937121300ac1e21632c4ecdcf4b0f34b59
+14ff5f798f5bd8a17f0eabdaa7"},
+    {"path": "brief/vendor_brief.md", "size": 3360, "sha256": "c2b0e19d13d1750326804b47004d30b4bbeb137d7d09d
+acdafd7726ba8569f3d"},
+    {"path": "rules/wazuh/003_interpreter_abuse.xml", "size": 3, "sha256": "ca3d163bab055381827226140568f3be
+f7eaac187cebd76878e0b63e9e442356"},
+    {"path": "rules/wazuh/translation_report.json", "size": 3, "sha256": "ca3d163bab055381827226140568f3bef7
+eaac187cebd76878e0b63e9e442356"},
+    {"path": "rules/wazuh/010_credential_theft_chain.xml", "size": 3, "sha256": "ca3d163bab05538182722614056
+8f3bef7eaac187cebd76878e0b63e9e442356"},
+    {"path": "rules/wazuh/001_ssh_brute_force.xml", "size": 3, "sha256": "ca3d163bab055381827226140568f3bef7
+eaac187cebd76878e0b63e9e442356"},
+    {"path": "runtime/4-cli_scenario_a.sh", "size": 3506, "sha256": "baf6da2ffd17daf67c0e2dfaf444c54dca8ac8d
+872588404014f8037c10440fc"},
+    {"path": "runtime/5-cli_scenario_b.sh", "size": 3824, "sha256": "da27656d2c665dd6b54a70228e60e16c190048e
+8cb1da1b102bce30e88c3fe69"},
+    {"path": "runtime/14.sh", "size": 4334, "sha256": "a4e4855a9b0fa2e58ffb2ab5c8e924427f64caaec23373be4e89f
+51336d0651c"},
+    {"path": "runtime/2-cli_anchor.sh", "size": 4491, "sha256": "6ad525fc1510c365596c47d4b6f4b2da135c9130c08
+43cb157b681374d25a521"},
+    {"path": "runtime/12-tradeoff_analysis.sh", "size": 3053, "sha256": "1048b87b8b95738af61854571aa517511d9
+5fb009a8a3fce8102b529a93e4e4d"},
+    {"path": "runtime/1-wazuh_container.sh", "size": 3207, "sha256": "66b5ce518faad75730ef20e67a10b174d2b674
+02a418cd742543b641edf1195c"},
+    {"path": "runtime/13-workflow_comparison.sh", "size": 1961, "sha256": "1654e52fb2afdf8dd74bc61b4eb3c9dc8
+425ff5b0fd2a8ec5fe4488c2b663ee9"},
+    {"path": "runtime/9-export_scenario_c.sh", "size": 2572, "sha256": "5673636e2b5467fe726b8a3e2b37be94b603
+4ccd4b4e67e3e8e75827d1249a4d"},
+    {"path": "runtime/6-cli_scenario_b.sh", "size": 2867, "sha256": "1cd58ec84b81ee876d35338e133df6dfec2c62f
+000a0eae1d70a6b46a1df8eef"},
+    {"path": "runtime/0-tool_check.sh", "size": 4169, "sha256": "9a0a68a9501e8310858534f981c874bafc7f05dc39e
+94587057b2091969e58bf"},
+    {"path": "runtime/3-export_anchor.sh", "size": 3850, "sha256": "255dc9052527714d7bf06854873ecbf427d38b68
+13ed623d2ff1ecc22d8fea13"},
+    {"path": "runtime/8-export_scenario_b.sh", "size": 2405, "sha256": "1cd76c2fa4a2de8e5a2c4afea1846589d5dc
+12c5bfa2190b48e928f4fb725b2a"},
+    {"path": "runtime/15-tool_evaluation_package.sh", "size": 3265, "sha256": "29c32d5a09f57b3294a1315ae6b60
+4496be282149be9f34ae363a8b35510219b"},
+    {"path": "runtime/7-export_scenario_a.sh", "size": 2775, "sha256": "138213feadf85fd540939259d0f44f596882
+9f44ef1860231235c751c72413d3"},
+    {"path": "playbook/tool_agnostic_playbook.md", "size": 4057, "sha256": "9347bc47fad2d8c4492fa85db427790f
+c75120f29a821dd822893dd068042625"},
+    {"path": "findings/scenario_a_cli.json", "size": 1120, "sha256": "803c424b50f07d6806ae97c4e65aa9615b3351
+7fa23145294839e8bdd664835e"},
+    {"path": "findings/scenario_c_export.json", "size": 1238, "sha256": "591cbe3072c8db4660d0242e5525c2164ec
+a66c7dc831576afc1dff616f328b2"},
+    {"path": "findings/scenario_b_cli.json", "size": 1256, "sha256": "127d3d57e75c5b57a3208cbb9f607b75099d1e
+df21ed4a2c36a74bcbe73ab9c7"},
+    {"path": "findings/anchor_export.json", "size": 1201, "sha256": "139cc86427c8db180635468931b0583a244b6ec
+00dd2513ce6b91c19bcfd5ba0"},
+    {"path": "findings/scenario_b_export.json", "size": 1245, "sha256": "5e4075ad9b7abdd24f428b014bcbcc4340b
+de1aa53e6d058c7ae481598cb9ee3"},
+    {"path": "findings/scenario_c_cli.json", "size": 1076, "sha256": "d2c3b5e787e3ba928b6293b86ceb670d460fd3
+929780ea65f178b10338cf2966"},
+    {"path": "findings/anchor_cli.json", "size": 893, "sha256": "5f8f3912a7f49ddf6ae2ac60f9ed7f83635fedea3f3
+4813510e549e9416d418e"},
+    {"path": "findings/scenario_a_export.json", "size": 1248, "sha256": "a6c433b5130140fb2dec33e8a3b1d00db2b
+c92abe858c5413f5c9d54f025b23f"}
+  ]
+}
