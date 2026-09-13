@@ -1,0 +1,33 @@
+{
+  "finding_id": "scenario_c_wazuh_export",
+  "scenario_id": "scenario_c",
+  "interface": "wazuh_export",
+  "investigation_start": "2026-09-13T15:37:47Z",
+  "investigation_end": "2026-09-13T15:37:47Z",
+  "time_to_first_answer_seconds": 21,
+  "actions": ["Navigate to Discover → index meddefense-evidence-2026-03","Set time range: 2026-03-25T11:00:0
+0Z to 2026-03-25T13:00:00Z","Type KQL: source.ip:\"10.2.3.2\" AND destination.ip:\"198.51.100.73\"","Sort by
+ @timestamp ascending","Note 5 matching flows — consistent 12-minute beacon interval","Check source.zone fie
+ld — MEDICAL_IOT (should have no direct internet access)","Note bytes_out increasing per flow: 8KB, 14KB, 28
+KB, 42KB, 48KB — data staging pattern"],
+  "fields_touched": [
+    "source.ip",
+    "destination.ip",
+    "destination.port",
+    "source.zone",
+    "@timestamp"
+  ],
+  "event_refs": [
+    "wazuh-scenario-c-flow1",
+    "wazuh-scenario-c-flow2",
+    "wazuh-scenario-c-flow3"
+  ],
+  "attack_techniques": [
+    "T1071.001",
+    "T1041"
+  ],
+  "hypothesis": "Wazuh index export confirms medical IoT segment egress (med-mri-02) matching external C2 be
+acon intervals and isolated zone violation.",
+  "confidence": "high",
+  "created_at": "2026-09-13T15:37:47Z"
+}
