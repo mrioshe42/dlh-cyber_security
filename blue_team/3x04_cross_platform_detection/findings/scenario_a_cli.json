@@ -1,0 +1,37 @@
+{
+  "finding_id": "scenario_a_cli",
+  "scenario_id": "scenario_a",
+  "interface": "cli",
+  "investigation_start": "2026-09-13T12:48:04Z",
+  "investigation_end": "2026-09-13T12:48:06Z",
+  "time_to_first_answer_seconds": 52,
+  "actions": [
+    "Loaded scenario_a_credential_theft manifest",
+    "Filtered enriched events for clin-ws-12 within timeframe",
+    "Identified Sysmon EID 10 (LSASS memory access via rundll32.exe)",
+    "Identified Sysmon EID 11 (C:\Temp\debug.dmp creation)",
+    "Identified Sysmon EID 3 (Network connection to DC via SMB port 445)"
+  ],
+  "fields_touched": [
+    "winlog.event_id",
+    "process.executable",
+    "file.path",
+    "destination.ip",
+    "destination.port",
+    "@timestamp"
+  ],
+  "event_refs": [
+    "cli-scenario-a-eid10",
+    "cli-scenario-a-eid11",
+    "cli-scenario-a-eid3"
+  ],
+  "attack_techniques": [
+    "T1003.001",
+    "T1550.002",
+    "T1021.002"
+  ],
+  "hypothesis": "LSASS memory dumped via rundll32 resulting in credential compromise and subsequent lateral 
+movement to domain controller over SMB.",
+  "confidence": "high",
+  "created_at": "2026-09-13T12:48:06Z"
+}
