@@ -1,0 +1,48 @@
+{
+  "findings_loaded": 8,
+  "per_interface": {
+    "cli": {
+      "total_time_seconds": 928,
+      "avg_time_seconds": 232,
+      "median_time_seconds": 247,
+      "total_actions": 39
+    },
+    "wazuh_export": {
+      "total_time_seconds": 788,
+      "avg_time_seconds": 197,
+      "median_time_seconds": 193,
+      "total_actions": 22
+    }
+  },
+  "confidence_distribution": {
+    "cli": {
+      "high": 3,
+      "medium": 1,
+      "low": 0
+    },
+    "wazuh_export": {
+      "high": 3,
+      "medium": 1,
+      "low": 0
+    }
+  },
+  "per_scenario_deltas": {
+    "anchor": {
+      "delta_seconds": -34,
+      "faster": "wazuh_export"
+    },
+    "scenario_a": {
+      "delta_seconds": -130,
+      "faster": "wazuh_export"
+    },
+    "scenario_b": {
+      "delta_seconds": 26,
+      "faster": "cli"
+    },
+    "scenario_c": {
+      "delta_seconds": -73,
+      "faster": "wazuh_export"
+    }
+  },
+  "generated_at": "2026-09-13T15:51:32Z"
+}
