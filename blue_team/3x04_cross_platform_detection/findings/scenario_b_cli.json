@@ -1,0 +1,36 @@
+{
+  "finding_id": "scenario_b_cli",
+  "scenario_id": "scenario_b",
+  "interface": "cli",
+  "investigation_start": "2026-09-13T14:27:18Z",
+  "investigation_end": "2026-09-13T14:27:19Z",
+  "time_to_first_answer_seconds": 48,
+  "actions": [
+    "Loaded scenario_b manifest and asset inventory",
+    "Checked asset criticality (MEDIUM) and data classification (PHI)",
+    "Identified Windows Event 4624 (RemoteInteractive logon for p.morales)",
+    "Identified Windows Event 4672 (Special privileges assigned)",
+    "Identified Sysmon EID 1 (PowerShell execution with ExecutionPolicy Bypass)",
+    "Evaluated contextual ambiguity regarding CISO authorization versus off-hours risk"
+  ],
+  "fields_touched": [
+    "winlog.event_id",
+    "user.name",
+    "host.hostname",
+    "process.command_line",
+    "@timestamp"
+  ],
+  "event_refs": [
+    "cli-scenario-b-eid4624",
+    "cli-scenario-b-eid4672",
+    "cli-scenario-b-eid1"
+  ],
+  "attack_techniques": [
+    "T1078.002",
+    "T1059.001"
+  ],
+  "hypothesis": "Off-hours privileged logon by authorized CISO account on PHI workstation paired with script
+ execution bypass requires verification and escalation due to timing and policy anomalies.",
+  "confidence": "medium",
+  "created_at": "2026-09-13T14:27:19Z"
+}
