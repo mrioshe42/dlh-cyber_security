@@ -1,0 +1,26 @@
+{
+  "shift_id": "SHIFT-20260915-01",
+  "tlp": "AMBER",
+  "cluster_id": "HC-RED7",
+  "generated_at": "2026-09-15T21:45:45.967593+00:00",
+  "iocs": [
+    {
+      "type": "ip",
+      "value": "198[.]51[.]100[.]73",
+      "first_seen": "2026-09-15T01:00:00Z",
+      "last_seen": "2026-09-15T21:45:45.966943+00:00",
+      "incident_id": "INC-20260915-A",
+      "source": "shift_discovered",
+      "confidence": "high"
+    },
+    {
+      "type": "domain",
+      "value": "MedSyncHelper",
+      "first_seen": "2026-09-15T01:00:00Z",
+      "last_seen": "2026-09-15T21:45:45.966975+00:00",
+      "incident_id": "INC-20260915-A",
+      "source": "shift_discovered",
+      "confidence": "high"
+    }
+  ]
+}

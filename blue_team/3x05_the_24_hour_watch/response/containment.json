@@ -1,0 +1,66 @@
+{
+  "shift_id": "SHIFT-20260915-01",
+  "generated_at": "2026-09-15T21:45:45.967200+00:00",
+  "actions": [
+    {
+      "action_id": "ACT-001",
+      "priority": "immediate",
+      "action": "Isolate confirmed compromised host meddefense-clin-01 immediately.",
+      "target_type": "host",
+      "target_value": "meddefense-clin-01",
+      "incident_id": "INC-20260915-A",
+      "operational_impact": "Loss of local host connectivity and service uptime.",
+      "requires_approval_from": "None (Emergency Containment)"
+    },
+    {
+      "action_id": "ACT-002",
+      "priority": "short_term",
+      "action": "Rotate and reset credentials for accounts associated with INC-20260915-A.",
+      "target_type": "user",
+      "target_value": "compromised_accounts",
+      "incident_id": "INC-20260915-A",
+      "operational_impact": "Requires user re-authentication.",
+      "requires_approval_from": "Identity Access Management Lead"
+    },
+    {
+      "action_id": "ACT-003",
+      "priority": "immediate",
+      "action": "Isolate confirmed compromised host meddefense-srv-01 immediately.",
+      "target_type": "host",
+      "target_value": "meddefense-srv-01",
+      "incident_id": "INC-20260915-B",
+      "operational_impact": "Loss of local host connectivity and service uptime.",
+      "requires_approval_from": "None (Emergency Containment)"
+    },
+    {
+      "action_id": "ACT-004",
+      "priority": "short_term",
+      "action": "Rotate and reset credentials for accounts associated with INC-20260915-B.",
+      "target_type": "user",
+      "target_value": "compromised_accounts",
+      "incident_id": "INC-20260915-B",
+      "operational_impact": "Requires user re-authentication.",
+      "requires_approval_from": "Identity Access Management Lead"
+    },
+    {
+      "action_id": "ACT-005",
+      "priority": "immediate",
+      "action": "Isolate confirmed compromised host meddefense-rad-01 immediately.",
+      "target_type": "host",
+      "target_value": "meddefense-rad-01",
+      "incident_id": "INC-20260915-C",
+      "operational_impact": "Loss of local host connectivity and service uptime.",
+      "requires_approval_from": "None (Emergency Containment)"
+    },
+    {
+      "action_id": "ACT-006",
+      "priority": "short_term",
+      "action": "Rotate and reset credentials for accounts associated with INC-20260915-C.",
+      "target_type": "user",
+      "target_value": "compromised_accounts",
+      "incident_id": "INC-20260915-C",
+      "operational_impact": "Requires user re-authentication.",
+      "requires_approval_from": "Identity Access Management Lead"
+    }
+  ]
+}
