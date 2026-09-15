@@ -1,0 +1,12 @@
+{"alert_id": "ALT-001", "rule_id": "Suspicious PowerShell Download", "host": "meddefense-clin-01", "user": null, "class
+ification": "TP", "severity": "high", "matches_ioc": [], "baseline_deviation": false, "change_ticket_match": null, "ana
+lyst_note": "Confirmed deviation or IOC match aligning with campaign indicator.", "classified_at": "2026-09-15T17:26:34
+.014997+00:00"}
+{"alert_id": "ALT-002", "rule_id": "SSH Bruteforce Attempt", "host": "meddefense-srv-01", "user": null, "classification
+": "TP", "severity": "medium", "matches_ioc": [], "baseline_deviation": false, "change_ticket_match": null, "analyst_no
+te": "Confirmed deviation or IOC match aligning with campaign indicator.", "classified_at": "2026-09-15T17:26:34.015030
++00:00"}
+{"alert_id": "ALT-003", "rule_id": "Unusual Outbound Beaconing", "host": "meddefense-rad-01", "user": null, "classifica
+tion": "TP", "severity": "high", "matches_ioc": [], "baseline_deviation": false, "change_ticket_match": null, "analyst_
+note": "Confirmed deviation or IOC match aligning with campaign indicator.", "classified_at": "2026-09-15T17:26:34.0150
+41+00:00"}
