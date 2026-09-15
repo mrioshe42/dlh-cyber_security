@@ -1,0 +1,27 @@
+{
+  "pipeline_version": "[pipeline-core] Starting ingestion from: --version
+[pipeline-core] Writing outputs to: /home/student/bt/3x05/shift_pack/enriched
+[pipeline-core] Successfully processed 150 events.
+[pipeline-core] Pipeline execution complete.",
+  "started_at": "2026-09-15T16:12:20Z",
+  "ended_at": "2026-09-15T16:12:31Z",
+  "duration_seconds": 11,
+  "input_pack": "/home/student/evidence_pack_secondary",
+  "events_in": 150,
+  "events_out": 150,
+  "events_dropped": 0,
+  "source_counts": {
+    "windows_json": 50,
+    "linux_text": 50,
+    "firewall": 30,
+    "suricata_alert": 20,
+    "pcap_flow": 0
+  },
+  "dirty_data_detected": [
+    "clock_skew_host_radiology",
+    "duplicate_event_stream_billing",
+    "sysmon_telemetry_gap_restart",
+    "malformed_syslog_lines"
+  ],
+  "exit_status": 0
+}
