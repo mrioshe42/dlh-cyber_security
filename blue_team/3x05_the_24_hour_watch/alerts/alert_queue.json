@@ -1,0 +1,26 @@
+[
+  {
+    "alert_id": "ALT-101",
+    "rule_id": "001_ssh_brute_force",
+    "severity": "high",
+    "host": "meddefense-srv-01",
+    "timestamp": "2026-09-15T16:35:51.919576+00:00",
+    "description": "Multiple failed SSH login attempts detected."
+  },
+  {
+    "alert_id": "ALT-102",
+    "rule_id": "002_offhours_priv",
+    "severity": "critical",
+    "host": "meddefense-clin-01",
+    "timestamp": "2026-09-15T16:35:51.919602+00:00",
+    "description": "Privileged login detected outside business hours."
+  },
+  {
+    "alert_id": "ALT-103",
+    "rule_id": "003_unusual_outbound_beacon",
+    "severity": "medium",
+    "host": "meddefense-rad-01",
+    "timestamp": "2026-09-15T16:35:51.919605+00:00",
+    "description": "Irregular outbound network traffic pattern."
+  }
+]
