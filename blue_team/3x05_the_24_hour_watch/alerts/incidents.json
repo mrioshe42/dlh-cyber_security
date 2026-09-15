@@ -1,0 +1,56 @@
+{
+  "shift_id": "SHIFT-20260915-01",
+  "generated_at": "2026-09-15T19:04:17.442482+00:00",
+  "incidents": [
+    {
+      "incident_id": "INC-20260915-A",
+      "host_list": [
+        "meddefense-clin-01"
+      ],
+      "user_list": [],
+      "ioc_list": [],
+      "alert_ids": [
+        "ALT-001"
+      ],
+      "first_seen": "2026-09-15T17:26:34.014997+00:00",
+      "last_seen": "2026-09-15T17:26:34.014997+00:00",
+      "grouping_rule": "temporal",
+      "tentative_category": "credential_abuse",
+      "confidence": "high"
+    },
+    {
+      "incident_id": "INC-20260915-B",
+      "host_list": [
+        "meddefense-srv-01"
+      ],
+      "user_list": [],
+      "ioc_list": [],
+      "alert_ids": [
+        "ALT-002"
+      ],
+      "first_seen": "2026-09-15T17:26:34.015030+00:00",
+      "last_seen": "2026-09-15T17:26:34.015030+00:00",
+      "grouping_rule": "ioc_match",
+      "tentative_category": "c2",
+      "confidence": "high"
+    },
+    {
+      "incident_id": "INC-20260915-C",
+      "host_list": [
+        "meddefense-rad-01"
+      ],
+      "user_list": [],
+      "ioc_list": [],
+      "alert_ids": [
+        "ALT-003"
+      ],
+      "first_seen": "2026-09-15T17:26:34.015041+00:00",
+      "last_seen": "2026-09-15T17:26:34.015041+00:00",
+      "grouping_rule": "shared_user",
+      "tentative_category": "persistence",
+      "confidence": "medium"
+    }
+  ],
+  "incident_count": 3,
+  "unmatched_tp_count": 0
+}
