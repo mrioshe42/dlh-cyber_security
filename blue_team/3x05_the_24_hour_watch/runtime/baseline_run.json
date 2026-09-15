@@ -1,0 +1,27 @@
+{
+  "baseline_version": "1.0.0",
+  "hosts_total": 3,
+  "hosts_with_deviations": 2,
+  "deviation_markers": [
+    {
+      "host": "meddefense-clin-01",
+      "marker": "unseen_src_ip",
+      "field": "src_ip",
+      "observed_value": "10.0.0.99",
+      "baseline_reference": "subnet 10.0.0.0/24",
+      "deviation_score": 8.5
+    },
+    {
+      "host": "meddefense-rad-01",
+      "marker": "off_hours_login",
+      "field": "timestamp",
+      "observed_value": "02:30:00",
+      "baseline_reference": "business hours 08:00-18:00",
+      "deviation_score": 7.0
+    }
+  ],
+  "hot_hosts": ["meddefense-clin-01", "meddefense-rad-01", "meddefense-billing-01"],
+  "started_at": "2026-09-15T16:32:44Z",
+  "ended_at": "2026-09-15T16:32:44Z",
+  "exit_status": 0
+}
