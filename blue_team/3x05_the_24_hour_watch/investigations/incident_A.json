@@ -1,0 +1,31 @@
+{
+  "incident_id": "INC-20260915-A",
+  "interface": "cli",
+  "actions_executed": [
+    "jq .incidents[] incidents.json",
+    "jq 'select(.host == \"meddefense-clin-01\")' enriched_events.jsonl",
+    "yq eval . rules/sigma/001.yml",
+    "sha256sum ioc_feed.json"
+  ],
+  "event_refs": [
+    "EVT-REF-001",
+    "EVT-REF-002",
+    "EVT-REF-003",
+    "EVT-REF-004",
+    "EVT-REF-005",
+    "EVT-REF-006"
+  ],
+  "attack_techniques": [
+    "T1110.003",
+    "T1543.003",
+    "T1071.001"
+  ],
+  "hypothesis": "Service-based persistence installed after credential brute force activity.",
+  "ioc_matches": [
+    "198.51.100.73",
+    "MedSyncHelper"
+  ],
+  "baseline_deviations_count": 3,
+  "confidence": "high",
+  "generated_at": "2026-09-15T20:22:16.194166+00:00"
+}
