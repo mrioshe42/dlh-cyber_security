@@ -1,0 +1,39 @@
+student@ip-10-42-222-204:~/bt/3x05/shift_pack$ more campaign/campaign_assessment.json 
+{
+  "incidents": [
+    "INC-20260915-A",
+    "INC-20260915-B",
+    "INC-20260915-C"
+  ],
+  "ioc_overlap_matrix": {
+    "A-B": 1,
+    "A-C": 0,
+    "B-C": 0
+  },
+  "tactic_overlap_matrix": {
+    "A-B": 2,
+    "A-C": 0,
+    "B-C": 0
+  },
+  "temporal_distance_minutes": {
+    "A-B": 0,
+    "A-C": 0,
+    "B-C": 0
+  },
+  "ioc_feed_matches": {
+    "A": 1,
+    "B": 1,
+    "C": 0
+  },
+  "linked_pairs": [
+    "A-B"
+  ],
+  "campaign_linked": true,
+  "cluster_id": "HC-RED7",
+  "confidence": "high",
+  "export_view_verdict": "HC-RED7 Multi-Vector Campaign Confirmed via Wazuh Dashboard Correlation",
+  "supporting_counts": {
+    "shared_iocs_total": 1,
+    "shared_tactics_total": 2
+  }
+}
