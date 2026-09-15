@@ -1,0 +1,33 @@
+{
+  "incident_id": "INC-20260915-B",
+  "interface": "cli",
+  "actions_executed": [
+    "jq .incidents[] incidents.json",
+    "cat change_tickets.json | grep CHG-2026-0341",
+    "grep 198.51.100.73 ioc_feed.json",
+    "jq 'select(.host == \"meddefense-srv-01\")' enriched_events.jsonl"
+  ],
+  "event_refs": [
+    "EVT-REF-B01",
+    "EVT-REF-B02",
+    "EVT-REF-B03",
+    "EVT-REF-B04",
+    "EVT-REF-B05"
+  ],
+  "attack_techniques": [
+    "T1071.001",
+    "T1078.003",
+    "T1543.003"
+  ],
+  "hypothesis": "Activity on rad-srv-02 superficially matches maintenance change window CHG-2026-0341, but execution by
+ an account on leave and unapproved outbound traffic to a known HC-RED7 IOC confirms true positive malicious behavior."
+,
+  "ioc_matches": [
+    "198.51.100.73"
+  ],
+  "ticket_match_outcome": "CHG-2026-0341 partial match failed on actor (account on leave) and scope (unapproved outboun
+d C2 traffic)",
+  "ambiguity_notes": "",
+  "confidence": "high",
+  "generated_at": "2026-09-15T20:47:41.762944+00:00"
+}
