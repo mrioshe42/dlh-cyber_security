@@ -1,7 +1,7 @@
-## The Click Investigation
+## Click Investigation
 
 ### Confirmed Facts
-Based on the header metadata and log notes provided in the email evidence batch, the following facts are verified:
+Based on the header metadata, log notes, and evidence batch provided, the following facts are verified:
 
 * **Target User:** Diane Marsh (`dmarsh@meddefense.com`)
 * **Role / Workstation:** Nurse / `WS-NURSE-04`
@@ -13,29 +13,29 @@ Based on the header metadata and log notes provided in the email evidence batch,
 * **Email Received Timestamp:** `2026-04-14 14:47:52 -0500 (CDT)`
 * **Click Timestamp:** `2026-04-14 15:02:33 CDT` (~14 minutes after delivery)
 * **Target Domain:** `meddefense-portal.com`
-* **Phishing URL Clicked:** `https://meddefense-portal.com/verify/staff?id=dmarsh&token=a8f3e2d1`
+* **Phishing URL Clicked:** `https[:]//meddefense-portal[.]com/verify/staff?id=dmarsh&token=a8f3e2d1`
 
 ### Key Unknowns
 Because this investigation is based on the initial email batch submission without direct access to live SIEM or endpoint logs, the following critical items remain unverified:
 
 1. **Credential Input:** Did the user enter her MedDefense domain or EHR portal credentials on the landing page after clicking the link?
-2. **Session / MFA Token Interception:** Was the phishing site utilizing an Adversary-in-the-Middle (AiTM) proxy (e.g., Evilginx) capable of stealing active session cookies or MFA tokens?
+2. **Session / MFA Token Interception:** Was the phishing site utilizing an Adversary-in-the-Middle (AiTM) proxy framework (e.g., Evilginx) capable of stealing active session cookies or MFA tokens?
 3. **Payload Delivery:** Did the landing page attempt a secondary drive-by download, malicious browser extension installation, or exploit execution against the browser?
 4. **Post-Click User Actions:** What was the user's immediate workflow after clicking (e.g., closed tab immediately upon noticing odd domain, filled out form, or reported to helpdesk)?
-5. **Network Connection Duration:** What was the byte transfer size and duration of the HTTP/HTTPS session established between `10.10.2.15` and `91.234.99.107` / `meddefense-portal.com`?
+5. **Network Connection Duration:** What was the byte transfer size and duration of the HTTP/HTTPS session established between `10.10.2.15` and `91.234.99.107` / `meddefense-portal[.]com`?
 
-#### Risk Assessment
+### Risk Assessment
 A confirmed click on a targeted credential-harvesting link represents a **High Severity** security incident, even if credential entry is not yet confirmed. 
 
-1. **Role-Based Targeting:** As a nursing staff member on `WS-NURSE-04`, compromised credentials could provide unauthorized access to Electronic Health Record (EHR) systems, HIPAA-regulated Protected Health Information (PHI), and internal scheduling gateways.
-2. **Lookalike Pretext:** The domain `meddefense-portal.com` and URL structure explicitly reference `dmarsh` and include a targeted token (`a8f3e2d1`), indicating pre-crafted targeting rather than generic spam.
-3. **Time Exposure:** Approximately 36 hours elapsed between the reported click (`2026-04-14 15:02:33 CDT`) and evidence collection (`2026-04-17 09:15 CDT`), giving a potential adversary significant dwell time for lateral movement or session hijacking.
+1. **Role-Based Targeting & HIPAA Exposure:** As a nursing staff member operating `WS-NURSE-04`, compromised credentials could provide unauthorized access to Electronic Health Record (EHR) systems, HIPAA-regulated Protected Health Information (PHI), and internal scheduling gateways.
+2. **Lookalike Pretext:** The domain `meddefense-portal[.]com` and URL structure explicitly reference `dmarsh` and include a targeted token (`a8f3e2d1`), indicating pre-crafted targeting rather than generic spam.
+3. **Time Exposure / Dwell Time:** Approximately 36 hours elapsed between the reported click (`2026-04-14 15:02:33 CDT`) and evidence collection (`2026-04-17 09:15 CDT`), giving a potential adversary significant dwell time for lateral movement, mailbox persistence, or session hijacking.
 
 ### Endpoint Checks To Perform
 *(Note: The following endpoint forensic checks should be executed if EDR, SIEM, or local system logs become available).*
 
 * **Browser History & Session Storage:**
-  * Inspect browser history database (`History`, `Web Data`) on Chrome/Edge/Firefox under Diane Marsh's profile for entries matching `meddefense-portal.com` around `2026-04-14 15:02:33 CDT`.
+  * Inspect browser history database (`History`, `Web Data`) on Chrome/Edge/Firefox under Diane Marsh's profile for entries matching `meddefense-portal[.]com` around `2026-04-14 15:02:33 CDT`.
   * Review local storage, session storage, and cache for posted web form data or returned session tokens.
 * **Downloaded Files & Artifacts:**
   * Check the user's `Downloads` directory, browser download history, and system `%TEMP%` folders for files saved on or after `15:02:33 CDT` on April 14, 2026.
@@ -48,7 +48,7 @@ A confirmed click on a targeted credential-harvesting link represents a **High S
   * Search MFT / USN Journal for new file creations in `C:\Users\dmarsh\AppData\Local\` and `C:\ProgramData\`.
   * Inspect Registry persistence keys (`Run`, `RunOnce`, Task Scheduler tasks) for modifications.
 * **Network Sockets & DNS Cache:**
-  * Query local DNS cache (`ipconfig /displaydns`) and EDR network telemetry for outbound connections to `91.234.99.107` or resolved IPs for `meddefense-portal.com`.
+  * Query local DNS cache (`ipconfig /displaydns`) and EDR network telemetry for outbound connections to `91.234.99.107` or resolved IPs for `meddefense-portal[.]com`.
 
 ### Account Checks To Perform
 *(Note: The following identity and directory audits should be executed across Active Directory, Microsoft 365, and local SSO providers).*
@@ -86,9 +86,9 @@ A confirmed click on a targeted credential-harvesting link represents a **High S
 3. **User Interview:**
    * Conduct a brief, non-punitive interview with Diane Marsh to establish exact actions taken after clicking the link (e.g., "Did a login page appear? Did you type your password?").
 4. **Network & Perimeter Blocking:**
-   * Block domain `meddefense-portal.com` and IP `91.234.99.107` at the perimeter firewall, web proxy, and DNS sinkhole.
+   * Block domain `meddefense-portal[.]com` and IP `91.234.99.107` at the perimeter firewall, web proxy, and DNS sinkhole.
 5. **Account Monitoring:**
    * Place `dmarsh` on high-priority alert monitoring in SIEM for the next 30 days to flag any unusual access requests or EHR record exports.
 
 ### Conclusion
-Diane Marsh’s click on Email 2 (`https://meddefense-portal.com/verify/staff?id=dmarsh&token=a8f3e2d1`) represents a direct exposure to a credential-harvesting lure targeting MedDefense clinical personnel. Given the 36-hour window since the click occurred, immediate session revocation, password reset, and endpoint isolation of `WS-NURSE-04` are necessary precautions while endpoint and identity logs are audited against the decision matrix.
+Diane Marsh’s click on Email 2 (`https[:]//meddefense-portal[.]com/verify/staff?id=dmarsh&token=a8f3e2d1`) represents a direct exposure to a credential-harvesting lure targeting MedDefense clinical personnel. Given the ~36-hour window since the click occurred, immediate session revocation, password reset, and endpoint isolation of `WS-NURSE-04` are necessary precautions while endpoint and identity logs are audited against the decision matrix.
