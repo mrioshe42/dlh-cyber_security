@@ -20,7 +20,7 @@
 - **[MEDIUM] Suspicious Mailer Infrastructure:** The email was generated via web-script (`PHPMailer 6.6.0`) hosted on external IP `91.234.99.107` rather than official Exchange or M365 infrastructure.
 
 ### Conclusion
-Email 2 is a malicious credential-harvesting phishing attack using lookalike domain spoofing (`meddefense-portal.com`). The email failed SPF and DMARC verification and was dispatched via generic PHPMailer infrastructure.
+Email 2 is an unauthenticated message originating from external sending infrastructure (`91.234.99.107`) using a lookalike domain (`meddefense-portal.com`) to spoof internal IT security communications, failing both SPF and DMARC validation.
 
 ## Email 3 - outlook-protection.com
 
@@ -38,11 +38,11 @@ Email 2 is a malicious credential-harvesting phishing attack using lookalike dom
 
 ### Anomalies
 - **[HIGH] Brand Impersonation:** Uses lookalike domain `outlook-protection.com` to impersonate Microsoft Account Protection services. Official Microsoft notifications do not originate from this domain.
-- **[HIGH] Fraudulent DKIM Signature Value:** While `Authentication-Results` indicates a pass for the attacker's domain `outlook-protection.com`, the DKIM `b=` signature string contains hardcoded plaintext (`TrustMeIHaveAValidSignatureFromOutlookProtectionDotCom...`), indicating custom/crafted sending infrastructure.
-- **[MEDIUM] Web CMS Mail Generation:** The first `Received` hop lists `wp-admin.outlook-protection.com`, demonstrating the mail was sent from a WordPress backend using `PHPMailer 6.6.0` on VPS hosting.
+- **[HIGH] Fraudulent DKIM Signature Value:** While `Authentication-Results` indicates a pass for domain `outlook-protection.com`, the DKIM `b=` signature string contains hardcoded plaintext (`TrustMeIHaveAValidSignatureFromOutlookProtectionDotCom...`), indicating custom/crafted sending infrastructure.
+- **[MEDIUM] Web CMS Mail Generation:** The first `Received` hop lists `wp-admin.outlook-protection.com`, demonstrating the mail was generated from a WordPress backend using `PHPMailer 6.6.0` on external VPS hosting (`51.38.42.17`).
 
 ### Conclusion
-Email 3 is an external phishing campaign targeting Microsoft 365 credentials by spoofing Microsoft security notifications through a attacker-controlled domain (`outlook-protection.com`).
+Email 3 originates from external web-hosting infrastructure (`51.38.42.17`) using a lookalike domain (`outlook-protection.com`) and crafted DKIM signatures to impersonate official Microsoft Account Protection notifications.
 
 ## Email 5 - medequip-supplies.net
 
@@ -60,11 +60,11 @@ Email 3 is an external phishing campaign targeting Microsoft 365 credentials by 
 
 ### Anomalies
 - **[HIGH] Authentication Failure:** SPF evaluation resulted in `softfail` (`sender IP 185.176.43.22 is softfail for medequip-supplies.net`), leading to DMARC failure (`dmarc=fail`).
-- **[HIGH] Fraudulent Invoice / Vendor Phishing:** Targeted toward Accounts Payable (`arivera@meddefense.com`) using a lookalike vendor domain (`medequip-supplies.net`) accompanied by a fake PDF attachment (`INV-2026-04891.pdf`) containing embedded URI links.
-- **[MEDIUM] Mailer & Signature Anomalies:** Lacks DKIM signing (`dkim=none`) and uses PHPMailer 6.6.0 on a foreign IP address (`185.176.43.22`).
+- **[HIGH] Sender Domain Mismatch:** Originating domain `medequip-supplies.net` claims external vendor identity while failing SPF authorization checks for the sending server IP (`185.176.43.22`).
+- **[MEDIUM] Mailer & Signature Anomalies:** Lacks DKIM signing (`dkim=none`) and uses `PHPMailer 6.6.0` on external host IP `185.176.43.22`.
 
 ### Conclusion
-Email 5 is a Business Email Compromise (BEC) / Invoice Fraud attempt attempting to lure AP staff to a fake payment portal via a spoofed vendor domain.
+Email 5 fails SPF authorization and DMARC verification at the inbound gateway, originating from unverified external script infrastructure (`185.176.43.22`) under domain `medequip-supplies.net`.
 
 ## Email 7 - meddefense-benefits.org
 
@@ -81,9 +81,9 @@ Email 5 is a Business Email Compromise (BEC) / Invoice Fraud attempt attempting 
 3. **Inbound Gateway to Internal Relay:** `mx01.meddefense.com ([10.10.1.20])` to `inbound-relay.meddefense.com` via ESMTP (ID: `3C8E4A7B`) on `Thu, 16 Apr 2026 15:22:07 -0500`.
 
 ### Anomalies
-- **[HIGH] Spoofed HR Domain:** Uses lookalike domain `meddefense-benefits.org` to impersonate internal MedDefense Human Resources Open Enrollment.
+- **[HIGH] Spoofed HR Domain:** Uses lookalike domain `meddefense-benefits.org` to impersonate MedDefense Human Resources personnel.
 - **[HIGH] Authentication Failures:** Fails SPF validation (`spf=fail (sender IP 164.90.218.73 not authorized for meddefense-benefits.org)`) and DMARC (`dmarc=fail`). Unsigned email (`dkim=none`).
-- **[MEDIUM] Shared Threat Infrastructure:** Uses the exact same user-agent string (`PHPMailer 6.6.0`) originating from a WordPress application instance (`wp-portal.meddefense-benefits.org`) hosted on DigitalOcean/VPS infrastructure (`164.90.218.73`), matching patterns outlined in HC3 Alert E8.
+- **[MEDIUM] Web Mailer Infrastructure:** Generated via `PHPMailer 6.6.0` from a WordPress web host (`wp-portal.meddefense-benefits.org`) at external IP `164.90.218.73`.
 
 ### Conclusion
-Email 7 is a targeted credential harvesting attack against HR/Billing personnel using a spoofed benefit enrollment pretext and lookalike domain (`meddefense-benefits.org`).
+Email 7 represents an unauthenticated message sent from external host `164.90.218.73` using lookalike domain `meddefense-benefits.org` to impersonate internal HR notifications while failing SPF and DMARC authentication.
