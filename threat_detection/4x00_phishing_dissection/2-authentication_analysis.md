@@ -1,65 +1,65 @@
 # Email Authentication Analysis
 
-## Email 1 - Healthcare Education Weekly Newsletter
+## Email 1 - healthcare-education-weekly.com
 
-- **SPF:** Pass. The sending IP `198.51.100.42` is explicitly authorized to send mail for `healthcare-education-weekly.com`.
-- **DKIM:** Pass. The message contains a valid RSA-SHA256 signature under `header.d=healthcare-education-weekly.com` using selector `mail01`.
-- **DMARC:** Pass. DMARC policy is set to `action=none`. The authenticated domain aligns directly with the visible `From:` header domain.
-- **Authentication verdict:** Pass (Fully Authenticated).
-- **Investigation meaning:** The authentication results support the legitimacy of the sender domain. The email originated from authorized infrastructure used by MailChimp for legitimate third-party newsletter delivery.
+- **SPF:** Pass - Sending IP `198.51.100.42` is authorized to send mail on behalf of `healthcare-education-weekly.com`.
+- **DKIM:** Pass - The message contains a valid signature aligned with domain `healthcare-education-weekly.com`.
+- **DMARC:** Pass - DMARC evaluation indicates `p=none` (`action=none`), with alignment between the `From:` header domain and authenticated domains.
+- **Authentication verdict:** Pass - Technical authentication is aligned with the sending domain.
+- **Investigation meaning:** Authentication results indicate that the email was transmitted by infrastructure authorized by `healthcare-education-weekly.com`, supporting technical domain alignment for this sender.
 
-## Email 2 - MedDefense Staff Portal Verification Lure
+## Email 2 - meddefense-portal.com
 
-- **SPF:** Fail. Sending IP `91.234.99.107` is not authorized to send mail on behalf of `meddefense-portal.com`.
-- **DKIM:** None. The email lacks a DKIM cryptographic signature (`header.d=none`).
-- **DMARC:** Fail. DMARC fails with `action=none` because SPF failed and no valid DKIM alignment exists.
-- **Authentication verdict:** Fail (Authentication Failure).
-- **Investigation meaning:** The email fails all technical authentication checks. The message originated from an unauthorized external IP (`91.234.99.107`) running PHPMailer. This confirms that the sender spoofed the lookalike domain `meddefense-portal.com` in an unauthorized credential harvesting attack directed at Diane Marsh.
+- **SPF:** Fail - Sending IP `91.234.99.107` is not authorized to send mail for `meddefense-portal.com`.
+- **DKIM:** None - No DKIM signature is present in the email headers (`header.d=none`).
+- **DMARC:** Fail - DMARC evaluation indicates `action=none` due to SPF failure and missing DKIM signing.
+- **Authentication verdict:** Fail - Technical authentication checks failed.
+- **Investigation meaning:** The failure of SPF and DMARC indicates that the message originated from sending infrastructure not authorized for `meddefense-portal.com`. Additionally, `meddefense-portal.com` is an external domain distinct from the primary domain `meddefense.com`.
 
-## Email 3 — Microsoft Account Protection Notice
+## Email 3 - outlook-protection.com
 
-- **SPF:** Pass. Sending IP `51.38.42.17` is authorized by the SPF record published for `outlook-protection.com`.
-- **DKIM:** Pass. The email includes a valid DKIM signature under `header.d=outlook-protection.com` using selector `default`.
-- **DMARC:** Pass. DMARC passes with `action=none` because the `From:` header domain aligns with the authenticated DKIM and SPF domain (`outlook-protection.com`).
-- **Authentication verdict:** Pass (Technical Authentication Pass).
-- **Investigation meaning:** Technical authentication passes because the adversary registered the lookalike domain `outlook-protection.com` and configured proper SPF, DKIM, and DMARC records for their own sending infrastructure. Passing authentication merely proves that the email originated from the authorized infrastructure of `outlook-protection.com`; it does not prove the domain is trustworthy. Crucially, `outlook-protection.com` is an adversary-controlled typosquatted domain that is completely separate from legitimate Microsoft properties such as `microsoft.com` or `outlook.com`.
+- **SPF:** Pass - Sending IP `51.38.42.17` is authorized by the SPF record published for `outlook-protection.com`.
+- **DKIM:** Pass - The message contains a DKIM signature matching domain `outlook-protection.com`.
+- **DMARC:** Pass - DMARC passes with `action=none` because the `From:` header domain aligns with the authenticated domain `outlook-protection.com`.
+- **Authentication verdict:** Pass - Technical authentication passes for the sending domain.
+- **Investigation meaning:** Passing SPF, DKIM, and DMARC demonstrates that the email originated from infrastructure authorized for `outlook-protection.com`. However, passing technical authentication does not establish that the message is safe or trustworthy. Passing authentication merely indicates domain alignment for the sender's own domain; it does not indicate legitimate brand authorization, as `outlook-protection.com` is not the same as `microsoft.com` or `outlook.com`.
 
-## Email 4 - Internal IT Password Change Announcement
+## Email 4 - meddefense.com
 
-- **SPF:** Pass. Sending IP `10.10.1.15` corresponds to internal host `exchange-hub.meddefense.local`, which is authorized for `meddefense.com`.
-- **DKIM:** Pass. The email carries a valid DKIM signature signed by `header.d=meddefense.com` using selector `selector1`.
-- **DMARC:** Pass. DMARC passes with `action=none`, fully aligning with internal domain `meddefense.com`.
-- **Authentication verdict:** Pass (Legitimate Internal Alignment).
-- **Investigation meaning:** Authentication confirms that the email originated internally from the organization's Exchange server infrastructure. This verifies the message as a legitimate broadcast notice issued by the internal SOC/IT team.
+- **SPF:** Pass - Sending IP `10.10.1.15` is authorized to deliver mail on behalf of `meddefense.com`.
+- **DKIM:** Pass - The message contains a valid DKIM signature aligned with domain `meddefense.com`.
+- **DMARC:** Pass - DMARC evaluation indicates `action=none`, fully aligning with domain `meddefense.com`.
+- **Authentication verdict:** Pass - Technical authentication aligns with the organizational domain.
+- **Investigation meaning:** Authentication results indicate that the message originated from sending infrastructure authorized for `meddefense.com`, supporting domain alignment with internal mail infrastructure.
 
-## Email 5 - MedEquip Supplies Invoice Notice
+## Email 5 - medequip-supplies.net
 
-- **SPF:** Softfail. Sending IP `185.176.43.22` returned a softfail result for `medequip-supplies.net`.
-- **DKIM:** None. The message contains no cryptographic DKIM signature (`header.d=none`).
-- **DMARC:** Fail. DMARC evaluation failed with `action=none` due to unaligned/failing SPF and missing DKIM signatures.
-- **Authentication verdict:** Fail (Authentication Failure).
-- **Investigation meaning:** The failure of SPF and DKIM indicates that the sending host is not authorized to deliver mail for `medequip-supplies.net`. The email was generated via PHPMailer from a suspicious hosting IP (`185.176.43.22`), supporting the conclusion that this is an unauthorized fraudulent invoice lure sent to Accounts Payable.
+- **SPF:** Softfail - Sending IP `185.176.43.22` returned a softfail evaluation for `medequip-supplies.net`.
+- **DKIM:** None - No DKIM signature is present in the email headers (`header.d=none`).
+- **DMARC:** Fail - DMARC evaluation failed with `action=none` due to unaligned SPF and absent DKIM signature.
+- **Authentication verdict:** Fail - Technical authentication checks failed.
+- **Investigation meaning:** The softfail SPF result and lack of DKIM signature indicate that the sending IP `185.176.43.22` is not designated as an authorized sender for `medequip-supplies.net`, contradicting the technical legitimacy of the sender address.
 
-## Email 6 — Canadian Pharma Discounts
+## Email 6 - canadian-pharma-discount.org
 
-- **SPF:** Softfail. Sending IP `203.0.113.228` is not designated as an authorized sender for `canadian-pharma-discount.org`.
-- **DKIM:** None. The email is unsigned.
-- **DMARC:** Fail. DMARC evaluation failed, triggering `action=quarantine` as dictated by the domain's policy.
-- **Authentication verdict:** Fail (Authentication Failure).
-- **Investigation meaning:** The email fails domain authentication and was flagged with a Spam Score of 9.8. This confirms the message originated from unauthenticated bulk spam infrastructure.
+- **SPF:** Softfail - Sending IP `203.0.113.228` is not designated as an authorized sender for `canadian-pharma-discount.org`.
+- **DKIM:** None - No DKIM signature is present in the email headers (`header.d=none`).
+- **DMARC:** Fail - DMARC evaluation failed, resulting in `action=quarantine` as specified by the domain policy.
+- **Authentication verdict:** Fail - Technical authentication checks failed.
+- **Investigation meaning:** The message failed domain authentication alignment, triggering a DMARC policy action of quarantine. This indicates sending host origin outside the published domain policy.
 
-## Email 7 - MedDefense HR Benefits Open Enrollment Notice
+## Email 7 - meddefense-benefits.org
 
-- **SPF:** Fail. Sending IP `164.90.218.73` is not authorized for `meddefense-benefits.org`.
-- **DKIM:** None. No DKIM signature is present (`header.d=none`).
-- **DMARC:** Fail. DMARC evaluation failed with `action=none`.
-- **Authentication verdict:** Fail (Authentication Failure).
-- **Investigation meaning:** The email fails all authentication checks and originates from an unauthorized cloud host (`164.90.218.73`) using PHPMailer. The domain `meddefense-benefits.org` is an external lookalike domain created for spear-phishing billing staff (Linda Patterson).
+- **SPF:** Fail - Sending IP `164.90.218.73` is not authorized for `meddefense-benefits.org`.
+- **DKIM:** None - No DKIM signature is present in the email headers (`header.d=none`).
+- **DMARC:** Fail - DMARC evaluation indicates `action=none` due to failed SPF and missing DKIM signature.
+- **Authentication verdict:** Fail - Technical authentication checks failed.
+- **Investigation meaning:** The email failed SPF and DMARC authentication checks. The sending IP `164.90.218.73` is not authorized by the record for `meddefense-benefits.org`, and the domain itself is distinct from `meddefense.com`.
 
-## Email 8 - HC3 Sector Alert Advisory
+## Email 8 - hhs.gov
 
-- **SPF:** Pass. Sending IP `134.174.47.82` is authorized to transmit mail on behalf of `hhs.gov`.
-- **DKIM:** Pass. Cryptographically signed and verified by `header.d=hhs.gov` with selector `hhs2026`.
-- **DMARC:** Pass. DMARC passes with `action=none`, fully aligning with `hhs.gov`.
-- **Authentication verdict:** Pass (Fully Authenticated Official Source).
-- **Investigation meaning:** The email is fully authenticated against official government sending infrastructure. This confirms that the alert genuinely originated from the HHS Health Sector Cybersecurity Coordination Center (HC3).
+- **SPF:** Pass - Sending IP `134.174.47.82` is authorized to transmit mail for `hhs.gov`.
+- **DKIM:** Pass - The message contains a valid signature aligned with domain `hhs.gov`.
+- **DMARC:** Pass - DMARC evaluation indicates `action=none`, showing full domain alignment with `hhs.gov`.
+- **Authentication verdict:** Pass - Technical authentication is verified for the domain.
+- **Investigation meaning:** Authentication checks indicate that the email was transmitted by infrastructure authorized for `hhs.gov`, supporting technical domain alignment.
