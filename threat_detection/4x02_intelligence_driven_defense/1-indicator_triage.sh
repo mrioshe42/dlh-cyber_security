@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 # Script Name: 1-indicator_triage.sh
 
 INPUT_JSON="commercial_feed_extract.json"
