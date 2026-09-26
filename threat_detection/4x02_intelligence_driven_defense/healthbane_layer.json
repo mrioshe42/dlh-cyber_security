@@ -1,0 +1,101 @@
+{
+  "name": "HEALTHBANE Campaign (Project 4x02)",
+  "version": "4.3",
+  "domain": "enterprise-attack",
+  "description": "Two-tier MITRE ATT&CK mapping distinguishing observed indicators from inferred campaign behaviors.",
+  "filters": {
+    "platforms": ["Windows", "Linux", "SaaS"]
+  },
+  "sorting": 3,
+  "layout": {
+    "layout": "side",
+    "aggregateFunction": "average",
+    "showSubtechniques": true,
+    "collapse": "all"
+  },
+  "hideDisabled": false,
+  "techniques": [
+    {
+      "techniqueID": "T1566.001",
+      "tactic": "initial-access",
+      "score": 100,
+      "color": "#ff6666",
+      "comment": "OBSERVED: Confirmed via MedDefense gateway logs and HC3 advisory.",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1566.002",
+      "tactic": "initial-access",
+      "score": 100,
+      "color": "#ff6666",
+      "comment": "OBSERVED: Malicious Office attachments identified in researcher blog.",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1204.002",
+      "tactic": "execution",
+      "score": 100,
+      "color": "#ff6666",
+      "comment": "OBSERVED: User execution of weaponized files confirmed locally.",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1059.001",
+      "tactic": "execution",
+      "score": 100,
+      "color": "#ff6666",
+      "comment": "OBSERVED: PowerShell script execution artifacts found in samples.",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1547.001",
+      "tactic": "persistence",
+      "score": 50,
+      "color": "#ffcc00",
+      "comment": "INFERRED: Standard registry run key persistence likely utilized post-compromise.",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1078",
+      "tactic": "defense-evasion",
+      "score": 100,
+      "color": "#ff6666",
+      "comment": "OBSERVED: Use of harvested credentials to access enterprise portals.",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1071.001",
+      "tactic": "command-and-control",
+      "score": 100,
+      "color": "#ff6666",
+      "comment": "OBSERVED: Outbound HTTPS C2 traffic logged by firewalls and commercial feed.",
+      "enabled": true
+    },
+    {
+      "techniqueID": "T1048",
+      "tactic": "exfiltration",
+      "score": 100,
+      "color": "#ff6666",
+      "comment": "OBSERVED: DNS tunneling anomalies confirmed in internal packet captures.",
+      "enabled": true
+    }
+  ],
+  "gradient": {
+    "colors": [
+      "#ffcc00",
+      "#ff6666"
+    ],
+    "minValue": 0,
+    "maxValue": 100
+  },
+  "legendItems": [
+    {
+      "label": "OBSERVED (Confirmed Evidence)",
+      "color": "#ff6666"
+    },
+    {
+      "label": "INFERRED (Logical Deduction)",
+      "color": "#ffcc00"
+    }
+  ]
+}
