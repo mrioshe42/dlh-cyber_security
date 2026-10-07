@@ -7,6 +7,9 @@ pick 4x00 "$BASE/previous_findings/4x00*.txt"; pick 4x01 "$BASE/previous_finding
 pick 4x03 "$BASE/previous_findings/4x03*.txt"; pick 4x04 "$BASE/previous_findings/4x04*.txt"; pick MEM "$BASE/ir_evidence/memory*.txt"
 pick DISK "$BASE/ir_evidence/disk*.txt"; pick FW "$BASE/ir_evidence/firewall*.json"; pick NOTES "$BASE/ir_evidence/ir_team_notes.txt"
 IOC="$BASE/reference/healthbane_ioc_master.json"; NAV="$BASE/reference/attck_navigator_80pct.json"
+HERE="$(dirname "$(readlink -f "$0")")"
+run_t() { [ -x "$HERE/$1" ] && "$HERE/$1" "$BASE" 2>&1 || echo "(missing $1)"; }
+T0=$(run_t 0-evidence_index.sh); T1=$(run_t 1-memory_analysis.sh); T2=$(run_t 2-disk_analysis.sh); T3=$(run_t 3-firewall_analysis.sh)
 SRCS=(4x00 4x01 4x02 4x03 4x04 MEM DISK FW); INDEP=" 4x00 4x01 4x03 4x04 MEM DISK FW "; PRIMARY=" MEM DISK FW "
 for k in "${SRCS[@]}"; do [ -f "${F[$k]}" ] || { echo "Missing source $k" >&2; exit 1; }; done
 command -v jq >/dev/null || { echo "jq is required" >&2; exit 1; }
@@ -156,6 +159,12 @@ bar
 echo "   CROSS-EVIDENCE CORRELATION MATRIX"
 echo "   Sources: $(ls "${F[4x00]}" "${F[4x01]}" "${F[4x02]}" "${F[4x03]}" "${F[4x04]}" "${F[MEM]}" "${F[DISK]}" "${F[FW]}" "${F[NOTES]}" | wc -l) evidence files (4x00-4x04 summaries, IR memory/disk/firewall/notes)"
 bar
+echo
+echo "INPUTS (T0-T3 outputs):"
+echo "  0-evidence_index.sh   : $(grep -c '^  GAP:' <<< "$T0") coverage gaps, $(grep -c '^  \[Q' <<< "$T0") open questions"
+echo "  1-memory_analysis.sh  : $(grep -m1 'Known indicators confirmed' <<< "$T1" | sed 's/^ *//')"
+echo "  2-disk_analysis.sh    : $(grep -m1 'Staging:' <<< "$T2" | sed 's/^ *//')"
+echo "  3-firewall_analysis.sh: $(grep -m1 'IP: ' <<< "$T3" | sed 's/^ *//; s/ *not in IOC master//')"
 echo
 echo "IOC CORRELATION:   (CONVERGED = 2+ independent sources; 4x02 and IR notes do not count)"
 printf '  %-30s %s\n' IOC "4x00 4x01 4x02 4x03 4x04 MEM  DISK FW   Status"
