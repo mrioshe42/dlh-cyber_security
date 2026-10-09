@@ -1,4 +1,4 @@
-# Draft the Severity Matrix
+# MedDefense IR team structure and escalation path.
 
 roles:
   IR_Commander:
@@ -47,8 +47,8 @@ roles:
     authority_ceiling: SEV1
 
   Scribe:
-    primary: On-shift SOC Analyst (rotation; analysts are not named in the organization profile)
-    backup: Mike Torres, Network Engineer
+    primary: Mike Torres, Network Engineer
+    backup: Sarah Park, IT Director
     responsibilities:
       - Keeps the timestamped incident log of decisions, actions and owners
       - Records evidence handling and chain of custody entries
