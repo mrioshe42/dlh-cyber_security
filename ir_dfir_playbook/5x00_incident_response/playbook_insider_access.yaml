@@ -1,0 +1,129 @@
+# MedDefense playbook: suspected insider data access
+
+playbook_id: PB-003
+title: Suspected Insider Data Access - Out-of-Care-Team Record Access by Authorized User
+owner_role: IR_Commander
+
+applies_to:
+  triggers:
+    - Access audit flags an authorized user viewing patient records outside their assigned care team
+    - Epic access report shows a burst of record views for patients with no care relationship
+    - Repeated access to the record of a family member, coworker or public figure
+  indicators:
+    - Records opened outside assigned unit, service line or patient list
+    - Access at unusual hours, or records opened without an order, task or encounter
+    - Bulk patient lookups, printing, screenshots or export of records
+    - Access that follows the user's personal or social contacts, or a recent HR action (complaint, discipline, resignation)
+
+severity_mapping:
+  initial: SEV3
+  escalate_if:
+    - Access is confirmed as improper and the patient list is broad or includes VIP or high-profile patients
+    - Data left the organization (email, personal device, print or photo of records)
+    - Evidence of identity theft or financial fraud using the records
+    - Access continues after the first audit flag or after the user is informed of the review
+
+immediate_actions:
+  - step: Declare SEV3, assign the Scribe, open the incident log in UTC, and mark the case confidential. Keep the case off shared channels
+    owner: IR_Commander
+    timebox_minutes: 2
+  - step: Pull the full Epic access audit for the user ID over the review period (patients, timestamps, workstations, actions, print and export events). Save it read-only
+    owner: Technical_Lead
+    timebox_minutes: 4
+  - step: Notify Legal_Liaison and HR director of the case. Do not notify the user or their manager
+    owner: IR_Commander
+    timebox_minutes: 2
+  - step: Start evidence_preservation for all items. Do not change the user's account, role or access yet
+    owner: Technical_Lead
+    timebox_minutes: 5
+  - step: Log the access-containment decision (see containment step 1)
+    owner: IR_Commander
+    timebox_minutes: 2
+
+# All captured before any confrontation, access change or interview. The Scribe logs the SHA-256 and location of each item.
+evidence_preservation:
+  - artifact: Epic access logs for the user ID, full period under review plus 30 days before the first flagged access
+    method: Epic security team export to CSV, with print, export and screen-capture events included
+    before_step: Reduce access scope
+  - artifact: Workstation state for the user's assigned workstations - logged-on sessions, USB and removable-media history, print spool, browser history and downloads
+    method: Wazuh or EDR collection run by the Technical_Lead in a read-only session, saved as read-only copies. Forensic image only if Legal_Liaison directs
+    before_step: Reduce access scope
+  - artifact: Corporate email and Teams or messaging archive for the user, scoped to the review period and to patient names or record numbers from the audit
+    method: Purview eDiscovery hold and export, requested through Legal_Liaison. Preserve without notifying the user
+    before_step: Reduce access scope
+  - artifact: HR file context - recent performance, complaint, discipline or resignation records relevant to the case
+    method: HR director provides copies through Legal_Liaison, not through the IR team directly
+    before_step: Reduce access scope
+
+# Run in the order listed. "Step N" in the text counts from 1 at the access-containment decision.
+containment_actions:
+  - step: Decide access containment - scope reduction or monitoring only
+    owner: IR_Commander
+    decision_point: >-
+      Default is REDUCE SCOPE quietly through role-based access, not account disable. Reduce now if
+      the audit confirms records outside care team, data left the organization, or access continues.
+      Monitor only if the access is explained by a plausible workflow (for example a covering shift,
+      a documented reassignment) pending verification with the manager and Legal_Liaison. The IR_Commander
+      logs the decision with the reason. The Executive_Sponsor decides if the case is SEV1 or involves a VIP record.
+    trade_off: >-
+      Reducing scope now stops further access, but the user may notice a change and become alert,
+      which can prompt them to delete evidence or move data. Monitoring keeps the investigation quiet,
+      but more records may be accessed and the HIPAA exposure grows with each one.
+  - step: Reduce access scope to the user's assigned care team through the role-based access model
+    owner: Technical_Lead
+    decision_point: Do after all evidence_preservation items are captured. Apply through the normal role change workflow so it looks routine, with the change ticket owner recorded as the access review process
+    trade_off: Limits further out-of-role access without a visible account action, but the user's normal work may slow if the role change is too narrow. Verify against the assigned patient list before applying
+  - step: Start an access review workflow for the user's role and patient list
+    owner: Technical_Lead
+    decision_point: Run as a routine review, not an investigation, so the user is not told. Coordinate with the manager's access attestation schedule
+    trade_off: Looks like a normal audit to the user and keeps the subject unaware, but it can take days to complete, so the scope reduction in step 2 must not wait for it
+  - step: Do not disable the account, revoke sessions or reset credentials unless compromise is confirmed
+    owner: IR_Commander
+    decision_point: Switch to the compromise playbook (credential exposure) if the audit shows another person used the account
+    trade_off: Keeps the subject unaware and the workflow normal, but leaves the user able to act if the case is misuse. This is an accepted trade-off because visible action can destroy evidence or cause the user to flee
+
+eradication_actions:
+  - If misuse is confirmed - remove the user's access to the affected records and any saved searches, bookmarks or reports built from them
+  - Remove any copies of records outside the EHR (screenshots, printouts, email, personal devices) through Legal_Liaison, with a documented destruction record
+  - If the user is found to be a victim of account sharing or compromise, follow credential exposure (PB-001) instead
+  - Reset role mappings and access entitlements to the approved baseline after HR and Legal decide the outcome
+
+recovery_validation:
+  - check: Epic access log for the user after the scope reduction
+    criterion: No access to records outside the assigned care team for the review period plus 14 days
+  - check: Role and entitlement list for the user
+    criterion: Matches the approved baseline, with the change ticket recorded
+  - check: Evidence hash list and chain-of-custody record
+    criterion: Complete, and every item accounted for in the case file
+  - check: HR and Legal outcome recorded
+    criterion: Written decision on the case, including any action against the user, with HR and Legal sign-off
+
+communication_plan:
+  - audience: Legal_Liaison (Helena Reyes, General Counsel)
+    trigger: At declaration, before any evidence action or access change
+    template: tmpl_legal_insider_case_notice.md
+  - audience: HR director (not named in the organization profile)
+    trigger: At declaration, after Legal_Liaison agrees the scope
+    template: tmpl_hr_insider_case_notice.md
+  - audience: Executive_Sponsor (Dr. Patricia Morales, CISO)
+    trigger: SEV1, VIP or high-profile patient records involved, or data left the organization
+    template: tmpl_exec_briefing_security_incident.md
+  - audience: Privacy officer for HIPAA reporting
+    trigger: Misuse confirmed and the access is reportable under HIPAA
+    template: tmpl_privacy_hipaa_reporting_notice.md
+  - audience: "Not notified until HR and Legal decide - the user, the user's manager, and the wider clinical team"
+    trigger: Do not communicate before the outcome is decided
+    template: none
+
+escalation_triggers:
+  - Access is confirmed as improper and the patient list is broad - raise to SEV2, then SEV1 if VIP records or data leaving the organization is confirmed
+  - Data left the organization or ePHI is used for fraud - raise to SEV1 and notify the Executive_Sponsor and Legal_Liaison
+  - Access continues after the scope reduction - raise to SEV2 and treat as active misuse
+  - Another person used the account - switch to PB-001 (credential exposure)
+
+post_incident_tasks:
+  - Legal_Liaison documents the HIPAA reportability decision, with the access list, the reason, and the notification timeline for affected patients
+  - HR and Legal record the outcome and any sanction; IR team does not decide discipline
+  - Scribe hands the timeline, decision log and evidence hash list to the post-incident review
+  - Add an Epic audit rule for out-of-care-team record access and for bulk lookups, with alerts routed to the privacy officer
+  - Review role-based access for the unit and the access attestation schedule
