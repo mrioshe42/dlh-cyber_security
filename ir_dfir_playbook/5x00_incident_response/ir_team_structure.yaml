@@ -1,0 +1,103 @@
+# Draft the Severity Matrix
+
+roles:
+  IR_Commander:
+    primary: James Chen, SOC Lead
+    backup: Robert Kim, Infrastructure Lead
+    responsibilities:
+      - Owns the incident through closure
+      - Runs the incident bridge and timeline
+      - Authorizes containment actions within authority ceiling
+    authority_ceiling: SEV2
+
+  Technical_Lead:
+    primary: Robert Kim, Infrastructure Lead
+    backup: Mike Torres, Network Engineer
+    responsibilities:
+      - Directs investigation, containment and recovery across network, servers, AD and cloud
+      - Coordinates evidence acquisition and preservation
+      - Advises the IR_Commander on clinical-system impact and restoration against RTO
+    authority_ceiling: SEV3
+
+  Communications_Lead:
+    primary: Marcus Webb, Communications Director
+    backup: Sarah Park, IT Director
+    responsibilities:
+      - Owns internal and external crisis communication, including patient and media messaging
+      - Issues clinical-staff downtime notices with the IR_Commander
+      - Clears all outbound statements with the Legal_Liaison before release
+    authority_ceiling: SEV2
+
+  Legal_Liaison:
+    primary: Helena Reyes, General Counsel
+    backup: Dr. Patricia Morales, CISO
+    responsibilities:
+      - Decides HIPAA, Oregon and Washington breach-notification obligations and deadlines
+      - Issues the litigation hold and directs privileged communications
+      - Manages regulator, law-enforcement and insurer contact
+    authority_ceiling: SEV2
+
+  Executive_Sponsor:
+    primary: Dr. Patricia Morales, CISO
+    backup: Sarah Park, IT Director
+    responsibilities:
+      - Owns SEV1 decisions, including shutting down clinical systems and engaging the IR retainer
+      - Removes organizational blockers and approves emergency spend
+      - Briefs the board and executive leadership
+    authority_ceiling: SEV1
+
+  Scribe:
+    primary: On-shift SOC Analyst (rotation; analysts are not named in the organization profile)
+    backup: Mike Torres, Network Engineer
+    responsibilities:
+      - Keeps the timestamped incident log of decisions, actions and owners
+      - Records evidence handling and chain of custody entries
+      - Captures status updates and open actions for each bridge review
+    authority_ceiling: SEV4
+
+escalation:
+  SEV1:
+    on_detection:
+      - IR_Commander
+      - Technical_Lead
+      - Executive_Sponsor
+      - Scribe
+    on_confirmation:
+      - Communications_Lead
+      - Legal_Liaison
+    on_scope_expansion:
+      - Executive_Sponsor
+      - Communications_Lead
+      - Legal_Liaison
+    time_threshold_minutes_to_escalate: 30
+
+  SEV2:
+    on_detection:
+      - IR_Commander
+      - Technical_Lead
+      - Scribe
+    on_confirmation:
+      - Communications_Lead
+      - Legal_Liaison
+    on_scope_expansion:
+      - Executive_Sponsor
+    time_threshold_minutes_to_escalate: 60
+
+  SEV3:
+    on_detection:
+      - IR_Commander
+      - Scribe
+    on_confirmation:
+      - Technical_Lead
+    on_scope_expansion:
+      - Communications_Lead
+      - Legal_Liaison
+    time_threshold_minutes_to_escalate: 120
+
+  SEV4:
+    on_detection: []
+    on_confirmation:
+      - IR_Commander
+    on_scope_expansion:
+      - Technical_Lead
+    time_threshold_minutes_to_escalate: 480
