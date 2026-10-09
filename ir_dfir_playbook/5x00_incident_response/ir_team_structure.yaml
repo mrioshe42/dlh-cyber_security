@@ -92,8 +92,8 @@ escalation:
       - Technical_Lead
       - Legal_Liaison
     on_scope_expansion:
-      - Technical_Lead
       - Communications_Lead
+      - Legal_Liaison
     time_threshold_minutes_to_escalate: 120
 
   SEV4:
