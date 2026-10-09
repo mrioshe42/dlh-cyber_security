@@ -1,0 +1,161 @@
+# MedDefense playbook: clinical service degradation
+
+playbook_id: PB-002
+title: Clinical Service Degradation - Radiology Imaging Server Slow or Unavailable
+owner_role: IR_Commander
+
+applies_to:
+  triggers:
+    - ED or ward staff report that X-rays or other images cannot be pulled, or load far slower than normal
+    - Splunk or Wazuh alert on the radiology imaging server (CPU, disk I/O, new process, outbound connections, failed logins)
+  indicators:
+    - "PERFORMANCE: a known cause is found - backup or archive job, scheduled patch or reboot, disk or database near full, storage latency, or a known bad release - and no incident indicator below is present"
+    - "PERFORMANCE: degradation matches a pattern seen before, follows the load curve (peak ED hours), and recovers when the job or load stops"
+    - "INCIDENT: new or unknown processes, scheduled tasks, services or admin accounts on the server, or security tools stopped"
+    - "INCIDENT: image files renamed, encrypted or modified, ransom note, or radiologists report wrong or corrupt images"
+    - "INCIDENT: outbound connections to unknown external IPs, large unexplained transfers, or the server scanning or connecting to other internal hosts"
+    - "INCIDENT: failed-then-successful logins, logins at odd hours or from non-radiology workstations, or a service account used interactively"
+    - "RULE: any INCIDENT indicator, or no benign cause found within 5 minutes, means treat as an incident"
+
+severity_mapping:
+  initial: SEV2
+  escalate_if:
+    - Imaging is fully unavailable for the ED or other critical care areas
+    - Encryption, image tampering or ransomware is confirmed
+    - Spread to other clinical systems (Epic, LIS) is seen
+    - Any patient harm or delayed critical care is reported
+    - Large-scale data exfiltration is confirmed
+
+immediate_actions:
+  - step: Declare SEV2, assign the Scribe, start the incident log in UTC, and record how many ED patients are waiting on imaging
+    owner: IR_Commander
+    timebox_minutes: 2
+  - step: Contact the on-call clinical lead and the ED charge nurse. Tell them an incident is suspected, ask which patients are waiting on images and which are critical, and agree the downtime trigger. This happens before any isolation action
+    owner: IR_Commander
+    timebox_minutes: 3
+  - step: Triage the server against the performance and incident indicators using Splunk, Wazuh and a live look at processes, connections and storage. Do not reboot, unplug or isolate it
+    owner: Technical_Lead
+    timebox_minutes: 5
+  - step: Capture live evidence (see evidence_preservation) without taking the server offline
+    owner: Technical_Lead
+    timebox_minutes: 3
+  - step: Make and log the downtime decision (see containment step 1) with the on-call clinical lead
+    owner: IR_Commander
+    timebox_minutes: 2
+
+# Captured while the server stays in service. The Scribe logs the SHA-256 and location of each item.
+evidence_preservation:
+  - artifact: Memory image and a snapshot of the server
+    method: Hypervisor snapshot with memory if virtual, otherwise a live memory capture with the Wazuh or IR tool. No reboot
+    before_step: Apply network segmentation
+  - artifact: Running processes, services, scheduled tasks, local accounts and active network connections
+    method: Scripted live collection run from the Wazuh agent or remote session, output saved read-only
+    before_step: Restrict accounts
+  - artifact: Windows Security, System and imaging application logs, and Wazuh alerts for the server
+    method: Splunk export to CSV plus wevtutil epl copy of the event logs
+    before_step: Restrict accounts
+  - artifact: Network flow and packet capture to and from the server
+    method: Switch SPAN or firewall capture for 10 minutes, plus flow logs exported from Splunk
+    before_step: Apply network segmentation
+  - artifact: List of recently modified, renamed or encrypted files on the imaging storage, with hashes of a sample
+    method: Read-only file listing sorted by modified time, hash a sample of files and compare with the last backup
+    before_step: Throttle non-clinical service load
+
+# Run in the order listed. "Step N" in the text counts from 1 at the downtime decision.
+containment_actions:
+  - step: Decide - investigate under downtime or continue service with elevated monitoring and constrained access
+    owner: IR_Commander
+    decision_point: >-
+      Decision is made with the on-call clinical lead. Investigate under DOWNTIME if any of these is
+      true - active malicious activity is confirmed (encryption, ransom note, exfiltration, spread),
+      image integrity is in doubt (risk of a wrong image used for care), or the ED cannot retrieve
+      images at all. Otherwise CONTINUE SERVICE with elevated monitoring and constrained access
+      (steps 4 to 6) while the server stays up. Re-decide every 15 minutes, and at once if an
+      indicator changes. The Executive_Sponsor decides if the incident is SEV1.
+    trade_off: >-
+      Downtime gives a safer, cleaner investigation and stops spread, but removes imaging from
+      live patient care and slows ED decisions. Continued service keeps imaging available, but the
+      attacker may keep running, destroy evidence or spread while we watch.
+  - step: Coordinate with the clinical lead before any isolation
+    owner: IR_Commander
+    decision_point: >-
+      No isolation action (steps 4, 5, 6 and 7) starts until the on-call clinical lead and ED charge
+      nurse confirm they know what will change, which patients are affected, and what the fallback is.
+      Exception - confirmed active encryption or spread, where the IR_Commander acts first and calls
+      the clinical lead right after.
+    trade_off: Costs a few minutes of delay, but prevents blind loss of imaging for patients in care
+  - step: Activate clinical downtime procedures
+    owner: On-call clinical lead
+    decision_point: >-
+      Activate at the earliest of - the downtime decision says DOWNTIME, imaging cannot be retrieved
+      for an ED patient within 5 minutes, image integrity is in doubt, or the IR_Commander announces
+      full isolation. Fallback - paper orders, images read at the modality or radiology workstation,
+      verbal radiologist read for critical cases, and a runner for results.
+    trade_off: Protects patients when imaging cannot be trusted or reached, but adds delay, manual work and transcription error risk, so keep it as short as possible
+  - step: Restrict accounts
+    owner: Technical_Lead
+    decision_point: Allow only named ED and radiology viewing accounts. Disable interactive logon for service and admin accounts, and reset any suspected account
+    trade_off: Keeps the ED viewing images and cuts off attacker credentials, but radiology staff may not be able to upload new studies until their access is restored
+  - step: Throttle non-clinical service load
+    owner: Technical_Lead
+    decision_point: Rate-limit bulk queries, batch jobs, archive transfers and non-ED clients. Keep ED viewer sessions at top priority
+    trade_off: Preserves ED performance and slows possible bulk copying, but non-urgent reads and reports will be slow
+  - step: Apply network segmentation
+    owner: Technical_Lead
+    decision_point: Allow only ED and radiology viewer workstations, modalities and the Epic interface. Block outbound internet and traffic to other internal segments. Have a tested rollback ready
+    trade_off: Stops exfiltration and lateral movement while ED viewing continues, but teleradiology and vendor remote access stop, and a bad rule could break modality feeds
+  - step: Isolate the server fully
+    owner: Technical_Lead
+    decision_point: Last resort. Only after clinical downtime is active and the IR_Commander approves. Never a power-off, isolate at the network
+    trade_off: Fully stops the attacker and preserves memory and disk, but imaging is entirely unavailable until restored
+
+eradication_actions:
+  - If performance - fix the root cause (free storage, stop the runaway job, apply the patch, move the schedule) and close the incident
+  - If incident - remove malware, unknown services, tasks and accounts, and patch the exploited weakness
+  - Reset all credentials used on the server (service, admin and viewer accounts)
+  - Rebuild or restore from a clean immutable backup if integrity was affected, then check images against modality originals
+  - Add detection for the attack path found before reconnecting
+
+recovery_validation:
+  - check: ED image retrieval time during peak hours
+    criterion: Back to the normal baseline for 1 hour, as confirmed by ED staff
+  - check: Image integrity - radiologist reviews a sample of recent studies against modality originals, and file hashes are compared with backup
+    criterion: No missing, altered or corrupt images
+  - check: Wazuh scan, process list and outbound connections on the server
+    criterion: No malicious processes, and no connections to unknown external IPs
+  - check: Constraints removed one at a time (segmentation, throttling, account restrictions)
+    criterion: No degradation or new alerts for 24 hours after the last one is lifted
+  - check: Clinical lead confirms downtime ended and paper orders and manual reads are entered into Epic and imaging records
+    criterion: Backlog reconciled and signed off by the on-call clinical lead
+
+communication_plan:
+  - audience: On-call clinical lead and ED charge nurse
+    trigger: Immediately on declaration, before any isolation, and at every re-decision
+    template: tmpl_clinical_lead_incident_alert.md
+  - audience: Clinical staff in the ED and wards (sent by the Communications_Lead with the IR_Commander)
+    trigger: When downtime procedures are activated, and again when they end
+    template: tmpl_clinical_downtime_notice.md
+  - audience: Radiology department lead
+    trigger: When account restrictions, throttling or segmentation affect radiology work
+    template: tmpl_radiology_access_change_notice.md
+  - audience: Executive_Sponsor (Dr. Patricia Morales, CISO)
+    trigger: SEV1, full isolation, or downtime lasting more than 1 hour
+    template: tmpl_exec_briefing_security_incident.md
+  - audience: Legal_Liaison (Helena Reyes, General Counsel)
+    trigger: Exfiltration, ePHI exposure or image tampering is confirmed or cannot be ruled out
+    template: tmpl_legal_hipaa_assessment_request.md
+
+escalation_triggers:
+  - Imaging is unavailable and the ED has no workable fallback - raise to SEV1 and notify the Executive_Sponsor
+  - Ransomware, encryption or image tampering is confirmed - raise to SEV1
+  - Patient harm or delayed critical care is reported - raise to SEV1 and notify the Executive_Sponsor and Legal_Liaison
+  - Spread to Epic, LIS or other clinical systems
+  - Exfiltration or ePHI exposure is suspected - notify the Legal_Liaison for the HIPAA assessment
+  - No progress 60 minutes after declaration (SEV2 time threshold)
+
+post_incident_tasks:
+  - Record whether the cause was performance or incident, which indicator decided it, and how long triage took
+  - Clinical leadership reviews patient impact, downtime duration and any delayed care, and keeps the record for the Joint Commission reaccreditation
+  - Update the downtime procedure and the downtime trigger with the lessons learned
+  - Add monitoring for the imaging server baseline (retrieval time, I/O, outbound traffic) and tune the triage indicators
+  - Run a tabletop exercise on a clinical system incident where isolation is not possible
