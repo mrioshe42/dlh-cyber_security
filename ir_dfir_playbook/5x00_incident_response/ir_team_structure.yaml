@@ -61,6 +61,7 @@ escalation:
       - IR_Commander
       - Technical_Lead
       - Executive_Sponsor
+      - Legal_Liaison
       - Scribe
     on_confirmation:
       - Communications_Lead
@@ -89,15 +90,18 @@ escalation:
       - Scribe
     on_confirmation:
       - Technical_Lead
-    on_scope_expansion:
-      - Communications_Lead
       - Legal_Liaison
+    on_scope_expansion:
+      - Technical_Lead
+      - Communications_Lead
     time_threshold_minutes_to_escalate: 120
 
   SEV4:
-    on_detection: []
-    on_confirmation:
+    on_detection:
       - IR_Commander
+    on_confirmation:
+      - Technical_Lead
     on_scope_expansion:
       - Technical_Lead
+      - Scribe
     time_threshold_minutes_to_escalate: 480
