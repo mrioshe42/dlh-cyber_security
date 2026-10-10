@@ -1,9 +1,16 @@
+<!-- HOW TO USE: Fill every [placeholder]. Delete any bullet that does not apply. Do not submit until General Counsel approves. -->
+
 # HIPAA Breach Notification - Draft to HHS OCR
 
-**Audience:** U.S. Department of Health and Human Services, Office for Civil Rights (HHS OCR)
-**Classification:** DRAFT - not for submission until approved by General Counsel (Helena Reyes)
-**Basis:** 45 CFR 164.404 (individuals), 164.408 (Secretary), 164.406 (media, if more than 500 residents of a state or jurisdiction)
-**Cadence:** For 500 or more individuals, submit at the same time as individual notice, no later than 60 days after discovery (164.408(b)). For fewer than 500, log the breach and submit within 60 days after the end of the calendar year (164.408(c)). Add addenda as facts change
+<!-- HEADER: audience, classification, basis, cadence -->
+
+- **Audience:** U.S. Department of Health and Human Services, Office for Civil Rights (HHS OCR)
+- **Classification:** DRAFT - not for submission until approved by General Counsel (Helena Reyes)
+- **Basis:** 45 CFR 164.404 (individuals), 164.408 (Secretary), 164.406 (media, if more than 500 residents of a state or jurisdiction)
+- **Cadence:** For 500 or more individuals, submit at the same time as individual notice, no later than 60 days after discovery (164.408(b)). For fewer than 500, log the breach and submit within 60 days after the end of the calendar year (164.408(c)). Add addenda as facts change
+
+<!-- BODY: required fields -->
+
 
 ## Covered entity
 
@@ -21,7 +28,7 @@
 
 ## Types of unsecured PHI involved (164.404(c)(1)(B))
 
-- [phi_types]
+- [data_types]
 
 ## Steps individuals should take (164.404(c)(1)(C))
 
@@ -44,6 +51,8 @@
 - Individuals notified on: [individual_notice_date]
 - Media notified on: [media_notice_date_or_not_required]
 
-Submitted by: [submitter_name_title]
-Approved by: [legal_approver] (General Counsel)
-Addendum due: [addendum_due_date]
+<!-- FOOTER: submitter, approver, addendum date -->
+
+- **Submitted by:** [submitter_name_title]
+- **Approved by:** [legal_approver] (General Counsel)
+- **Addendum due:** [addendum_due_date]

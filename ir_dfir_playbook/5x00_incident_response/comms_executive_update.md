@@ -1,8 +1,14 @@
+<!-- HOW TO USE: Fill every [placeholder]. Delete any bullet that does not apply. Do not send with brackets left in. Send from the IR bridge; the IR_Commander owns this update. -->
+
 # Executive Status Update
 
-**Audience:** CISO (Dr. Patricia Morales), IT Director (Sarah Park)
-**Classification:** Internal, IR team only
-**Cadence:** Every 30 minutes during active incident
+<!-- HEADER: audience, classification, cadence -->
+
+- **Audience:** CISO (Dr. Patricia Morales), IT Director (Sarah Park)
+- **Classification:** Internal, IR team only
+- **Cadence:** Every 30 minutes during an active incident
+
+<!-- BODY: required fields -->
 
 ## Incident identity
 
@@ -17,15 +23,15 @@
 
 ## Current containment status
 
-- [containment_state]
+- [containment_status]
 
 ## Systems affected
 
-- [systems_list]
+- [systems_affected]
 
 ## Data exposure status
 
-- [data_exposure_state]
+- [data_exposure_status] (confirmed, suspected or none, and the data types from [data_types])
 
 ## Actions in the next 30 minutes
 
@@ -34,7 +40,9 @@
 
 ## Decisions needed from you
 
-- [decision_if_any]
+- [decision_if_any] (write "None" if there are no decisions)
 
-Next update: [next_update_utc]
-Owner: [ir_commander_name]
+<!-- FOOTER: next update and sign-off -->
+
+- **Next update:** [next_update_utc]
+- **Owner:** [ir_commander_name]

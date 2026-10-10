@@ -1,8 +1,14 @@
+<!-- HOW TO USE: Fill every [placeholder]. Delete any bullet that does not apply. Do not send with brackets left in. Send by the IR_Commander to Legal_Liaison; do not forward outside the privileged channel. -->
+
 # Legal Notification - Privileged
 
-**Audience:** General Counsel (Helena Reyes)
-**Classification:** PRIVILEGED AND CONFIDENTIAL - prepared at the direction of counsel
-**Cadence:** Once at opening; then on any change in scope or data exposure
+<!-- HEADER: audience, classification, cadence -->
+
+- **Audience:** General Counsel (Helena Reyes)
+- **Classification:** PRIVILEGED AND CONFIDENTIAL - prepared at the direction of counsel
+- **Cadence:** Once at opening; then on any change in scope or data exposure
+
+<!-- BODY: required fields -->
 
 ## Incident identity
 
@@ -13,12 +19,12 @@
 
 ## Facts known to date
 
-- [fact_1]
-- [fact_2]
+- [confirmed_fact_1]
+- [confirmed_fact_2]
 
 ## Systems and accounts involved
 
-- [systems_list]
+- Systems: [systems_affected]
 - Accounts or users involved: [account_list]
 
 ## Data types potentially involved
@@ -37,10 +43,12 @@
 
 ## Requested from Legal
 
-- Advice on HIPAA breach assessment, including the 164.402 four-factor analysis
+- Advice on the HIPAA breach assessment, including the 164.402 four-factor analysis
 - Litigation hold scope: [hold_scope]
 - Decision on regulator, patient and insurer notification timing
 
-This notice is prepared to request legal advice and is not a conclusion about whether a breach occurred.
-Next update: [next_update_utc]
-Owner: [ir_commander_name]
+<!-- FOOTER: next update and sign-off -->
+
+- **Note:** This notice requests legal advice. It is not a conclusion about whether a breach occurred.
+- **Next update:** [next_update_utc]
+- **Owner:** [ir_commander_name]
