@@ -4,6 +4,18 @@
 **Hash Algorithm**: SHA-256  
 **Prerequisites**: Run `evidence_store_init.sh` first. Do NOT isolate/reboot/kill processes until all steps complete.
 
+## Required Artifacts Checklist
+
+- [ ] Memory dump (WST-WS-031)
+- [ ] Running process list with PIDs and command lines
+- [ ] Active network connections (established TCP/UDP)
+- [ ] Full endpoint telemetry (24h, all event types)
+- [ ] SIEM alert record (A-20260414-9841)
+- [ ] Proxy logs (24h, user dmarsh)
+- [ ] DNS logs (24h, host WST-WS-031)
+- [ ] Authentication logs (24h, user dmarsh, AD+Azure AD)
+- [ ] Malware files (update.zip, update.exe, update.xml)
+
 
 ## 1. Memory Dump (WST-WS-031)
 Volatile; lost on reboot
@@ -91,13 +103,44 @@ sha256sum /evidence/IR-20260414-01/malware/update.xml >> /evidence/IR-20260414-0
 - update.exe: `5a4b3c2d1e0f9a8b7c6d5e4f3a2b1c0d9e8f7a6b5c4d3e2f1a0b9c8d7e6f5a4b`
 - update.xml: `a4f1e9b4fe7aa6d5d3f3e2b8c9a7d4e8f5b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3`
 
-## 9. Verification
-Verify all hashes
+## 9. Verification and Evidence Store Validation
+
+**Hash Verification**:
 ```bash
 cd /evidence/IR-20260414-01
-sha256sum -c hashes.txt
+sha256sum -c hashes.txt > /tmp/hash_check_result.txt 2>&1
+echo "Hash verification exit code: $?"
 ```
 **If mismatch**: STOP, escalate to IR Commander, do NOT delete evidence
+
+**Final Evidence Store Validation Checklist**:
+```bash
+# Verify all 9 artifact categories present
+[ -f memory/wst-ws-031.mem ] && echo "✓ Memory dump" || echo "✗ Memory dump MISSING"
+[ -f process_tree/running_processes.json ] && echo "✓ Process list" || echo "✗ Process list MISSING"
+[ -f network/netstat_established.json ] && echo "✓ Network connections" || echo "✗ Network MISSING"
+[ -f endpoint_telemetry/edr_wst_ws_031_24h.jsonl ] && echo "✓ Endpoint telemetry" || echo "✗ Telemetry MISSING"
+[ -f siem/alert_A-20260414-9841.json ] && echo "✓ SIEM alert" || echo "✗ Alert MISSING"
+[ -f proxy_dns/proxy_24h_dmarsh.log ] && echo "✓ Proxy logs" || echo "✗ Proxy logs MISSING"
+[ -f proxy_dns/dns_24h_wst_ws_031.log ] && echo "✓ DNS logs" || echo "✗ DNS logs MISSING"
+[ -f authentication/auth_24h_dmarsh.json ] && echo "✓ Auth logs" || echo "✗ Auth logs MISSING"
+[ -f malware/update.zip ] && [ -f malware/update.exe ] && [ -f malware/update.xml ] && echo "✓ Malware files" || echo "✗ Malware files MISSING"
+[ -f hashes.txt ] && echo "✓ Chain of custody manifest" || echo "✗ Manifest MISSING"
+
+# Verify hashes.txt contains all 10+ entries
+echo "Artifact count in manifest: $(grep -c '^[a-f0-9]' hashes.txt)"
+```
+
+**Sign Verification**:
+```bash
+cat >> /evidence/IR-20260414-01/hashes.txt << EOF
+
+# Verification completed: $(date -u +%Y-%m-%dT%H:%M:%SZ)
+# Verified by: $(whoami) on $(hostname)
+# Status: PASS (all artifacts collected, hashes verified)
+EOF
+chmod 440 /evidence/IR-20260414-01/hashes.txt
+```
 
 ## Execution Order
 1. Memory (volatile)
@@ -109,5 +152,39 @@ sha256sum -c hashes.txt
 7. Auth logs (baseline)
 8. Malware files (analysis)
 9. Verification (integrity)
+
+## Expected Evidence Store Structure
+
+```
+/evidence/IR-20260414-01/
+├── memory/
+│   └── wst-ws-031.mem                        (16–32 GB)
+├── process_tree/
+│   └── running_processes.json                (JSON with PIDs, parent PIDs, cmd lines)
+├── network/
+│   └── netstat_established.json              (TCP/UDP connections at capture time)
+├── endpoint_telemetry/
+│   └── edr_wst_ws_031_24h.jsonl             (20+ events covering attack chain)
+├── siem/
+│   └── alert_A-20260414-9841.json            (Detection rule metadata + context)
+├── proxy_dns/
+│   ├── proxy_24h_dmarsh.log                  (HTTP/S events, phishing→download→C2)
+│   └── dns_24h_wst_ws_031.log                (DNS queries for 24h window)
+├── authentication/
+│   └── auth_24h_dmarsh.json                  (AD + Azure AD logon events)
+├── malware/
+│   ├── update.zip                            (421 KB, SHA256: 3c2a1b...)
+│   ├── update.exe                            (Persistence binary, SHA256: 5a4b3c...)
+│   └── update.xml                            (MSBuild config, SHA256: a4f1e9...)
+└── hashes.txt                                (SHA-256 manifest, signed with verification)
+```
+
+**Validation Success Criteria**:
+- [ ] All 9 artifact categories present
+- [ ] hashes.txt contains 10+ valid SHA-256 entries
+- [ ] `sha256sum -c hashes.txt` returns exit code 0 (no mismatches)
+- [ ] hashes.txt signed with analyst name, timestamp, and verification status
+- [ ] Memory file > 8 GB (typical for clinical workstation)
+- [ ] Endpoint telemetry includes all key events (download, persistence, C2)
 
 **Next**: Create EVIDENCE entry in incident_timeline.md, then proceed to containment (PB-CRED-001).
