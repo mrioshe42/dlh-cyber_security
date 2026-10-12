@@ -1,0 +1,222 @@
+---
+# Eradication Checklist: IR-20260414-01
+# Scope: WST-WS-031, user dmarsh | No lateral movement detected
+
+items:
+
+  # MALWARE ARTIFACTS
+  - id: ERAD-001
+    category: malware_artifact
+    target_host: WST-WS-031
+    description: Remove update.zip
+    command_or_action: Remove-Item "C:\Users\dmarsh\Downloads\update.zip" -Force
+    verification_command: Test-Path "C:\Users\dmarsh\Downloads\update.zip"
+    expected_verification_result: "$false"
+    status: pending
+    executed_at: null
+    executed_by: null
+
+  - id: ERAD-002
+    category: malware_artifact
+    target_host: WST-WS-031
+    description: Remove update.exe
+    command_or_action: Remove-Item "C:\Users\dmarsh\AppData\Local\Temp\update.exe" -Force
+    verification_command: Test-Path "C:\Users\dmarsh\AppData\Local\Temp\update.exe"
+    expected_verification_result: "$false"
+    status: pending
+    executed_at: null
+    executed_by: null
+
+  - id: ERAD-003
+    category: malware_artifact
+    target_host: WST-WS-031
+    description: Remove update.xml
+    command_or_action: Remove-Item "C:\Users\dmarsh\AppData\Local\Temp\update.xml" -Force
+    verification_command: Test-Path "C:\Users\dmarsh\AppData\Local\Temp\update.xml"
+    expected_verification_result: "$false"
+    status: pending
+    executed_at: null
+    executed_by: null
+
+  - id: ERAD-004
+    category: malware_artifact
+    target_host: WST-WS-031
+    description: Remove Registry RunKey persistence (WindowsUpdateSvc)
+    command_or_action: Remove-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run" -Name "WindowsUpdateSvc" -Force
+    verification_command: Get-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Run" -Name "WindowsUpdateSvc" -ErrorAction SilentlyContinue
+    expected_verification_result: "$null"
+    status: pending
+    executed_at: null
+    executed_by: null
+
+  - id: ERAD-005
+    category: malware_artifact
+    target_host: WST-WS-031
+    description: Remove Scheduled Task (GUID {7B4F2D81-19E2-4A8C-9E67-A1F0DE2C7B3A})
+    command_or_action: schtasks /delete /tn "{7B4F2D81-19E2-4A8C-9E67-A1F0DE2C7B3A}" /f
+    verification_command: schtasks /query /tn "{7B4F2D81-19E2-4A8C-9E67-A1F0DE2C7B3A}"
+    expected_verification_result: Exit code 1 (task not found)
+    status: pending
+    executed_at: null
+    executed_by: null
+
+  # PROCESSES
+  - id: ERAD-006
+    category: process
+    target_host: WST-WS-031
+    description: Kill MSBuild.exe (PID 8104)
+    command_or_action: Stop-Process -Id 8104 -Force
+    verification_command: Get-Process -Id 8104 -ErrorAction SilentlyContinue
+    expected_verification_result: "$null"
+    status: pending
+    executed_at: null
+    executed_by: null
+
+  - id: ERAD-007
+    category: process
+    target_host: WST-WS-031
+    description: Kill PowerShell (PID 7812)
+    command_or_action: Stop-Process -Id 7812 -Force
+    verification_command: Get-Process -Id 7812 -ErrorAction SilentlyContinue
+    expected_verification_result: "$null"
+    status: pending
+    executed_at: null
+    executed_by: null
+
+  - id: ERAD-008
+    category: process
+    target_host: WST-WS-031
+    description: Kill update.exe (PID 7204)
+    command_or_action: Stop-Process -Id 7204 -Force
+    verification_command: Get-Process -Id 7204 -ErrorAction SilentlyContinue
+    expected_verification_result: "$null"
+    status: pending
+    executed_at: null
+    executed_by: null
+
+  # CREDENTIALS
+  - id: ERAD-009
+    category: credential
+    target_host: domain
+    description: Reset dmarsh AD password; revoke O365 sessions
+    command_or_action: Set-ADAccountPassword -Identity dmarsh -NewPassword (ConvertTo-SecureString -AsPlainText (New-Guid).Guid -Force) -Reset; Set-ADUser -Identity dmarsh -ChangePasswordAtLogon $true; Revoke-MsolUserSession -UserPrincipalName dmarsh@meddefense.local
+    verification_command: Get-ADUser -Identity dmarsh -Properties PasswordLastSet | Select-Object SamAccountName, PasswordLastSet
+    expected_verification_result: PasswordLastSet = current timestamp (within 5 min)
+    status: pending
+    executed_at: null
+    executed_by: null
+
+  - id: ERAD-010
+    category: credential
+    target_host: domain
+    description: Invalidate Kerberos TGT for dmarsh session
+    command_or_action: klist purge /all (on WST-WS-031)
+    verification_command: klist
+    expected_verification_result: No cached TGTs for dmarsh
+    status: pending
+    executed_at: null
+    executed_by: null
+
+  - id: ERAD-011
+    category: credential
+    target_host: azure_ad
+    description: Revoke Azure AD refresh tokens
+    command_or_action: Revoke-AzureADUserAllRefreshToken -ObjectId (Get-AzureADUser -Filter "userPrincipalName eq 'dmarsh@meddefense.local'").ObjectId
+    verification_command: Search-UnifiedAuditLog -UserIds dmarsh@meddefense.local -StartDate (Get-Date).AddHours(-2) | Where-Object {$_.ResultStatus -eq "Failure"}
+    expected_verification_result: No failed auth attempts using prior tokens
+    status: pending
+    executed_at: null
+    executed_by: null
+
+  # MACHINE ACCOUNT
+  - id: ERAD-012
+    category: machine_account
+    target_host: WST-WS-031
+    description: Reset WST-WS-031 machine account password in AD
+    command_or_action: Reset-ComputerMachinePassword -Server ms-dc01.meddefense.local
+    verification_command: Test-ComputerSecureChannel -Server ms-dc01.meddefense.local
+    expected_verification_result: "$true"
+    status: pending
+    executed_at: null
+    executed_by: null
+
+  # KERBEROS
+  - id: ERAD-013
+    category: krbtgt
+    target_host: domain
+    description: Double-reset krbtgt if Pass-the-Ticket confirmed (CONDITIONAL)
+    rationale: No evidence of TGT forgery detected in auth logs. Execute only if forensic analysis confirms Pass-the-Ticket. Otherwise, ERAD-009 (dmarsh password reset) is sufficient.
+    command_or_action: "Reset 1: Set-ADAccountPassword -Identity krbtgt -NewPassword (New-Guid).Guid -Reset; Wait 10h; Reset 2: Set-ADAccountPassword -Identity krbtgt -NewPassword (New-Guid).Guid -Reset"
+    verification_command: Get-ADUser -Identity krbtgt -Properties PasswordLastSet; Get-WinEvent -LogName Security -FilterXPath "*[System[(EventID=4768)]]" | Where-Object {$_.TimeCreated -lt $reset1_time}
+    expected_verification_result: Two reset timestamps 10h apart; no valid TGTs issued before second reset
+    status: pending
+    requires_approval: true
+    approval_by: CISO
+    executed_at: null
+    executed_by: null
+
+  # NETWORK
+  - id: ERAD-014
+    category: network
+    target_host: perimeter
+    description: Egress block for 185.220.101.47:443 (primary C2)
+    command_or_action: Firewall rule deployed 2026-04-14T03:19:18Z; maintain permanent rule
+    verification_command: netflow query | filter dest_ip=185.220.101.47
+    expected_verification_result: Zero packets to 185.220.101.47 after 03:19:18Z
+    status: in_progress
+    executed_at: 2026-04-14T03:19:18Z
+    executed_by: Taj Patel
+
+  - id: ERAD-015
+    category: network
+    target_host: perimeter
+    description: Egress block for 91.234.99.107:443 (secondary C2, preventative)
+    command_or_action: Create deny rule for 91.234.99.107:443
+    verification_command: netflow query | filter dest_ip=91.234.99.107
+    expected_verification_result: Zero packets to 91.234.99.107
+    status: pending
+    executed_at: null
+    executed_by: null
+
+  - id: ERAD-016
+    category: network
+    target_host: WST-WS-031
+    description: Maintain VLAN 999 isolation until reimaging complete
+    command_or_action: Keep WST-WS-031 in quarantine VLAN; scheduled revert after remediation
+    verification_command: show switchport interface ms-lab-sw-03:47
+    expected_verification_result: VLAN=999; only jumpbox traffic allowed
+    status: in_progress
+    executed_at: 2026-04-14T03:19:04Z
+    executed_by: Taj Patel
+
+  # HOST REMEDIATION
+  - id: ERAD-017
+    category: host_remediation
+    target_host: WST-WS-031
+    description: Forensic imaging (500 GB, ~8h)
+    command_or_action: FTK Imager via jumpbox → /evidence/IR-20260414-01/disk_images/wst-ws-031.dd
+    verification_command: ls -lh /evidence/IR-20260414-01/disk_images/wst-ws-031.dd; sha256sum
+    expected_verification_result: File ~500 GB; hash matches manifest
+    status: pending
+    executed_at: null
+    executed_by: null
+
+  - id: ERAD-018
+    category: host_remediation
+    target_host: WST-WS-031
+    description: Wipe and reimage with clean baseline (post-imaging)
+    command_or_action: PXE boot clean Windows 10 image; apply group policy; reinstall lab software
+    verification_command: systeminfo | findstr OS; Get-Service WazuhAgent,WinDefend
+    expected_verification_result: "OS: Windows 10 Pro 22H2; Security agents running"
+    status: pending
+    executed_at: null
+    executed_by: null
+
+---
+summary:
+  total_items: 18
+  completed: 3 (ERAD-014, ERAD-016, network isolation)
+  pending: 15
+  critical_path: "ERAD-001:008 (cleanup) → ERAD-009:012 (credentials) → ERAD-017 (imaging) → ERAD-018 (reimage) = 72h total"
+  approval_required: "ERAD-013 (krbtgt reset, requires CISO review of Pass-the-Ticket analysis)"
+  authorization: "James Chen (IR Commander) approves all; CISO for krbtgt only"
