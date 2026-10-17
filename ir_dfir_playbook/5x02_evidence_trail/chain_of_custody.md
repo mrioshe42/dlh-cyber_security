@@ -1,66 +1,59 @@
-# Chain of Custody: LH-2026-0414-01
+# Chain of Custody: `<case_number>`
 
 ## Case Header
 
-- **Case number:** LH-2026-0414-01
-- **Incident ID:** IR-2026-0414-01 (5x01 files also call it IR-20260414-01)
-- **Lead investigator:** Massimo
-- **Date opened:** 2026-04-14
-- **Litigation hold reference:** Memo from Helena Reyes, 2026-04-14T07:30Z
+- **Case number:** `<case_number>`
+- **Incident ID:** `<incident_id>`
+- **Lead investigator:** `<investigator_name>`
+- **Date opened:** `<YYYY-MM-DD>`
+- **Litigation hold reference:** `<legal_memo_reference>`
 
 ## Artifact Registry
 
-Custody began at acquisition, not at first analysis. Mike Torres took no hashes at acquisition (`5x02/acquisition_notes.md`), so there is no trusted starting hash. The first hash we compute is the **baseline**. It proves nothing about the time before it.
-
-| Artifact ID | Name | Format | Acquired By | Acquired At (UTC) | Tool | SHA-256 at Acquisition | Storage Path | Access Controls |
-|---|---|---|---|---|---|---|---|---|
-| ART-001 | wst-ws-031.dd | RAW | Mike Torres | 2026-04-14 04:51 – 06:14 | FTK Imager (raw/dd) | NOT RECORDED | `\\evidence\share\IR-2026-0414-01\wst-ws-031.dd` | read-only, IR team only (intended, not verified) |
-| ART-002 | wst-ws-031.mem | RAW | Mike Torres | 2026-04-14 03:02 | WinPmem v3.3-rc3 | NOT RECORDED | `\\evidence\share\IR-2026-0414-01\wst-ws-031.mem` | read-only, IR team only (intended, not verified) |
-| ART-003 | wst-ws-017.mem | RAW | Mike Torres | 2026-04-14 03:38 | WinPmem v3.3-rc3 | NOT RECORDED | `\\evidence\share\IR-2026-0414-01\wst-ws-017.mem` | read-only, IR team only (intended, not verified) |
-| ART-004 | siem_alert_export.json | JSON | soc-evidence-collector | 2026-04-14 02:58:04 | SIEM export (MedDefense-SIEM-Alert-v1.2) | NOT RECORDED | `5x02/siem_alert_export.json` | working copy, rw (not read-only) |
-| ART-005 | ad_auth_log.jsonl | JSONL | NOT RECORDED | NOT RECORDED (after 03:43:30, last event) | NOT RECORDED | NOT RECORDED | `5x02/ad_auth_log.jsonl` | working copy, rw (not read-only) |
-| ART-006 | proxy_log.jsonl | JSONL | NOT RECORDED | NOT RECORDED (after 03:27:45, last event) | NOT RECORDED | NOT RECORDED | `5x02/proxy_log.jsonl` | working copy, rw (not read-only) |
-
-## Baseline Hashes
-
-| Artifact ID | SHA-256 (baseline) | Computed (UTC) |
-|---|---|---|
-| ART-001 | PENDING (file not available to the analyst yet) | |
-| ART-002 | PENDING (file not available to the analyst yet) | |
-| ART-003 | PENDING (file not available to the analyst yet) | |
-| ART-004 | `d270a87e00d33f6f9f7261fd18b40db76a64bb4be53b08bf9c29f4f1b420f63d` | 2026-10-17 07:32 |
-| ART-005 | `0596d6b2de97fe3bd6ccd7a65cb4e3eb3b2a5094c8d96787eaf38c30de25fbed` | 2026-10-17 07:32 |
-| ART-006 | `340c4a575bf6dc0104e4a21c7c8219a1406615d8e3ffd08b66c2d9dcb73a68e9` | 2026-10-17 07:32 |
-
-## Known Gaps and Deviations
-
-- **No hashes** at acquisition for any artifact. No custody form was written. Nobody recorded who had access between acquisition and the evidence share.
-- **DEVIATION, ART-001:** the live disk was mounted read-write before imaging and Explorer was opened on it. Access times on the source may have changed. The image was taken without remounting read-only.
-- **DEVIATION, ART-001:** Massimo opened an SSH/PowerShell session to the live host at 03:21:30Z (`5x01/containment_execution.md`), before the disk image was taken. Logged below.
-- **Copy path:** ART-002 went through Mike's workstation and a USB3 NVMe enclosure to the share. ART-003 used the "same workflow". Integrity of that hop cannot be proven.
-- **Conflicting record:** `5x01/incident_timeline.md` (03:14:18Z) says the memory dump was collected by the SOC Evidence Collector with hashes verified in `/evidence/IR-20260414-01/hashes.txt`. Mike says his capture was at 03:02Z with no hash, and used a different path. Either there are two memory dumps with the same name, or one record is wrong. Find `hashes.txt` and confirm which file ART-002 is. Until then, treat it as no trusted hash.
-- **Sources are gone:** WST-WS-031 and WST-WS-017 were rebuilt at 10:12Z and 11:04Z on 2026-04-14 (`5x01/incident_timeline.md`). These copies cannot be re-acquired.
-- **Custody holes:** no record between the handoff (2026-04-14 07:42Z) and the first logged analyst access below. ART-004 to ART-006 are writable working copies.
+| Artifact ID | Artifact Name | Format | Acquired By | Acquisition Timestamp (UTC) | Acquisition Tool | SHA-256 at Acquisition | Storage Path | Access Controls |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| ART-001 | `<disk_image_filename>` | RAW/dd | `<network_engineer_name>` | `<YYYY-MM-DDTHH:MMZ>` | Disk imaging tool | Not computed at acquisition | Evidence storage location; exact path unverified | Not documented; read-only access required |
+| ART-002 | `<memory_dump_filename_1>` | RAW memory | `<network_engineer_name>` | `<YYYY-MM-DDTHH:MMZ>` | Memory acquisition tool | Not computed at acquisition | Evidence storage location; exact path unverified | Not documented; read-only access required |
+| ART-003 | `<memory_dump_filename_2>` | RAW memory | `<network_engineer_name>` | `<YYYY-MM-DDTHH:MMZ>` | Memory acquisition tool | Not computed at acquisition | Evidence storage location; exact path unverified | Not documented; read-only access required |
 
 ## Access Log
 
-| Timestamp (UTC) | Actor | Artifact ID | Action | Tool | Hash Verified | Notes |
-|---|---|---|---|---|---|---|
-| 2026-04-14 02:58:04 | soc-evidence-collector | ART-004 | export | SIEM export | no | From the file's own metadata. No hash taken. |
-| 2026-04-14 03:02 | Mike Torres | ART-002 | acquire_memory | WinPmem v3.3-rc3 | no | From acquisition notes. Host still live. No hash taken. |
-| 2026-04-14 03:21:30 | Massimo | ART-001 (source host) | remote_session | SSH + PowerShell | no | DEVIATION: live-host access before imaging. From `5x01/containment_execution.md`. |
-| 2026-04-14 03:38 | Mike Torres | ART-003 | acquire_memory | WinPmem v3.3-rc3 | no | From acquisition notes. No hash taken. |
-| 2026-04-14 before 04:51 (exact time not recorded) | Mike Torres | ART-001 (source disk) | read_write_mount | Windows / Explorer | no | DEVIATION: see Known Gaps. From acquisition notes. |
-| 2026-04-14 04:51 – 06:14 | Mike Torres | ART-001 | acquire_disk | FTK Imager | no | Host already on VLAN 999. No hash taken. |
-| 2026-04-14 07:42 | Mike Torres | ART-001, ART-002, ART-003 | handoff | n/a | no | Acquisition notes handed to the forensic analyst. |
-| 2026-10-17 07:32 | Massimo | ART-004 | hash_verify | sha256sum | no | No earlier hash to compare. Baseline established; hash stored in Baseline Hashes. |
-| 2026-10-17 07:32 | Massimo | ART-005 | hash_verify | sha256sum | no | No earlier hash to compare. Baseline established; hash stored in Baseline Hashes. |
-| 2026-10-17 07:32 | Massimo | ART-006 | hash_verify | sha256sum | no | No earlier hash to compare. Baseline established; hash stored in Baseline Hashes. |
+| Timestamp (UTC) | Actor | Artifact ID | Action | Tool Used | Hash Verified (yes/no) | Notes |
+| --- | --- | --- | --- | --- | --- | --- |
+| `<YYYY-MM-DDTHH:MMZ>` | Monitoring system | ART-001 (source), ART-002 (source), ART-003 (source) | alert_detection | Detection engine | no | Initial incident trigger. Alert identification recorded. Scope limited at detection time. |
+| `<YYYY-MM-DDTHH:MMZ>` | `<engineer_name>` | ART-002 | acquire_memory | Memory acquisition tool | no | Volatile memory capture from live source system. Transfer method documented. |
+| `<YYYY-MM-DDTHH:MMZ>` | `<ir_commander>` | ART-001 (source) | isolation_decision | Incident response playbook | no | Network isolation strategy authorized. Remote forensic access pathway established. |
+| `<YYYY-MM-DDTHH:MMZ>` | `<analyst_name>` | ART-001 (source) | remote_forensic_access | Remote access tool | no | Live-system forensic access established. Volatile data collection initiated before disk acquisition. |
+| `<YYYY-MM-DDTHH:MMZ>` | `<engineer_name>` | ART-003 | acquire_memory | Memory acquisition tool | no | Scope expansion: secondary host memory captured. Same acquisition method as primary. Transfer method documented. |
+| `<YYYY-MM-DDTHH:MMZ>` | IR operations team | ART-001, ART-002, ART-003 | evidence_preservation_notice | Evidence preservation playbook | no | Formal evidence preservation notice issued. All artifacts flagged for custody tracking. Litigation hold pending. |
+| `<YYYY-MM-DDTHH:MMZ>`, exact time not recorded | `<engineer_name>` | ART-001 (source) | read_write_mount | File system explorer | no | Pre-imaging artifact location verification. Source filesystem mounted with write access. File system metadata access possible. |
+| `<YYYY-MM-DDTHH:MMZ>` | `<engineer_name>` | ART-001 | acquire_disk_start | Disk imaging tool | no | Disk acquisition initiated on isolated host. Source filesystem not in read-only mode during acquisition. |
+| `<YYYY-MM-DDTHH:MMZ>` | `<engineer_name>` | ART-001 | acquire_disk_complete | Disk imaging tool | no | Disk image acquisition completed. Raw/dd format. Acquisition duration documented. Transfer method recorded. |
+| `<YYYY-MM-DDTHH:MMZ>` | Legal counsel | ART-001, ART-002, ART-003 | litigation_hold | Legal notice | no | Litigation hold placed on all artifacts. Evidence retention and integrity preservation mandatory. |
+| `<YYYY-MM-DDTHH:MMZ>` | `<engineer_name>` | ART-001, ART-002, ART-003 | acquisition_handoff | Acquisition documentation | no | Artifacts transferred to evidence storage. Acquisition notes document gaps: no acquisition hashes, no contemporaneous CoC form, filesystem access before imaging, transfer path verification unavailable. |
+| `<YYYY-MM-DDTHH:MMZ>` | System administration | ART-001 (source) | source_system_rebuild | Clean system image | no | Source host rebuilt from baseline image. Original source no longer available. Artifact capture final and unreproducible. |
+| `<YYYY-MM-DDTHH:MMZ>` | System administration | ART-003 (source) | source_system_rebuild | Clean system image | no | Secondary source host rebuilt from baseline image. Original source no longer available. Artifact capture final and unreproducible. |
 
-**Next entries:** baseline `hash_verify` for ART-001, ART-002, ART-003 once the files are available. Do this before any analysis.
+## Evidence Integrity and Handling Rules
 
-## Rules
+- Litigation hold applies to all artifacts from date of legal notice.
+- Preserve original evidence without modification or deletion.
+- Establish SHA-256 baseline hashes before first forensic analysis access.
+- Acquisition hashes are unavailable and must not be reconstructed or invented.
+- Perform forensic analysis on verified working copies only.
+- Append every subsequent access to this log with timestamp, actor, artifact, action, tool, hash verification, and notes.
+- Record any hash mismatch immediately as DEVIATION.
+- Source systems have been rebuilt and are not available for verification or re-acquisition.
 
-1. Hash each artifact **before** the first analysis access.
-2. Every later access gets a new row, even a quick one.
-3. If a hash does not match the baseline, log it right away as a `DEVIATION` note.
+## Known Evidence Gaps
+
+- No SHA-256 hashes were recorded at acquisition time.
+- No contemporaneous chain-of-custody form was completed at acquisition.
+- Physical and network access to artifacts between acquisition and evidence storage was not documented.
+- Source filesystem was mounted with write access before disk imaging; file system metadata may have been modified.
+- Volatile memory artifacts were transferred via external storage device; transfer path integrity cannot be independently verified.
+- Forensic access to live source system occurred before disk acquisition was complete, creating temporal overlap between live analysis and disk imaging.
+- Disk acquisition was not performed under read-only conditions; source filesystem remained writable during imaging.
+- Exact evidence storage paths and access control enforcement remain unverified.
+- Source systems have been rebuilt and are not available for re-acquisition or reverification.
+- Baseline SHA-256 hashes remain pending until artifacts are available to analyst.
