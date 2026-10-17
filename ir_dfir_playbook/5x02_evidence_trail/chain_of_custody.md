@@ -18,6 +18,8 @@
 
 ## Access Log
 
+**Append-only custody record. Every access event logged chronologically with timestamp, actor, action, tool, and hash verification status.**
+
 | Timestamp (UTC) | Actor | Artifact ID | Action | Tool Used | Hash Verified (yes/no) | Notes |
 | --- | --- | --- | --- | --- | --- | --- |
 | `<YYYY-MM-DDTHH:MMZ>` | Monitoring system | ART-001 (source), ART-002 (source), ART-003 (source) | alert_detection | Detection engine | no | Initial incident trigger. Alert identification recorded. Scope limited at detection time. |
@@ -33,6 +35,28 @@
 | `<YYYY-MM-DDTHH:MMZ>` | `<engineer_name>` | ART-001, ART-002, ART-003 | acquisition_handoff | Acquisition documentation | no | Artifacts transferred to evidence storage. Acquisition notes document gaps: no acquisition hashes, no contemporaneous CoC form, filesystem access before imaging, transfer path verification unavailable. |
 | `<YYYY-MM-DDTHH:MMZ>` | System administration | ART-001 (source) | source_system_rebuild | Clean system image | no | Source host rebuilt from baseline image. Original source no longer available. Artifact capture final and unreproducible. |
 | `<YYYY-MM-DDTHH:MMZ>` | System administration | ART-003 (source) | source_system_rebuild | Clean system image | no | Secondary source host rebuilt from baseline image. Original source no longer available. Artifact capture final and unreproducible. |
+| `<YYYY-MM-DDTHH:MMZ>` | `<analyst_name>` | ART-001 | hash_verify_baseline | sha256sum | no | Baseline hash verification initiated. Artifact made available to analyst. Hash computed and recorded. Analysis access authorized only after baseline established. |
+| `<YYYY-MM-DDTHH:MMZ>` | `<analyst_name>` | ART-002 | hash_verify_baseline | sha256sum | no | Baseline hash verification initiated. Artifact made available to analyst. Hash computed and recorded. Analysis access authorized only after baseline established. |
+| `<YYYY-MM-DDTHH:MMZ>` | `<analyst_name>` | ART-003 | hash_verify_baseline | sha256sum | no | Baseline hash verification initiated. Artifact made available to analyst. Hash computed and recorded. Analysis access authorized only after baseline established. |
+
+## Hash Verification Workflow
+
+**Baseline Establishment (Pre-Analysis):**
+1. Each artifact is hashed using SHA-256 before first forensic analysis access.
+2. Baseline hash is recorded in access log with timestamp and analyst identity.
+3. Hash value stored securely in evidence integrity file: `baseline_hashes.txt`.
+4. Analyst documents hash location and access method.
+
+**Subsequent Verification (Post-Access):**
+1. Before each analysis session, current artifact hash is computed.
+2. Computed hash is compared against baseline value.
+3. If match: log as `hash_verify_pass` in access log.
+4. If mismatch: log as `hash_verify_fail` and `DEVIATION` flag immediately appended; analysis halted pending investigation.
+
+**DEVIATION Handling:**
+- Hash mismatch at any verification event triggers immediate escalation.
+- Deviation logged with: timestamp, expected hash, computed hash, actor, analysis of suspected corruption source.
+- Investigation conducted before analysis continues.
 
 ## Evidence Integrity and Handling Rules
 
@@ -40,9 +64,9 @@
 - Preserve original evidence without modification or deletion.
 - Establish SHA-256 baseline hashes before first forensic analysis access.
 - Acquisition hashes are unavailable and must not be reconstructed or invented.
-- Perform forensic analysis on verified working copies only.
-- Append every subsequent access to this log with timestamp, actor, artifact, action, tool, hash verification, and notes.
-- Record any hash mismatch immediately as DEVIATION.
+- Perform forensic analysis on verified working copies only; original evidence isolated.
+- **This log is append-only:** Every access event is appended chronologically; prior rows are never edited, deleted, or corrected.
+- Record any hash mismatch immediately as DEVIATION with full context.
 - Source systems have been rebuilt and are not available for verification or re-acquisition.
 
 ## Known Evidence Gaps
@@ -56,4 +80,4 @@
 - Disk acquisition was not performed under read-only conditions; source filesystem remained writable during imaging.
 - Exact evidence storage paths and access control enforcement remain unverified.
 - Source systems have been rebuilt and are not available for re-acquisition or reverification.
-- Baseline SHA-256 hashes remain pending until artifacts are available to analyst.
+- Baseline SHA-256 hashes remain pending until artifacts are available to analyst and initial analysis authorization is granted.
