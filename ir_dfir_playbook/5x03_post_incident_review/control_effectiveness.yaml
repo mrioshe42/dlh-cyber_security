@@ -1,0 +1,109 @@
+
+- phase: "Credential phishing and submission"
+  att_ck_technique: "T1566.002, T1078"
+  controls_expected:
+    - "Secure email gateway with URL rewriting and detonation"
+    - "Web proxy / DNS block on newly registered look-alike domains (Spamhaus DBL, SURBL)"
+    - "Phishing-resistant MFA on Office 365 sign-in"
+    - "User phishing-report and awareness control"
+  controls_fired:
+    - "None evidenced in-window. Domain is now listed by Spamhaus DBL and SURBL (URLhaus snapshot 2026-04-14); listing date not captured"
+  controls_missed:
+    - "Web proxy / DNS block of ms0365-support.login-verification.click on first visit (2026-04-13T18:14:02Z); URLhaus firstseen 2026-04-07"
+    - "Mail gateway URL scan of the lure (no delivery telemetry in evidence)"
+    - "MFA or token binding that would have stopped the stolen credential pair and session (not evidenced either way)"
+  gap_severity: critical
+  gap_reason: "Credentials were submitted to a known-bad typosquat and no control blocked the visit or the session that followed."
+
+- phase: "VPN access using stolen credentials from a foreign IP"
+  att_ck_technique: "T1078"
+  controls_expected:
+    - "Conditional access: block or step-up on sign-in from non-allowed countries"
+    - "Identity Protection risk-based sign-in and impossible-travel detection"
+    - "Conditional access requiring a compliant device for unmanaged sessions"
+    - "SOC alerting on unfamiliar-location sign-ins"
+  controls_fired:
+    - "Azure AD risk signals raised for the session, then suppressed by the conditional access 'compliant device' rule (open item in summary)"
+  controls_missed:
+    - "Geo/IP block for sign-in from 45.63.9.88 (RU); session accepted at 2026-04-13T18:14:41Z"
+    - "Risk signal escalation to SOC or auto-block (suppressed)"
+    - "Conditional access rule design: 'compliant device' exception overrode risk-based blocking"
+  gap_severity: critical
+  gap_reason: "Stolen credentials produced a valid foreign-IP session; risk signals fired but a conditional access rule suppressed the response, and the session is still untraced."
+
+- phase: "PowerShell to MSBuild LOLBin execution"
+  att_ck_technique: "T1127.001"
+  controls_expected:
+    - "AMSI and PowerShell Script Block Logging (4104) with alerts on -enc, -w hidden, -ep bypass"
+    - "EDR process-tree rule: unsigned user-context binary spawning PowerShell"
+    - "AppLocker or WDAC denying MSBuild.exe inline tasks from user-writable paths"
+    - "ASR rule: block executable files that fail prevalence, age, or trust criteria"
+    - "Sysmon EID 1, 11 and 13 coverage"
+  controls_fired:
+    - "Sysmon EID 1 recorded update.exe to powershell.exe (encoded, hidden, bypass) at 02:46:41Z and powershell.exe to MSBuild.exe at 02:46:58Z (logging only, no alert or block evidenced)"
+    - "Sysmon EID 11 recorded update.xml drop at 02:46:51Z (logging only)"
+    - "Sysmon EID 13 recorded Run key write by MSBuild at 02:50:04Z (logging only)"
+  controls_missed:
+    - "Block of encoded, hidden PowerShell with -ep bypass on WST-WS-031 and WST-WS-017"
+    - "Block of unsigned update.exe running from %TEMP% (Sysmon EID 1 at 02:44:05Z)"
+    - "Block of MSBuild loading inline task XML from user-writable Temp (both hosts)"
+    - "Block or alert on Run key persistence written by MSBuild"
+  gap_severity: critical
+  gap_reason: "The full LOLBin chain ran on two hosts with no prevention; only passive Sysmon logging recorded it."
+
+- phase: "C2 beaconing to external IPs"
+  att_ck_technique: "T1071.001, T1090.003"
+  controls_expected:
+    - "Default-deny egress on 443 with block of Tor exit nodes and uncategorised destinations"
+    - "Perimeter IP reputation blocklist (AbuseIPDB, OTX pulses) enforced"
+    - "NDR beacon analytics (periodicity, TLS fingerprint)"
+    - "EDR alert on unsigned or LOLBin processes with outbound connections"
+    - "Automated host isolation (SOAR or EDR)"
+  controls_fired:
+    - "Sysmon EID 3 recorded 185.220.101.47:443 from MSBuild on WST-WS-031 at 02:47:02Z and 91.234.99.107:443 on WST-WS-017 at 03:27:15Z (logging only)"
+    - "Host isolation (VLAN 999) on WST-WS-031 at 03:55:02Z and WST-WS-017 at 03:58:18Z"
+  controls_missed:
+    - "Egress block of 185.220.101.47 (Tor exit, AbuseIPDB 84) on first connection; ran about 68 min before isolation"
+    - "Egress block of 91.234.99.107 (AbuseIPDB 92, OTX Cobalt Strike pulse) on first connection; ran about 31 min before isolation"
+    - "Alert on unsigned MSBuild making outbound 443 with no resolved hostname (dst_hostname null)"
+  gap_severity: high
+  gap_reason: "Two known-bad C2 IPs were reached with no egress block; only host isolation (about 31 to 68 min late) acted."
+
+- phase: "LSASS credential access and Kerberos ticket extraction"
+  att_ck_technique: "T1003.001, T1558.003"
+  controls_expected:
+    - "LSA protection (RunAsPPL) and Credential Guard"
+    - "Sysmon EID 10 (ProcessAccess) rule on lsass.exe with alerting"
+    - "EDR credential-dumping detection or ASR rule blocking LSASS credential theft"
+    - "Kerberos monitoring: EID 4769 ticket anomalies and 4624 type 3 Kerberos logons from workstations"
+    - "Tiered admin model: no privileged credentials cached on workstations"
+  controls_fired:
+    - "None evidenced. Sysmon config recorded no EID 10 events in the incident log"
+  controls_missed:
+    - "Block or alert on lsass.exe access by MSBuild on WST-WS-031 (NTLM material for dmarsh present at capture)"
+    - "Credential Guard or RunAsPPL absent or not enforced on WST-WS-031"
+    - "Kerberos logon from WST-WS-031 to WST-WS-017 (logon type 3 at 03:23:44Z) not flagged"
+    - "Kerberos ticket-use or ticket-request anomaly alert (no 4769 or 4624 telemetry in evidence)"
+  gap_severity: critical
+  gap_reason: "Workstation LSASS held reusable credential material that enabled the lateral hop, and no access telemetry or block fired."
+
+- phase: "Lateral movement and PHI access"
+  att_ck_technique: "T1550.003, T1078"
+  controls_expected:
+    - "Restriction of workstation-to-workstation admin shares (C$) by GPO or host firewall"
+    - "File-server share auditing (EID 4663) with alerts on bulk reads of LIS_REPORTS$"
+    - "Endpoint and egress DLP for PHI documents"
+    - "UEBA alert on bulk PHI document access by a single user"
+    - "Host isolation of every host touched by the attacker"
+  controls_fired:
+    - "Sysmon EID 1 recorded cmd.exe copying C:\\LIS\\reports\\daily\\*.pdf to \\\\WST-WS-017\\C$ at 03:43:30Z (logging only)"
+    - "AD-LOG-01: 14 PDF reads by dmarsh on LIS_REPORTS$ at 03:43:30Z (audit logged, no alert evidenced)"
+    - "Host isolation of WST-WS-031 (03:55:02Z) and WST-WS-017 (03:58:18Z), about 12 to 15 min after PHI access"
+  controls_missed:
+    - "Block of the workstation-to-workstation C$ admin share write to WST-WS-017"
+    - "DLP block on bulk PHI copy to a non-PHI host"
+    - "Alert on 14 PHI report reads in one burst"
+    - "Host isolation of LIS-WSIDE-01, the host that performed the reads and copy (no isolation event logged)"
+    - "Egress DLP: exfiltration is not ruled out because DLP logs were not reviewed"
+  gap_severity: critical
+  gap_reason: "PHI from 14 patient reports was staged to another workstation over an admin share with no block or DLP stop, and exfiltration is not ruled out."
