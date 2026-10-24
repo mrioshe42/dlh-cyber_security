@@ -1,0 +1,202 @@
+---
+# Map the Capabilities You Are Testing
+
+capabilities:
+
+  - capability_id: CAP-01
+    name: supply_chain_detection
+    expected_behavior: |
+      When presented with an unusual outbound connection from a non-internet-facing internal server,
+      the team immediately asks whether that traffic is authorized by a vendor integration,
+      then traces the traffic source to the vendor's agent or daemon running on the host,
+      and escalates the supplier as a potential threat vector (not just the host).
+      The team treats the vendor's update mechanism and code-signing model as part of the threat surface.
+    gap_hypothesis: |
+      MedDefense has not exercised a vendor-as-vector scenario before and lacks a standing vendor-risk
+      checklist in the incident playbook. The SOC likely treats the alert as a local compromise
+      (malware on SCHED-SVR-01) rather than suspecting the vendor or the update channel.
+      The team may not know that Nexus pushes automatic signed updates or that code-signing
+      validation alone is a residual finding from the 2025-11-14 vendor review.
+    tested_by_inject:
+      - INJ-01
+      - INJ-02
+    evaluation_owner: James Chen (SOC Lead / IR Commander)
+
+  - capability_id: CAP-02
+    name: vendor_communication
+    expected_behavior: |
+      When a vendor is implicated, the team initiates contact within 30 minutes via the BAA-documented
+      24x7 incident hotline (Nexus SecOps: +1 512 555 0184 or soc@nexushealth.io).
+      The team clearly states what MedDefense has detected (e.g., outbound traffic, EDR pattern),
+      asks for Nexus's own visibility (logs, incident status, whether they've seen similar at other customers),
+      and documents the contact (caller, time, what was asked, what Nexus said).
+      If Nexus has not discovered an incident on their end, the team asks what Nexus will do to investigate.
+      The team escalates to Nexus CISO (Marcus Oduya, security@nexushealth.io) if SecOps cannot confirm
+      or does not respond promptly.
+    gap_hypothesis: |
+      The BAA exists and the contact path is documented, but the incident communication path
+      has never been tested (last test was Sept 2024). The team may delay calling a vendor because
+      it feels like admitting MedDefense has a problem, or because no playbook step says "call vendor
+      within 30 min." The team may not know the difference between calling the general account team
+      (Priya Natarajan) and the 24x7 SecOps line. The team may fail to document what Nexus says,
+      making it hard to cross-check later or brief leadership.
+    tested_by_inject:
+      - INJ-02
+      - INJ-03
+    evaluation_owner: Sarah Park (IT Director) / Helena Reyes (General Counsel)
+
+  - capability_id: CAP-03
+    name: business_continuity_decision
+    expected_behavior: |
+      The team explicitly states the tradeoff: isolating SCHED-SVR-01 or the IPsec tunnel stops the
+      outbound traffic and stops unknown writes to Epic, but it also halts all scheduling across
+      three sites and burns a 24-hour RTO commitment to the board. Keeping the system up preserves
+      evidence and operations, but suspect data flows into Epic. The decision is made by the
+      IR Commander (James Chen) in consultation with the IT Director (Sarah Park) and the CISO.
+      The decision is documented with the tradeoff rationale, communicated to Nexus immediately,
+      and revisited as new facts arrive (e.g., if Nexus confirms a breach or MedDefense finds
+      evidence of record tampering). If isolation is chosen, the team has a restore/rebuild plan
+      ready within 4 hours.
+    gap_hypothesis: |
+      MedDefense has an RTO but may not have a playbook step that says "isolation vs. continuity is a
+      joint decision between IR, IT, and the business; document it and revisit it." The team may
+      isolate reactively (kill the process, isolate the host) without considering scheduling downtime
+      or may keep the system running "to preserve the RTO" without realizing that suspect data is
+      still flowing in. The decision may not be communicated to Nexus, leaving Nexus unaware that
+      MedDefense has taken action. The team may not have a rebuild plan ready, turning a 4-hour
+      RTO into a 24-hour recovery if isolation is chosen after two hours of investigation.
+    tested_by_inject:
+      - INJ-04
+      - INJ-05
+    evaluation_owner: James Chen (IR Commander), Sarah Park (IT Director)
+
+  - capability_id: CAP-04
+    name: phi_exposure_assessment
+    expected_behavior: |
+      The team scopes PHI exposure by asking: (1) what data types did the agent have access to?
+      (patient demographics, insurance info, appointment records — yes; clinical notes — no).
+      (2) How many patients were affected during the compromise window? (at least 500 per week × duration).
+      (3) What evidence is there of exfiltration? (outbound traffic pattern, but to where? what size packets?).
+      (4) What evidence is there of integrity compromise? (has Epic been comparing inbound appointment
+      updates against Nexus to detect inconsistencies?). The assessment is documented in a
+      one-page matrix: data type × access vector × evidence of loss/change × number of patients.
+      The team notifies the CISO and General Counsel of preliminary scope within 1 hour.
+    gap_hypothesis: |
+      The playbook may have a generic "assess PHI exposure" task but no step that walks the team
+      through "which data did this vendor touch." The team may assume "scheduling data is low-risk"
+      without recognizing that demographics and insurance info are ePHI and that appointment
+      modifications can harm patient safety. The team may not know the compromise window (3 days? 3 weeks?)
+      and thus cannot calculate patient count. The HIPAA four-factor assessment (45 CFR 164.404(b)(2))
+      may not be started until much later, delaying the notification decision.
+    tested_by_inject:
+      - INJ-03
+      - INJ-04
+      - INJ-06
+    evaluation_owner: Lisa Tanaka (Vendor Risk) / Helena Reyes (General Counsel)
+
+  - capability_id: CAP-05
+    name: hipaa_notification_posture
+    expected_behavior: |
+      The team recognizes that (1) Nexus is a Business Associate, so a Nexus breach may be
+      MedDefense's breach under HIPAA; (2) the notification clock (45 CFR 164.404(a)(2)) starts
+      on the first day MedDefense knew or would have known with reasonable diligence—which may be
+      45 minutes ago (when the SOC flagged the alert), not when Nexus confirms; (3) MedDefense
+      owes notice to affected individuals within 60 days of discovery; (4) if more than 500 residents
+      of a state are affected, notice to HHS and major media is also due (164.408); (5) Oregon ORS
+      646A.600 and Washington MHMD Act may apply for regional patient bases. The General Counsel
+      and CISO jointly assess whether the compromise likely meets the "reasonable likelihood of harm"
+      threshold (45 CFR 164.404(b)(1)) and prepare a draft notification plan by T+2 hours.
+      If harm is likely, the team notifies legal counsel and the board, prepares holding statements,
+      and does not delay notification pending Nexus's own investigation.
+    gap_hypothesis: |
+      The BAA shifts breach discovery obligation to Nexus, but MedDefense may not recognize that
+      the clock starts on MedDefense's discovery, not Nexus's. The team may wait for Nexus to
+      confirm before starting the notification assessment, losing up to 24 hours. The playbook may
+      not name the four-factor test (nature and extent, unauthorized persons, security measures,
+      probability of harm) and may lack a state-specific notification thresholds checklist.
+      The team may assume "appointment data is low-risk" and not reach the 500-person threshold,
+      missing a requirement for HHS/media notice. The General Counsel and Communications Director
+      may not be in the IR loop until late, delaying holding statement preparation.
+    tested_by_inject:
+      - INJ-04
+      - INJ-06
+      - INJ-07
+    evaluation_owner: Helena Reyes (General Counsel), Dr. Patricia Morales (CISO)
+
+  - capability_id: CAP-06
+    name: data_integrity_response
+    expected_behavior: |
+      When the team learns (from EDR logs or Nexus's own forensics) that the backdoor wrote to
+      the IPsec tunnel or the nexus-agent process for an extended period, the team immediately
+      asks: can we detect which appointments were created, moved, or cancelled while the backdoor
+      was active? The team uses Epic's audit log or the IPsec tunnel traffic capture to
+      reconstruct the writes to the ehr-ingest endpoint and compare them against what Nexus
+      claims to have sent. The team notifies Nexus that MedDefense is running forensics on the
+      inbound data stream and asks Nexus to do the same on the outbound side. The team flags
+      any discrepancies as evidence of record tampering and escalates to the Epic admin and
+      Chief Medical Officer to review any appointments that may have been surreptitiously modified.
+      Any appointments that cannot be verified as accurate are flagged for patient contact or
+      re-booking.
+    gap_hypothesis: |
+      MedDefense's playbooks focus on detecting loss (exfiltration) more than on detecting change
+      (record tampering). The team may not know that Nexus writes automated updates into Epic or
+      may not think to validate that traffic. The audit trail between Nexus and Epic may not be
+      visible (the ehr-ingest endpoint may not log detailed payloads). The team may not involve
+      the Epic admin or the clinical side until late, turning a data-integrity issue into a
+      patient-safety issue. The team may not coordinate with Nexus on forensics, allowing Nexus
+      to claim "we did not see exfiltration" without checking their own outbound logs.
+    tested_by_inject:
+      - INJ-03
+      - INJ-05
+    evaluation_owner: Sarah Park (IT Director), Robert Kim (Infrastructure Lead)
+
+  - capability_id: CAP-07
+    name: crisis_communications
+    expected_behavior: |
+      When a media inquiry arrives (e.g., "we heard Nexus is breached, was MedDefense affected?"),
+      the Communications Director (Marcus Webb) immediately escalates to the IR Commander and
+      General Counsel and checks the holding statement prepared during the HIPAA notification
+      assessment. The team follows the board-approved media protocol: no comment until legal clearance,
+      facts go through the CISO, and the statement addresses patient safety concern first
+      ("we are investigating, patients' safety is our priority"), confirms the vendor involvement
+      ("we are aware of an incident at a third-party vendor"), and commits to transparency
+      ("we will notify affected individuals as required by law within 60 days").
+      The team does not confirm or deny specific details (whether records were changed, how many
+      patients, the attacker's identity) until forensics is complete and legal approves.
+    gap_hypothesis: |
+      MedDefense may not have a board-approved crisis communication protocol for vendor incidents,
+      or the Communications Director may not be in the IR loop until late (only escalated if public
+      news breaks). The team may try to minimize the incident publicly ("no evidence of harm")
+      before forensics is complete, then have to retract. The team may leak conflicting statements
+      (IT says "we do not know," legal says "we are investigating," media reports them as denials).
+      The team may focus on technical details ("a signed update was compromised") rather than
+      patient impact, generating trust erosion.
+    tested_by_inject:
+      - INJ-07
+    evaluation_owner: Marcus Webb (Communications Director), Dr. Patricia Morales (CISO)
+
+  - capability_id: CAP-08
+    name: executive_briefing_under_pressure
+    expected_behavior: |
+      By T+90 minutes, the team produces a one-page board brief for the Chief Executive Officer
+      and board chair covering: (1) what we know (outbound traffic, Nexus agent, EDR pattern);
+      (2) what we do not yet know (compromise duration, data exfiltration, record integrity);
+      (3) timeline of actions taken (SOC alert → investigation → vendor contact → isolation decision);
+      (4) patient safety impact (X patients may have surreptitious appointment changes);
+      (5) HIPAA notification posture (clock started, threshold assessment in progress);
+      (6) business continuity impact (scheduling RTO is at risk if we isolate; operations RTO is at risk
+      if we do not); (7) next 4-hour milestones (forensics started with Nexus, rebuild plan ready,
+      initial patient contact list identified). The brief is written by the CISO, reviewed by the
+      General Counsel for legal risk, and delivered with context (do we recommend immediate board call
+      or is the 90-minute brief sufficient?).
+    gap_hypothesis: |
+      MedDefense may lack a template for "board brief in 90 minutes" and the CISO may produce a
+      30-slide technical deck instead. The team may not separate "what we know" from "what we assume,"
+      leaving the board confused about risk level. The team may focus on IT recovery (RTO, restore
+      schedule) without connecting to patient safety, HIPAA obligation, and reputational risk.
+      The CISO may brief alone without legal review, missing a reputational risk that legal would flag.
+      The team may not include "next 4-hour milestones," leaving the board with no sense of the
+      decision velocity ahead.
+    tested_by_inject:
+      - INJ-08
+    evaluation_owner: Dr. Patricia Morales (CISO), Helena Reyes (General Counsel)
