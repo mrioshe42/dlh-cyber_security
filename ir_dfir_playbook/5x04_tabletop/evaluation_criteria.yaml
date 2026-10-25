@@ -1,0 +1,89 @@
+# Evaluation Criteria
+
+criteria:
+
+  - id: INJ-00
+    cap: CAP-01
+    pass: |
+      Incident declared within 5 min with severity reasoning. IR Commander, CISO, IT Director, Vendor Risk notified.
+      Evidence collection (EDR, network) initiated before containment. Nexus mentioned as threat vector.
+    fail: "No incident declared. Containment before evidence. Vendor layer not mentioned. Vendor Risk not notified."
+    finding: |
+      Severity classification doesn't trigger for vendor anomalies. Vendor integration layer not recognized.
+      Action: Add Tier 2 escalation for "outbound ePHI system traffic to unknown IP" to severity_matrix.md.
+      Evidence collection mandatory before containment. Owner: James Chen. Deadline: 14 days.
+
+  - id: INJ-01
+    cap: "CAP-02, CAP-03"
+    pass: |
+      Explicit isolation vs. continuity decision (not deferred). Tradeoffs articulated. Clinical consulted.
+      Nexus SecOps contacted within 30 min (+1 512 555 0184). Decision communicated to Nexus. If isolated: rebuild plan initiated.
+    fail: "Decision deferred. Clinical not consulted. Nexus not contacted. Decision not communicated to Nexus. No rebuild plan."
+    finding: |
+      BC decision framework missing. BAA 24x7 incident line untested (2025-11-14 residual finding).
+      Actions: (1) Add BC decision matrix to IR playbook with clinical sign-off (Sarah Park, 7 days).
+      (2) Joint Nexus tabletop to test 24x7 line and SLA (Dr. Morales, 30 days).
+
+  - id: INJ-02
+    cap: CAP-06
+    pass: |
+      Data-integrity risk recognized (not just loss). Nexus asked for ehr-ingest write logs (72-hour window) within 15 min.
+      Epic audit pulled and compared. Discrepancies flagged. Epic admin and CMO involved. Appointments pending verification.
+    fail: "Team assumes no exfiltration = clean. Nexus not asked for logs. Epic audit not pulled/compared. Clinical not involved."
+    finding: |
+      No data-integrity validation process for vendor integrations. Misses appointment tampering, patient safety risk.
+      Actions: (1) Design integrity validation template for Nexus/LIS (Robert Kim, 21 days).
+      (2) Configure ehr-ingest to log detailed payloads (Sarah Park, 30 days).
+      (3) Joint integrity validation drill with Nexus (Lisa Tanaka, 60 days).
+
+  - id: INJ-03
+    cap: "CAP-04, CAP-05"
+    pass: |
+      Four-factor HIPAA assessment by T+75 (nature, persons, measures, harm probability). Clock = T+0 (SOC alert), not vendor.
+      60-day individual deadline understood. 500-person state threshold (OR/WA) checked. Holding statement drafted. Board notified.
+    fail: "Assessment deferred pending vendor. Clock starts at vendor confirmation. Thresholds not checked. No statement. Board not notified."
+    finding: |
+      HIPAA assessment dependent on vendor timeline. Clock not recognized as T+0. State thresholds not checked.
+      Actions: (1) Add four-factor template to IR playbook (Helena Reyes, 7 days).
+      (2) Document clock guidance: independent of vendor confirmation (Dr. Morales, 7 days).
+      (3) Create state patient population dashboard for 500-threshold check (Lisa Tanaka, 30 days).
+
+  - id: INJ-04
+    cap: "CAP-03, CAP-06"
+    pass: |
+      Isolation: ETA to clinics (4–6 hrs), manual scheduling for urgent cases, 30-min updates.
+      Continuity: Discrepancies investigated before concluding clean/compromised. Epic admin and CMO involved. Patient contact only for confirmed cases.
+      Either: clinical input documented, decision revisited if circumstances change.
+    fail: "Isolation: clinics left without ETA or fallback. Continuity: assumptions without investigation. Clinical not involved. Decision not revisited."
+    finding: |
+      Operational continuity and decision-revisit processes missing. No clinic communication path. No discrepancy triage.
+      Actions: (1) Operational escalation template: isolation → clinic notification + ETA + fallback (James Chen, 7 days).
+      (2) Discrepancy triage: investigate before concluding (Robert Kim, 14 days).
+      (3) Decision-revisit checkpoint every 2 hours (Sarah Park, 7 days).
+
+  - id: INJ-05
+    cap: CAP-05
+    pass: |
+      GC and CISO make independent notification decision. Nexus "no exfiltration" does not override MedDefense assessment.
+      Notification proceeds per 60-day deadline regardless of vendor audit. Decision and reasoning formally documented.
+      MedDefense informs Nexus (no permission sought).
+    fail: "Team waits for vendor audit. Accepts Nexus claim to delay. Agrees to 7–10 day hold. No documented rationale."
+    finding: |
+      Notification authority implicitly delegated to Business Associate. HIPAA makes MedDefense liable; decision must be independent.
+      Residual finding: BAA communication path not tested.
+      Actions: (1) Revise BAA or add memo: Nexus 24-hour notice ≠ MedDefense notification authority. Sign IR playbook (Helena Reyes, 14 days).
+      (2) Joint exercise with Nexus CISO on incident reporting and notification independence (Dr. Morales, 60 days).
+
+  - id: INJ-06
+    cap: CAP-07
+    pass: |
+      Media inquiry escalated immediately to Comms Director, CISO, GC. Statement within 90 min, reviewed by GC and CISO.
+      Content: acknowledge vendor, patient safety priority, notify per law, no comment on specifics. Nexus informed (no approval).
+      Unresolved questions (31 appointments, active attacker) escalated to CMO, documented. Control gap noted (zero Nexus visibility).
+    fail: "Statement minimizes incident before forensics. Includes claims still under investigation. GC/CISO skip review. Nexus approval sought. Questions buried."
+    finding: |
+      Crisis comms not cross-functional or not integrated with IR. Statement contradicted findings or buried unresolved issues.
+      Actions: (1) Add Comms Director (Marcus Webb) to IR team from declaration onward.
+      (2) Statement template: acknowledge vendor/safety, no harm claims pending forensics, no vendor approval (Marcus Webb, 7 days).
+      (3) Document control gap for AAR: zero visibility into Nexus attacker eviction (Dr. Morales, immediate).
+
