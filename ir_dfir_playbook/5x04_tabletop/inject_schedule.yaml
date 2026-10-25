@@ -1,0 +1,65 @@
+# Design the Inject Schedule
+
+injects:
+
+  - id: INJ-00
+    time_min: 0
+    capability: CAP-01
+    situation: "SOC flagged outbound traffic from SCHED-SVR-01 to unknown IP. Alert 45 min ago. EDR shows pattern every 4 hours. Scheduling operational. SOC ticket with James Chen."
+    decision: "Incident severity? Who notified first 15 min? Local compromise or vendor issue?"
+    expected: "SEV2+ declared. IR Commander, CISO, IT Director, Vendor Risk notified within 5 min. Passive evidence collection starts (EDR, traffic). Team asks: Nexus on host? Recent updates?"
+    roles: James Chen, Sarah Park
+
+  - id: INJ-01
+    time_min: 20
+    capability: "CAP-02, CAP-03"
+    situation: "Nexus publishes: build pipeline compromised, code-signing cert stolen, all updates in past 21 days may have malware. Patch in 24 hours. Nexus has NOT called MedDefense yet."
+    decision: "Isolate SCHED-SVR-01 or keep running? Who decides? Patient safety impact?"
+    expected: "Explicit isolation vs. continuity decision with documented tradeoffs. Clinical leadership consulted. Decision approved by CISO and IR Commander. Nexus SecOps called within 30 min with MedDefense's choice and rationale."
+    roles: James Chen, Sarah Park, Dr. Morales
+    conflict: "SECURITY (isolate) vs. CLINICAL (operations keep scheduling up)."
+
+  - id: INJ-02
+    time_min: 45
+    capability: CAP-06
+    situation: "Forensics: nexus-agent running 72 hours (since 2026-10-21 03:14 UTC). Outbound to Tor exit every 4 hours. Heavy write traffic to Epic ehr-ingest endpoint during all 72 hours. No Epic audit logs on inbound Nexus data."
+    decision: "How detect appointment tampering? Assume all 72 hours suspect?"
+    expected: "Request Nexus logs for all ehr-ingest writes (72-hour window). Pull Epic audit logs. Compare for discrepancies. Contact Epic admin and CMO for suspicious appointments (e.g., cancelled surgery). Flag 72-hour appointments as pending verification."
+    roles: Robert Kim, Sarah Park, Lisa Tanaka
+    escalation: "NEW INFO: Unknown traffic → 72-hour dwell + record writes to Epic."
+
+  - id: INJ-03
+    time_min: 75
+    capability: "CAP-04, CAP-05"
+    situation: "PHI scope: Nexus touched demographics, insurance, appointment records for ~1,500-2,000 patients over 72 hours. No exfiltration evidence yet. Four-factor HIPAA test required: (1) Nature: ePHI; (2) Persons: attacker via malicious agent; (3) Security: signed with compromised cert; (4) Harm probability: writes from compromised agent = likely."
+    decision: "Reasonable likelihood of harm met? Notify individuals? HHS? Media? When did clock start?"
+    expected: "Four-factor assessment by GC and CISO. Clock identified as T+0 (SOC alert), not when Nexus confirms. 60-day individual deadline. 500-person threshold for HHS/media checked (likely met: 1,500-2,000 patients, OR/WA sites). Holding statement drafted. Board looped in."
+    roles: Helena Reyes, Dr. Morales, Lisa Tanaka
+    regulation: "HIPAA: Clock starts on MedDefense discovery, not vendor confirmation."
+
+  - id: INJ-04
+    time_min: 120
+    capability: "CAP-03, CAP-06"
+    situation: "Two hours post-INJ-01. SCENARIO A (if isolated): Scheduling down. Clinic directors calling (85 patients scheduled today). 24-hour RTO pressure. Rebuild = 4-6 hours. SCENARIO B (if continuity): 3 appointments flagged as inconsistent with Nexus logs. Patient reports unexpected time change, no SMS/email confirmation. Clinical asks: contact all 1,500+ patients?"
+    decision: "Scenario A: manage downtime + RTO? Scenario B: verify without overwhelming staff?"
+    expected: "A: IR Commander gives clinics ETA (4 hours), initiates manual contact for urgent cases (surgeries). IT Director updates clinics every 30 min. B: Investigate discrepancies first (not assume tampering). Epic admin compares flagged appointments to Nexus logs. Patient contact for confirmed discrepancies only. Escalate to GC on notification."
+    roles: Sarah Park, James Chen
+    pressure: "OPERATIONAL IMPACT TESTS ISOLATION DECISION."
+
+  - id: INJ-05
+    time_min: 150
+    capability: CAP-05
+    situation: "Nexus calls: 'No exfiltration evidence from our side. Agent tried to phone home but no confirmed data theft. Recommend hold notification 7-10 days for full audit. Breach notice from you will spike customer concern.' Nexus CISO asking for delay."
+    decision: "Wait for Nexus audit or notify per MedDefense assessment? Vendor pressure vs. HIPAA?"
+    expected: "GC and CISO recognize vendor tension. Breach threshold = 'reasonable likelihood of harm,' not 'confirmed exfiltration.' Evidence: (1) compromised Nexus cert, (2) malicious agent 72 hours, (3) agent wrote to Epic, (4) cannot verify all appointments. Decision: notify individuals per 60-day deadline. Can delay HHS/media notice a few days for Nexus to comment, but do NOT wait 7-10 days."
+    roles: Helena Reyes, Dr. Morales
+    tension: "VENDOR PRESSURE FORCES INDEPENDENT HIPAA DECISION."
+
+  - id: INJ-06
+    time_min: 180
+    capability: CAP-07
+    situation: "Reporter calls Communications Director: 'Nexus compromised. MedDefense affected? 2-hour deadline.' Simultaneous forensics: 23 appointments Nexus says sent but Epic didn't receive; 8 appointments Epic shows but Nexus didn't log. Unexplained. Also: is attacker still in Nexus? Nexus hasn't audited their infrastructure yet."
+    decision: "Media statement content? What say/not say? Unresolved appointments and active attacker?"
+    expected: "Crisis comms: Statement within 90 min, GC and CISO reviewed. Content: acknowledge vendor incident, patient safety priority, will notify per law, no comment on specifics (pending forensics). Inform Nexus before publishing (don't ask permission). Forensics: 31 unresolved appointments to CMO. Document as 'pending correlation.' Recognize control gap: ehr-ingest lacks detailed payload logs. Active attacker: EXPLICITLY UNRESOLVED. Team recognizes zero visibility into Nexus. This is Nexus CISO conversation."
+    roles: Marcus Webb, Dr. Morales, Helena Reyes, Robert Kim
+    open_questions: "FINAL INJECT LEAVES 'WHAT WE DO NOT KNOW' UNRESOLVED (intentional)."
