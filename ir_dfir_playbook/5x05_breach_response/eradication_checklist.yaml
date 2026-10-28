@@ -1,0 +1,70 @@
+---
+incident: IR-2026-0420-01
+owner: Maria Gonzalez
+date: 2026-04-21
+
+actions:
+  - id: ERAD-001
+    cat: beacon_process
+    hosts: "CS-WS-101/104/107/112, FILE-SVR-01"
+    cmd: "taskkill /F /IM svchost32.exe ; net stop WinHealthSvc"
+    verify: "tasklist | grep -q svchost32 && echo FAIL || echo PASS"
+    at: 2026-04-21T08:15:00Z | by: Maria Gonzalez
+
+  - id: ERAD-002
+    cat: persistence
+    hosts: "ALL 5"
+    cmd: "sc delete WinHealthSvc"
+    verify: "sc query WinHealthSvc 2>&1 | grep -q 'does not exist' && echo PASS || echo FAIL"
+    at: 2026-04-21T08:20:00Z | by: Maria Gonzalez
+
+  - id: ERAD-003
+    cat: persistence
+    hosts: "CS-WS-101/104/107/112"
+    cmd: "reg delete HKLM\\Software\\Microsoft\\Windows\\CurrentVersion\\RunOnce /v svchost32.exe /f"
+    verify: "reg query HKLM\\...\\RunOnce | grep -q svchost32 && echo FAIL || echo PASS"
+    at: 2026-04-21T08:22:00Z | by: Maria Gonzalez
+
+  - id: ERAD-004
+    cat: staged_payload
+    hosts: "ALL 5"
+    cmd: "del C:\\Windows\\System32\\encryption_staging.ps1 /F"
+    verify: "dir C:\\Windows\\System32\\encryption_staging.ps1 2>&1 | grep -q 'not found' && echo PASS || echo FAIL"
+    at: 2026-04-21T08:25:00Z | by: Maria Gonzalez
+
+  - id: ERAD-005
+    cat: credential
+    hosts: "AD DC"
+    cmd: "Get-ADUser jdoe | select Enabled"
+    verify: "Get-ADUser jdoe | grep -q 'Enabled.*False' && echo PASS || echo FAIL"
+    at: 2026-04-21T08:30:00Z | by: Maria Gonzalez
+
+  - id: ERAD-006
+    cat: kerberos
+    hosts: "All domain"
+    cmd: "klist | grep jdoe"
+    verify: "klist 2>&1 | grep -q jdoe && echo FAIL || echo PASS"
+    at: 2026-04-21T08:32:00Z | by: Maria Gonzalez
+
+  - id: ERAD-007
+    cat: network
+    hosts: "Firewall"
+    cmd: "show access-list 152 | include 45.152.66.114"
+    verify: "show access-list 152 | grep -q 'deny.*45.152.66.114' && echo PASS || echo FAIL"
+    at: 2026-04-21T08:33:00Z | by: Taj Patel
+
+  - id: ERAD-008
+    cat: network
+    hosts: "DNS"
+    cmd: "zone staging.office365-cdn.net IN A 10.42.254.254"
+    verify: "nslookup staging.office365-cdn.net | grep -q '10.42.254.254' && echo PASS || echo FAIL"
+    at: 2026-04-21T09:00:00Z | by: Taj Patel
+
+  - id: ERAD-009
+    cat: machine_account
+    hosts: "ALL 5"
+    cmd: "Reset-ComputerMachinePassword -Server DC01"
+    verify: "Test-ComputerSecureChannel && echo PASS || echo FAIL"
+    at: 2026-04-21T09:20:00Z | by: Maria Gonzalez
+
+summary: {total: 9, completed: 9, failed: 0, verified: true, date: 2026-04-21T09:30:00Z, by: Maria Gonzalez}
