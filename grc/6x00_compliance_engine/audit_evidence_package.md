@@ -1,7 +1,7 @@
 Audit: HHS OCR Desk Audit | Organization: MedDefense Health Systems | Date: 2026-11-01
 
 ### Request 1: Security Risk Analysis (164.308(a)(1)(ii)(A))
-**Status:** **Full** | **Evidence:** forensic_findings_summary.md, risk_register_updates.yaml, gap_assessment.md | **Gap:** None
+**Status:** Partial | **Evidence:** forensic_findings_summary.md (incident findings), risk_register_updates.yaml (identified risks), gap_assessment.md (control assessment) | **Gap:** No standalone risk analysis methodology document; no documented scope or systematic approach to risk identification | **Remediation:** IT Security, 2026-12-31
 
 ### Request 2: Risk Management Plan (164.308(a)(1)(ii)(B))
 **Status:** Partial | **Evidence:** risk_treatment_plan.md | **Gap:** Not signed by CISO; no board approval | **Remediation:** CISO, 2026-11-01
@@ -13,7 +13,7 @@ Audit: HHS OCR Desk Audit | Organization: MedDefense Health Systems | Date: 2026
 **Status:** Partial | **Evidence:** sigma_detection_catalog.md, endpoint_hardening_baseline.md, ir_playbook_index.md | **Gap:** Sysmon 71% coverage; PowerShell logging incomplete; no formal review schedule; medical devices absent | **Remediation:** IT Security + Biomedical IT, 2026-07-01
 
 ### Request 5: Workforce Security Procedures (164.308(a)(3))
-**Status:** Partial | **Evidence:** acceptable_use_policy.md, vendor_management_policy.md | **Gap:** No periodic access review program; no provisioning/termination procedures; no privileged account management; service account over-privilege documented | **Remediation:** IT Security, 2026-12-15
+**Status:** **Minimal** | **Evidence:** acceptable_use_policy.md (user conduct expectations only) | **Gap:** No documented access provisioning procedures; no termination/revocation procedures; no periodic access review program; no privileged account management procedures; no RBAC documentation; service account over-privilege (svc_epic_int Domain Admin) unaddressed | **Remediation:** IT Security, 2026-12-15
 
 ### Request 6: Business Associate Agreement (164.308(b))
 **Status:** **None** | **Evidence:** vendor_management_policy.md, vendor_risk_assessment.md | **Gap:** CloudVault BAA unsigned; no ePHI transfer permitted until executed | **Remediation:** Legal + IT Security, 2026-11-15
@@ -26,13 +26,14 @@ Audit: HHS OCR Desk Audit | Organization: MedDefense Health Systems | Date: 2026
 
 ## Readiness Summary
 
-**Evidence count:** Full: 1 | Partial: 6 | None: 1
+**Evidence count:** Full: 0 | Partial: 6 | Minimal: 1 | None: 1
 
-**Overall rating:** **At Risk**
+**Overall rating:** **Not Ready**
 
-**Biggest gap:** CloudVault BAA unsigned (Request 6). ePHI transfer without BAA = HIPAA violation. OCR will cite as control failure.
-
-**Secondary gap:** No periodic access review program (Request 5). Service account over-privilege remains unaddressed.
+**Critical gaps (will result in OCR findings):**
+1. **Request 6 (BAA):** CloudVault BAA unsigned. No ePHI transfer permitted. = HIPAA violation if transfer occurs.
+2. **Request 5 (Workforce Procedures):** Only AUP exists; no access provisioning, termination, or periodic review procedures documented. = Foundational control failure.
+3. **Request 1 (Risk Analysis):** No methodology document; gap assessment shows results but not systematic approach. = Incomplete demonstration of risk analysis rigor.
 
 ---
 
