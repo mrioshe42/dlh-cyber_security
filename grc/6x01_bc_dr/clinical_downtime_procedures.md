@@ -25,19 +25,19 @@
 
 **Declare When:** Lab system fails on multiple workstations. Call IT (ext 4357).  
 **Who Declares:** Lab Manager / Charge Technician  
-**Notify:** All nursing units by phone (NOT email): **"Lab System Downtime Activated"**
+**Notify:** Lab Manager calls **ALL nursing units by phone** (NOT email) within 5 min: **"Lab System Downtime Activated. Call ext 5100 for all test orders."**
 
 | Step | Action | Form Location | Contact |
 |------|--------|---|---|
-| 1. **Orders [CRITICAL]** | Nursing calls Lab (ext 5100). Provide: name, MRN, test, specimen type, bed. Lab repeats back to confirm. | Lab reception, blue bin | Lab 5100 |
-| 2. **Specimen [CRITICAL]** | Label tube: name, MRN, date/time, initials. **Send paper order form with specimen.** | Lab collection | — |
-| 3. Results | Lab calls unit directly (NOT email) when ready. Unit documents result. | Nursing station | — |
-| 4. **Critical Values [CRITICAL]** | Lab calls provider (pager/phone). Lab calls unit to confirm. **Unit documents time of both calls.** | Paper contact list | — |
-| 5. Specimen Log | Log all specimens: name, MRN, type, time, initials. Prevents loss/tracking issues. | Lab reception, ledger | — |
+| 1. **Order Tests [CRITICAL]** | **Nursing calls Lab (ext 5100)** immediately. Provide: patient name, MRN, test name, specimen type, clinical indication, bed/unit. **Lab repeats order back to confirm.** Write confirmation on **Lab Order Form**. | Lab reception, blue bin | Lab 5100 |
+| 2. **Collect & Label [CRITICAL]** | Nursing collects specimen per standard protocol. **Label tube with: name, MRN, date, time, your initials.** Attach **Lab Order Form** to specimen. **Do NOT send specimen without paper form.** Deliver to lab immediately. | Lab collection area | — |
+| 3. **Track Specimen** | Nursing delivers specimen to lab. Lab staff logs specimen in **Lab Specimen Log** with time received. Lab staff writes receipt time on form. Nursing keeps copy of form in patient chart. | Lab reception, ledger | — |
+| 4. **Receive Results** | **Lab calls nursing unit directly** (phone, NOT email) when results available. Nursing documents: test name, result value, result time on **Result Notification Form**. **Post result on patient bedside and in paper chart.** | Nursing station | — |
+| 5. **Critical Values [CRITICAL]** | Lab identifies critical result per standard limits (glucose <50/>500, K+ <2.5/>6.5, etc.). **Lab calls provider immediately** (pager/phone). **Lab calls nursing unit to confirm provider was reached and time of call.** **Nursing documents: test, result, time lab called, time provider notified. Alert provider verbally at bedside if needed.** | Nursing station + paper chart | Lab 5100 |
 
-**Escalation:** Lab Manager → Nursing Director (5050) → CMO (ext 5020) if backlog >2 hrs. CMO authorizes **Priority Testing Only** (stat/critical; defer routine).
+**Escalation:** Lab Manager monitors test backlog. If backlog >2 hours, notify Nursing Director (5050). Director escalates to CMO (ext 5020). **CMO authorizes "Priority Testing Only" mode: STAT and critical tests only; routine tests deferred until restoration.**
 
-**After Restoration (2 hours):** Enter results into lab system. Verify critical results acted upon. Scan forms.
+**After Restoration (2 hours):** Lab staff enters all downtime results into lab system. Nursing verifies all critical results were acted upon (provider documentation exists). Scan all paper Lab Order Forms and Result Notification Forms into medical records.
 
 ## Quick Reference
 
