@@ -4,7 +4,7 @@
 
 ## The Immediate Risk (Why This Matters)
 
-Our post-breach audit identified **14 serious access control failures**—the majority **still in place today**. These gaps directly enabled the attack and create immediate re-occurrence risk:
+Our post-breach audit identified **14 serious access control failures:** **7 Critical** (immediate administrative compromise risk) and **7 High** (one step away from compromise). The majority remain unfixed today. These gaps directly enabled the breach attack and create identical re-occurrence risk:
 
 **Five automated system accounts have administrative access and haven't been touched in years.** When attackers compromise an employee's computer, they steal these old credentials and gain full control. This is exactly how the breach spread. We can remediate this in 48 hours by removing these unnecessary privileges. *(Evidence: IAM Audit Report, Findings 001, 002, 003)*
 
@@ -12,7 +12,13 @@ Our post-breach audit identified **14 serious access control failures**—the ma
 
 **Patient backup data is publicly accessible on the internet.** Our AWS S3 bucket containing medical record backups (patient names, diagnoses, medications, test results) has no authentication. Any user on the internet can download it. This constitutes a HIPAA regulatory breach. We can block it in one hour. *(Evidence: Cloud Security Assessment, Finding 6)*
 
-**Only 45% of system administrators use two-factor authentication.** One stolen password = one critical system under attacker control. *(Evidence: IAM Audit Report, MFA Coverage)*
+**Only 45% of system administrators use two-factor authentication.** One stolen password = one critical system under attacker control. This was the exact breach attack chain: compromise one employee's workstation → steal their password → access administrative accounts → full system breach. *(Evidence: IAM Audit Report, MFA Coverage; Incident Identity Path)*
+
+## What We Have Already Fixed
+
+- **Automated access control review script:** Scans all accounts quarterly; identifies violations automatically (completed; eliminates manual process gaps)
+- **Corrected cloud access policies:** Three over-privileged cloud policies now scoped to minimal permissions; eliminates cross-system blast radius (completed)
+- **Single sign-on documentation:** Ready to deploy; one logout action removes departing employee from all systems (eliminates off-boarding failures when implemented)
 
 ## What We're Doing Now (By Nov 21)
 
